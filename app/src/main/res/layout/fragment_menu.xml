@@ -44,7 +44,7 @@
             android:scaleType="fitCenter"
             app:shapeAppearanceOverlay="@style/roundimageview"
             android:background="@drawable/bg_radius_20dp"
-            android:src="@drawable/personimage" />
+            android:src="@drawable/personimagetest" />
 
     </LinearLayout>
 
