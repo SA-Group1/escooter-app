@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.dashboard.MenuFragment"
+    android:background="@drawable/mapexample">
+
+    <LinearLayout
+        android:id="@+id/LinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/bg_radius_20dp"
+        android:backgroundTint="@color/pesonimagebuttonbackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:textStyle="bold"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/personname"
+            android:textColor="@color/personnametext"
+            android:textSize="20sp" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            app:shapeAppearanceOverlay="@style/roundimageview"
+            android:background="@drawable/bg_radius_20dp"
+            android:src="@drawable/personimage" />
+
+    </LinearLayout>
+
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        tools:ignore="SpeakableTextPresentCheck"
+        android:id="@+id/waringbutton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="309dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_radius_20dp"
+        android:backgroundTint="@color/imagebuttonbackground"
+        android:src="@drawable/dangerimage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        tools:ignore="SpeakableTextPresentCheck"
+        android:id="@+id/messagebutton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="309dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_radius_20dp"
+        android:backgroundTint="@color/imagebuttonbackground"
+        android:src="@drawable/messageimage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/NearstButton"
+        android:layout_width="166dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="114dp"
+        android:layout_marginEnd="113.5dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_radius_20dp"
+        android:backgroundTint="@color/nearstbuttonbackground"
+        android:padding="20dp"
+        android:text="@string/nearstbuttontext"
+        android:textAllCaps="false"
+        android:textColor="@color/nearstbuttontext"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

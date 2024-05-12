@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Escooter</string>
+    <string name="hometext">Campus\nE-scooter\nRental</string>
+    <string name="homebuttontext">Get Started</string>
+    <string name="nearstbuttontext">Nearst</string>
+    <string name="personname">Stave Tom</string>
+</resources>
