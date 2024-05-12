@@ -1,4 +1,4 @@
-package com.example.escooter.ui.dashboard;
+package com.example.escooter.ui.menu;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

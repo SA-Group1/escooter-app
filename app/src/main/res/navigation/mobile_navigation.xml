@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.escooter.ui.dashboard.MenuFragment"
+        android:name="com.example.escooter.ui.menu.MenuFragment"
         tools:layout="@layout/fragment_menu" >
         <action
             android:id="@+id/action_navigation_dashboard_to_mapsFragment"

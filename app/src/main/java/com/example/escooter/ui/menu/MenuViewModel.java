@@ -1,4 +1,4 @@
-package com.example.escooter.ui.dashboard;
+package com.example.escooter.ui.menu;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
