@@ -9,6 +9,10 @@
     <color name="homebuttontext">#000000</color>
     <color name="personnametext">#000000</color>
     <color name="hometext">#FFFFFF</color>
+    <color name="menubackground">#2F3125</color>
+    <color name="chosenbuttontext">#253641</color>
+    <color name="profilebuttonbackground">#E2E8F3</color>
+    <color name="nonchosenbuttontext">#C6C6C6</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
