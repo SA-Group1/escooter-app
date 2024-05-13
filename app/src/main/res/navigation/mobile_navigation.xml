@@ -10,17 +10,20 @@
         android:name="com.example.escooter.ui.home.HomeFragment"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_navigation_home_to_navigation_dashboard"
-            app:destination="@id/navigation_dashboard" />
+            android:id="@+id/action_navigation_home_to_navigation_menu"
+            app:destination="@id/navigation_menuFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_menuFragment"
         android:name="com.example.escooter.ui.menu.MenuFragment"
         tools:layout="@layout/fragment_menu" >
         <action
-            android:id="@+id/action_navigation_dashboard_to_mapsFragment"
+            android:id="@+id/action_navigation_menu_to_mapsFragment"
             app:destination="@id/mapsFragment" />
+        <action
+            android:id="@+id/action_navigation_menu_to_personinfoFragment"
+            app:destination="@id/personinfoFragment" />
     </fragment>
 
     <fragment
@@ -32,4 +35,13 @@
         android:name="com.example.escooter.ui.map.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" />
+    <fragment
+        android:id="@+id/personinfoFragment"
+        android:name="com.example.escooter.ui.personinfo.PersoninfoFragment"
+        android:label="fragment_personimage"
+        tools:layout="@layout/fragment_personinfo" >
+        <action
+            android:id="@+id/action_personinfoFragment_to_navigation_menu"
+            app:destination="@id/navigation_menuFragment" />
+    </fragment>
 </navigation>
