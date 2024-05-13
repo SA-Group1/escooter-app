@@ -15,11 +15,10 @@ import com.google.android.material.imageview.ShapeableImageView;
 
 public class PersoninfoFragment extends Fragment {
 
-    private FragmentPersoninfoBinding binding;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        FragmentPersoninfoBinding binding;
         binding = FragmentPersoninfoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 

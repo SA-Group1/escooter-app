@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.personinfo.PersoninfoFragment"
-    android:background="@drawable/mapexample">
+    android:background="@color/black">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/gobackbutton"
@@ -15,65 +15,174 @@
         android:layout_marginStart="18dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        app:shapeAppearanceOverlay="@style/roundimageview"
-        android:background="@drawable/bg_radius_20dp"
         android:src="@drawable/gobackimage" />
 
     <LinearLayout
-        android:gravity="center"
-        android:id="@+id/Personinfobutton"
-        android:layout_width="345dp"
-        android:layout_height="75dp"
-        android:layout_marginStart="24dp"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_marginTop="72dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/bg_radius_20dp"
-        android:backgroundTint="@color/pesonimagebuttonbackground"
-        android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        tools:context=".ui.personinfo.PersoninfoFragment">
 
-
+        <!-- 第一個部分：原始的用戶訊息 -->
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:id="@+id/Personinfobutton"
+            android:layout_width="345dp"
+            android:layout_height="75dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_radius_20dp"
+            android:backgroundTint="@color/pesonimagebuttonbackground"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/personNameTextView"
-                android:layout_width="wrap_content"
+            <!-- 用戶名稱和資格 -->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/personname"
-                android:textColor="@color/personnametext"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/otherInfoTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/personotherinfo"
-                android:textColor="@color/personotherinfotext"
-                android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/personNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/personname"
+                    android:textColor="@color/personnametext"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/otherInfoTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/personotherinfo"
+                    android:textColor="@color/personotherinfotext"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <!-- 用戶頭像 -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageView"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                app:shapeAppearanceOverlay="@style/roundimageview"
+                android:background="@drawable/bg_radius_20dp"
+                android:src="@drawable/personimagetest" />
 
         </LinearLayout>
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageView"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="8dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            app:shapeAppearanceOverlay="@style/roundimageview"
+        <!-- 第二個部分：用戶個人信息切換按鈕 -->
+        <LinearLayout
+            android:id="@+id/Personinfochangebutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/bg_radius_20dp"
-            android:src="@drawable/personimagetest" />
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/personprofilebutton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="16dp"
+                android:text="Profile"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/personpaymentbutton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="16dp"
+                android:text="Payment"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/personrentrecord"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Rent Record"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- 第三個部分：用戶個人檔案信息 -->
+        <LinearLayout
+            android:id="@+id/Personprofile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_radius_20dp"
+            android:backgroundTint="@color/pesonimagebuttonbackground"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp">
+
+            <!-- 用戶名稱和其他信息 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/personprofiletextview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profile"
+                    android:textColor="@color/personnametext"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/otherInfoDetail1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:textColor="@color/personotherinfotext"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/otherInfoDetail2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PhoneNumber"
+                    android:textColor="@color/personotherinfotext"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/otherInfoDetail3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:textColor="@color/personotherinfotext"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 
