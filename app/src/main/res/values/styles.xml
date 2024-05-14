@@ -6,6 +6,6 @@
         <item name="color">@color/white</item>
     </style>
     <style name="CustomScrollBar" parent="">
-        <item name="android:scrollbarThumbVertical">@drawable/custom_scrollbar_thumb_vertical</item>
+        <item name="android:scrollbarThumbVertical">@drawable/person_info_scroll_bar</item>
     </style>
 </resources>

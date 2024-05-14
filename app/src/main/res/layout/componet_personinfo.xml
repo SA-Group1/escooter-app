@@ -18,7 +18,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:background="@drawable/bg_radius_20dp"
-            android:backgroundTint="@color/pesonimagebuttonbackground"
+            android:backgroundTint="@color/person_image_button_background"
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingStart="16dp"
@@ -40,8 +40,8 @@
                     android:id="@+id/personNameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/personname"
-                    android:textColor="@color/personnametext"
+                    android:text="@string/person_name"
+                    android:textColor="@color/person_name_text"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -49,8 +49,8 @@
                     android:id="@+id/otherInfoTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/personotherinfo"
-                    android:textColor="@color/personotherinfotext"
+                    android:text="@string/persono_info"
+                    android:textColor="@color/person_other_info_text"
                     android:textSize="16sp" />
 
             </LinearLayout>

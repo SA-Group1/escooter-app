@@ -35,9 +35,9 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:paddingStart="16dp"
-            android:paddingTop="16dp"
+            android:paddingTop="32dp"
             android:paddingEnd="16dp"
-            android:paddingBottom="8dp">
+            android:paddingBottom="16dp">
 
             <!-- 用戶個人檔案按鈕 -->
             <Button
@@ -45,9 +45,9 @@
                 android:layout_width="91dp"
                 android:layout_height="35dp"
                 android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/profilebuttonbackground"
+                android:backgroundTint="@color/profile_button_background"
                 android:text="Profile"
-                android:textColor="@color/chosenbuttontext"
+                android:textColor="@color/chosen_button_text"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText,TouchTargetSizeCheck" />
@@ -62,9 +62,9 @@
             <Button
                 android:id="@+id/paymentButton"
                 android:layout_width="91dp"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:text="Payment"
-                android:textColor="@color/nonchosenbuttontext"
+                android:textColor="@color/nonchosen_button_text"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:background="@drawable/bg_radius_8dp"
@@ -81,9 +81,9 @@
             <Button
                 android:id="@+id/rentRecordButton"
                 android:layout_width="91dp"
-                android:layout_height="wrap_content"
+                android:layout_height="34dp"
                 android:text="Rent Record"
-                android:textColor="@color/nonchosenbuttontext"
+                android:textColor="@color/nonchosen_button_text"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:background="@drawable/bg_radius_8dp"
@@ -110,7 +110,7 @@
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="26dp"
                 android:background="@drawable/bg_radius_20dp"
-                android:backgroundTint="@color/pesonimagebuttonbackground"
+                android:backgroundTint="@color/person_image_button_background"
                 android:orientation="horizontal"
                 android:paddingStart="16dp"
                 android:paddingTop="8dp"
@@ -132,7 +132,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Profile"
-                        android:textColor="@color/personnametext"
+                        android:textColor="@color/person_name_text"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -141,7 +141,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Name"
-                        android:textColor="@color/personotherinfotext"
+                        android:textColor="@color/person_other_info_text"
                         android:textSize="16sp"
                         tools:ignore="HardcodedText" />
                     <TextView
@@ -149,7 +149,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="PhoneNumber"
-                        android:textColor="@color/personotherinfotext"
+                        android:textColor="@color/person_other_info_text"
                         android:textSize="16sp"
                         tools:ignore="HardcodedText" />
                     <TextView
@@ -157,7 +157,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Email"
-                        android:textColor="@color/personotherinfotext"
+                        android:textColor="@color/person_other_info_text"
                         android:textSize="16sp"
                         tools:ignore="HardcodedText" />
                 </LinearLayout>
@@ -168,7 +168,7 @@
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="26dp"
                 android:background="@drawable/bg_radius_20dp"
-                android:backgroundTint="@color/pesonimagebuttonbackground"
+                android:backgroundTint="@color/person_image_button_background"
                 android:orientation="horizontal"
                 android:paddingStart="16dp"
                 android:paddingTop="8dp"
@@ -189,7 +189,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Profile"
-                        android:textColor="@color/personnametext"
+                        android:textColor="@color/person_name_text"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -197,21 +197,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Name"
-                        android:textColor="@color/personotherinfotext"
+                        android:textColor="@color/person_other_info_text"
                         android:textSize="16sp"
                         tools:ignore="HardcodedText" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="PhoneNumber"
-                        android:textColor="@color/personotherinfotext"
+                        android:textColor="@color/person_other_info_text"
                         android:textSize="16sp"
                         tools:ignore="HardcodedText" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Email"
-                        android:textColor="@color/personotherinfotext"
+                        android:textColor="@color/person_other_info_text"
                         android:textSize="16sp"
                         tools:ignore="HardcodedText" />
                 </LinearLayout>
@@ -222,7 +222,7 @@
                     android:layout_marginEnd="24dp"
                     android:layout_marginBottom="26dp"
                     android:background="@drawable/bg_radius_20dp"
-                    android:backgroundTint="@color/pesonimagebuttonbackground"
+                    android:backgroundTint="@color/person_image_button_background"
                     android:orientation="horizontal"
                     android:paddingStart="16dp"
                     android:paddingTop="8dp"
@@ -243,7 +243,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Profile"
-                            android:textColor="@color/personnametext"
+                            android:textColor="@color/person_name_text"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
@@ -251,21 +251,21 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Name"
-                            android:textColor="@color/personotherinfotext"
+                            android:textColor="@color/person_other_info_text"
                             android:textSize="16sp"
                             tools:ignore="HardcodedText" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="PhoneNumber"
-                            android:textColor="@color/personotherinfotext"
+                            android:textColor="@color/person_other_info_text"
                             android:textSize="16sp"
                             tools:ignore="HardcodedText" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Email"
-                            android:textColor="@color/personotherinfotext"
+                            android:textColor="@color/person_other_info_text"
                             android:textSize="16sp"
                             tools:ignore="HardcodedText" />
                     </LinearLayout>
@@ -276,7 +276,7 @@
                     android:layout_marginEnd="24dp"
                     android:layout_marginBottom="26dp"
                     android:background="@drawable/bg_radius_20dp"
-                    android:backgroundTint="@color/pesonimagebuttonbackground"
+                    android:backgroundTint="@color/person_image_button_background"
                     android:orientation="horizontal"
                     android:paddingStart="16dp"
                     android:paddingTop="8dp"
@@ -297,7 +297,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Profile"
-                            android:textColor="@color/personnametext"
+                            android:textColor="@color/person_name_text"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
@@ -305,21 +305,21 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Name"
-                            android:textColor="@color/personotherinfotext"
+                            android:textColor="@color/person_other_info_text"
                             android:textSize="16sp"
                             tools:ignore="HardcodedText" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="PhoneNumber"
-                            android:textColor="@color/personotherinfotext"
+                            android:textColor="@color/person_other_info_text"
                             android:textSize="16sp"
                             tools:ignore="HardcodedText" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Email"
-                            android:textColor="@color/personotherinfotext"
+                            android:textColor="@color/person_other_info_text"
                             android:textSize="16sp"
                             tools:ignore="HardcodedText" />
                     </LinearLayout>

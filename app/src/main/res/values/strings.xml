@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Escooter</string>
-    <string name="hometext">Campus\ne-scooter\nRental</string>
-    <string name="homebuttontext">Get Started</string>
-    <string name="nearstbuttontext">Nearst</string>
-    <string name="personname">Stave Torn</string>
-    <string name="personotherinfo">Personal discount available</string>
+    <string name="home_text">Campus\ne-scooter\nRental</string>
+    <string name="home_button_text">Get Started</string>
+    <string name="nearst_button_text">Nearst</string>
+    <string name="person_name">Stave Torn</string>
+    <string name="persono_info">Personal discount available</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

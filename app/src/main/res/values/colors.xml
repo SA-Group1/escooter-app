@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="homebuttonbackground">#F6F6F6</color>
-    <color name="nearstbuttonbackground">#1AB7FC</color>
-    <color name="nearstbuttontext">#FFFFFF</color>
-    <color name="pesonimagebuttonbackground">#FFFFFF</color>"
-    <color name="imagebuttonbackground">#FFFFFF</color>
-    <color name="personotherinfotext">#C6C6C6</color>
-    <color name="homebuttontext">#000000</color>
-    <color name="personnametext">#000000</color>
-    <color name="hometext">#FFFFFF</color>
-    <color name="menubackground">#2F3125</color>
-    <color name="chosenbuttontext">#253641</color>
-    <color name="profilebuttonbackground">#E2E8F3</color>
-    <color name="nonchosenbuttontext">#C6C6C6</color>
+    <color name="home_button_background">#F6F6F6</color>
+    <color name="nearst_button_background">#1AB7FC</color>
+    <color name="nearst_button_text">#FFFFFF</color>
+    <color name="person_image_button_background">#FFFFFF</color>"
+    <color name="image_button_background">#FFFFFF</color>
+    <color name="person_other_info_text">#C6C6C6</color>
+    <color name="home_button_text">#000000</color>
+    <color name="person_name_text">#000000</color>
+    <color name="home_text">#FFFFFF</color>
+    <color name="menu_background">#2F3125</color>
+    <color name="chosen_button_text">#253641</color>
+    <color name="profile_button_background">#E2E8F3</color>
+    <color name="nonchosen_button_text">#C6C6C6</color>
     <color name="transparent">#00000000</color>
     <color name="person_info_backround_start">#2f3135</color>
     <color name="person_info_backround_end">#18181D</color>
