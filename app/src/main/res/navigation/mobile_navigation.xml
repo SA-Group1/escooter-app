@@ -27,10 +27,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.escooter.ui.notifications.NotificationsFragment"
-        tools:layout="@layout/fragment_notifications" />
-    <fragment
         android:id="@+id/mapsFragment"
         android:name="com.example.escooter.ui.map.MapsFragment"
         android:label="fragment_maps"
