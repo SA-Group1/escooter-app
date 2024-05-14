@@ -7,64 +7,12 @@
     tools:context=".ui.menu.MenuFragment"
     android:background="@drawable/mapexample">
 
-    <LinearLayout
-        android:gravity="center"
-        android:id="@+id/Personinfobutton"
-        android:layout_width="345dp"
-        android:layout_height="75dp"
-        android:layout_marginStart="24dp"
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="72dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/bg_radius_20dp"
-        android:backgroundTint="@color/pesonimagebuttonbackground"
-        android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/personNameTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/personname"
-                android:textColor="@color/personnametext"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/otherInfoTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/personotherinfo"
-                android:textColor="@color/personotherinfotext"
-                android:textSize="16sp" />
-
-        </LinearLayout>
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageView"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="8dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            app:shapeAppearanceOverlay="@style/roundimageview"
-            android:background="@drawable/bg_radius_20dp"
-            android:src="@drawable/personimagetest" />
-
-    </LinearLayout>
-
+        android:id="@+id/personinfobutton"
+        layout="@layout/componet_personinfo" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         tools:ignore="SpeakableTextPresentCheck"

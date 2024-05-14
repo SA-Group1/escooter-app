@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
@@ -24,8 +24,8 @@ public class MenuFragment extends Fragment {
 
         binding = FragmentMenuBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        final LinearLayout myLinearLayout = binding.Personinfobutton;
-        myLinearLayout.setOnClickListener(v -> {
+        final FrameLayout personinfobutton = binding.personinfobutton.getRoot();
+        personinfobutton.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigate(R.id.action_navigation_menu_to_personinfoFragment);
         });
@@ -47,11 +47,5 @@ public class MenuFragment extends Fragment {
         });
 
         return root;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 }
