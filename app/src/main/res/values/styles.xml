@@ -5,4 +5,7 @@
         <item name="cornerSize">16dp</item>
         <item name="color">@color/white</item>
     </style>
+    <style name="CustomScrollBar" parent="">
+        <item name="android:scrollbarThumbVertical">@drawable/custom_scrollbar_thumb_vertical</item>
+    </style>
 </resources>

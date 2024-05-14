@@ -7,12 +7,19 @@
     tools:context=".ui.menu.MenuFragment"
     android:background="@drawable/mapexample">
 
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <LinearLayout
         android:layout_marginTop="72dp"
-        android:id="@+id/personinfobutton"
-        layout="@layout/componet_personinfo" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/personinfobutton"
+                layout="@layout/componet_personinfo"/>
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatImageButton
         tools:ignore="SpeakableTextPresentCheck"

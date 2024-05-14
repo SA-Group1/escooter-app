@@ -94,8 +94,9 @@
 
         <!-- 第三個部分：用戶個人檔案信息 -->
         <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/CustomScrollBar">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -104,9 +105,10 @@
             <LinearLayout
                 android:id="@+id/Personprofile"
                 android:layout_width="345dp"
-                android:layout_height="wrap_content"
+                android:layout_height="223dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
+                android:layout_marginBottom="26dp"
                 android:background="@drawable/bg_radius_20dp"
                 android:backgroundTint="@color/pesonimagebuttonbackground"
                 android:orientation="horizontal"
@@ -162,9 +164,10 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="345dp"
-                android:layout_height="wrap_content"
+                android:layout_height="223dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
+                android:layout_marginBottom="26dp"
                 android:background="@drawable/bg_radius_20dp"
                 android:backgroundTint="@color/pesonimagebuttonbackground"
                 android:orientation="horizontal"
@@ -216,9 +219,10 @@
             </LinearLayout>
                 <LinearLayout
                     android:layout_width="345dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="223dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="26dp"
                     android:background="@drawable/bg_radius_20dp"
                     android:backgroundTint="@color/pesonimagebuttonbackground"
                     android:orientation="horizontal"
@@ -270,117 +274,10 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="345dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="223dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
-                    android:background="@drawable/bg_radius_20dp"
-                    android:backgroundTint="@color/pesonimagebuttonbackground"
-                    android:orientation="horizontal"
-                    android:paddingStart="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <!-- 用戶名稱和其他信息 -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Profile"
-                            android:textColor="@color/personnametext"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Name"
-                            android:textColor="@color/personotherinfotext"
-                            android:textSize="16sp"
-                            tools:ignore="HardcodedText" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="PhoneNumber"
-                            android:textColor="@color/personotherinfotext"
-                            android:textSize="16sp"
-                            tools:ignore="HardcodedText" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Email"
-                            android:textColor="@color/personotherinfotext"
-                            android:textSize="16sp"
-                            tools:ignore="HardcodedText" />
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="345dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
-                    android:background="@drawable/bg_radius_20dp"
-                    android:backgroundTint="@color/pesonimagebuttonbackground"
-                    android:orientation="horizontal"
-                    android:paddingStart="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <!-- 用戶名稱和其他信息 -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Profile"
-                            android:textColor="@color/personnametext"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Name"
-                            android:textColor="@color/personotherinfotext"
-                            android:textSize="16sp"
-                            tools:ignore="HardcodedText" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="PhoneNumber"
-                            android:textColor="@color/personotherinfotext"
-                            android:textSize="16sp"
-                            tools:ignore="HardcodedText" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Email"
-                            android:textColor="@color/personotherinfotext"
-                            android:textSize="16sp"
-                            tools:ignore="HardcodedText" />
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="345dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="26dp"
                     android:background="@drawable/bg_radius_20dp"
                     android:backgroundTint="@color/pesonimagebuttonbackground"
                     android:orientation="horizontal"

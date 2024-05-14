@@ -34,7 +34,7 @@ android {
 
 dependencies {
 
-    implementation(libs.appcompat)
+    implementation(libs.annotation)
     implementation(libs.material)
     implementation(libs.constraintlayout)
     implementation(libs.lifecycle.livedata.ktx)
