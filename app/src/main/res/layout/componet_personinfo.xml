@@ -19,7 +19,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:background="@drawable/bg_radius_20dp"
-            android:backgroundTint="@color/person_image_button_background"
+            android:backgroundTint="@color/translucent"
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingStart="16dp"
@@ -64,7 +64,7 @@
                 android:adjustViewBounds="true"
                 android:background="@drawable/bg_radius_20dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/personimagetest"
+                android:src="@drawable/personimage"
                 app:shapeAppearanceOverlay="@style/roundimageview" />
         </LinearLayout>
 
