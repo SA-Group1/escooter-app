@@ -47,7 +47,14 @@
         android:id="@+id/paymentFragment"
         android:name="com.example.escooter.ui.payment.PaymentFragment"
         android:label="fragment_payment"
-        tools:layout="@layout/fragment_payment" />
+        tools:layout="@layout/fragment_payment" >
+        <action
+            android:id="@+id/action_paymentFragment_to_personinfoFragment"
+            app:destination="@id/personinfoFragment" />
+        <action
+            android:id="@+id/action_paymentFragment_to_navigation_menuFragment"
+            app:destination="@id/navigation_menuFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.escooter.ui.login.LoginFragment"
