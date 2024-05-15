@@ -92,131 +92,64 @@
 
         </LinearLayout>
 
-        <!-- 第三個部分：用戶個人支付信息 -->
-<!--            <ScrollView-->
-<!--                android:layout_marginStart="24dp"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                style="@style/CustomScrollBar">-->
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="vertical">-->
+            <ScrollView
+                android:layout_marginStart="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/CustomScrollBar">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-<!--                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--                        android:layout_width="345dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginEnd="24dp"-->
-<!--                        android:layout_marginBottom="26dp"-->
-<!--                        android:orientation="vertical"-->
-<!--                        android:background="@drawable/bg_radius_20dp"-->
-<!--                        android:backgroundTint="@color/profile_button_background">-->
-<!--                        &lt;!&ndash; Profile Section Title &ndash;&gt;-->
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginStart="19dp"-->
-<!--                            android:layout_marginTop="14dp"-->
-<!--                            android:text="Profile"-->
-<!--                            android:textColor="@color/person_name_text"-->
-<!--                            android:textSize="14dp"-->
-<!--                            android:textStyle="bold"/>-->
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="345dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginBottom="26dp"
+                        android:orientation="vertical"
+                        android:background="@drawable/bg_radius_20dp"
+                        android:backgroundTint="@color/profile_button_background">
+                        <!-- Profile Section Title -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="19dp"
+                            android:layout_marginTop="14dp"
+                            android:text="Profile"
+                            android:textColor="@color/profile_main_title_text"
+                            android:textSize="14dp"
+                            android:textStyle="bold"/>
 
-<!--                        &lt;!&ndash; Name Row &ndash;&gt;-->
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="16dp"-->
-<!--                            android:layout_marginStart="19dp"-->
-<!--                            android:orientation="vertical"-->
-<!--                            android:gravity="center_vertical">-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginStart="19dp"
+                            android:orientation="vertical"
+                            android:gravity="center_vertical">
 
-<!--                            <TextView-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:textAlignment="center"-->
-<!--                                android:textColor="@color/profile_title_text"-->
-<!--                                android:layout_weight="1"-->
-<!--                                android:text="Name"-->
-<!--                                android:textSize="12sp" />-->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="center"
+                                android:textColor="@color/profile_title_text"
+                                android:layout_weight="1"
+                                android:text="Email"
+                                android:textSize="12sp" />
 
-<!--                            <TextView-->
-<!--                                android:textColor="@color/black"-->
-<!--                                android:layout_marginTop="2dp"-->
-<!--                                android:layout_marginBottom="12dp"-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:text="Steve Torn"-->
-<!--                                android:textSize="14sp"-->
-<!--                                android:layout_marginRight="8dp"/>-->
-<!--                        </LinearLayout>-->
-
-<!--                        <ImageView-->
-<!--                            android:layout_width="345dp"-->
-<!--                            android:layout_height="1dp"-->
-<!--                            android:background="@color/divider" />-->
-<!--                        &lt;!&ndash; Phone Number Row &ndash;&gt;-->
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="16dp"-->
-<!--                            android:layout_marginStart="19dp"-->
-<!--                            android:orientation="vertical"-->
-<!--                            android:gravity="center_vertical">-->
-
-<!--                            <TextView-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:textAlignment="center"-->
-<!--                                android:textColor="@color/profile_title_text"-->
-<!--                                android:layout_weight="1"-->
-<!--                                android:text="Phone Number"-->
-<!--                                android:textSize="12sp" />-->
-
-<!--                            <TextView-->
-<!--                                android:textColor="@color/black"-->
-<!--                                android:layout_marginTop="2dp"-->
-<!--                                android:layout_marginBottom="12dp"-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:text="0900-123-456"-->
-<!--                                android:textSize="14sp"-->
-<!--                                android:layout_marginRight="8dp"/>-->
-<!--                        </LinearLayout>-->
-<!--                        <ImageView-->
-<!--                            android:layout_width="345dp"-->
-<!--                            android:layout_height="1dp"-->
-<!--                            android:background="@color/divider" />-->
-<!--                        &lt;!&ndash; Email Row &ndash;&gt;-->
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="16dp"-->
-<!--                            android:layout_marginStart="19dp"-->
-<!--                            android:orientation="vertical"-->
-<!--                            android:gravity="center_vertical">-->
-
-<!--                            <TextView-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:textAlignment="center"-->
-<!--                                android:textColor="@color/profile_title_text"-->
-<!--                                android:layout_weight="1"-->
-<!--                                android:text="Email"-->
-<!--                                android:textSize="12sp" />-->
-
-<!--                            <TextView-->
-<!--                                android:textColor="@color/black"-->
-<!--                                android:layout_marginTop="2dp"-->
-<!--                                android:layout_marginBottom="12dp"-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:text="stavetorn001@gmail.com"-->
-<!--                                android:textSize="14sp"-->
-<!--                                android:layout_marginRight="8dp"/>-->
-<!--                        </LinearLayout>-->
-<!--                    </LinearLayout>-->
-<!--                </LinearLayout>-->
-<!--            </ScrollView>-->
+                            <TextView
+                                android:textColor="@color/black"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="12dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="stavetorn001@gmail.com"
+                                android:textSize="14sp"
+                                android:layout_marginRight="8dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
         </LinearLayout>
     </FrameLayout>
