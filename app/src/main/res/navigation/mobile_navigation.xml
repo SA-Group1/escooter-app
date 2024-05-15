@@ -10,8 +10,8 @@
         android:name="com.example.escooter.ui.home.HomeFragment"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_navigation_home_to_navigation_menu"
-            app:destination="@id/navigation_menuFragment" />
+            android:id="@+id/action_navigation_home_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
 
     <fragment
@@ -38,6 +38,23 @@
         tools:layout="@layout/fragment_personinfo" >
         <action
             android:id="@+id/action_personinfoFragment_to_navigation_menu"
+            app:destination="@id/navigation_menuFragment" />
+        <action
+            android:id="@+id/action_personinfoFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.example.escooter.ui.payment.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.escooter.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_navigation_menuFragment"
             app:destination="@id/navigation_menuFragment" />
     </fragment>
 </navigation>

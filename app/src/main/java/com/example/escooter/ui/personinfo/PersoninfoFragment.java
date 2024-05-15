@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -22,10 +23,17 @@ public class PersoninfoFragment extends Fragment {
         binding = FragmentPersoninfoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final ShapeableImageView button = binding.gobackbutton;
-        button.setOnClickListener(v -> {
+        final ShapeableImageView goback_button = binding.gobackbutton;
+        final Button payment_button = binding.paymentButton;
+
+        goback_button.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigate(R.id.action_personinfoFragment_to_navigation_menu);
+        });
+
+        payment_button.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+            navController.navigate(R.id.action_personinfoFragment_to_paymentFragment);
         });
 
         return root;

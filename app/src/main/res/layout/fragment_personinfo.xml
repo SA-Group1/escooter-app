@@ -103,225 +103,175 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/Personprofile"
-                android:layout_width="345dp"
-                android:layout_height="223dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="26dp"
-                android:background="@drawable/bg_radius_20dp"
-                android:backgroundTint="@color/person_image_button_background"
-                android:orientation="horizontal"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <!-- 用戶名稱和其他信息 -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/personprofiletextview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Profile"
-                        android:textColor="@color/person_name_text"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/otherInfoDetail1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Name"
-                        android:textColor="@color/person_other_info_text"
-                        android:textSize="16sp"
-                        tools:ignore="HardcodedText" />
-                    <TextView
-                        android:id="@+id/otherInfoDetail2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="PhoneNumber"
-                        android:textColor="@color/person_other_info_text"
-                        android:textSize="16sp"
-                        tools:ignore="HardcodedText" />
-                    <TextView
-                        android:id="@+id/otherInfoDetail3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Email"
-                        android:textColor="@color/person_other_info_text"
-                        android:textSize="16sp"
-                        tools:ignore="HardcodedText" />
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="345dp"
-                android:layout_height="223dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="26dp"
-                android:background="@drawable/bg_radius_20dp"
-                android:backgroundTint="@color/person_image_button_background"
-                android:orientation="horizontal"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <!-- 用戶名稱和其他信息 -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Profile"
-                        android:textColor="@color/person_name_text"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Name"
-                        android:textColor="@color/person_other_info_text"
-                        android:textSize="16sp"
-                        tools:ignore="HardcodedText" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="PhoneNumber"
-                        android:textColor="@color/person_other_info_text"
-                        android:textSize="16sp"
-                        tools:ignore="HardcodedText" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Email"
-                        android:textColor="@color/person_other_info_text"
-                        android:textSize="16sp"
-                        tools:ignore="HardcodedText" />
-                </LinearLayout>
-            </LinearLayout>
-                <LinearLayout
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="345dp"
-                    android:layout_height="223dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
                     android:layout_marginBottom="26dp"
+                    android:orientation="vertical"
                     android:background="@drawable/bg_radius_20dp"
-                    android:backgroundTint="@color/person_image_button_background"
-                    android:orientation="horizontal"
-                    android:paddingStart="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <!-- 用戶名稱和其他信息 -->
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    android:backgroundTint="@color/profile_button_background">
+                    <!-- Profile Section Title -->
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="14dp"
+                        android:text="Profile"
+                        android:textColor="@color/person_name_text"
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
+
+                    <!-- Name Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="19dp"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="center"
+                                android:textColor="@color/profile_title_text"
+                                android:layout_weight="1"
+                                android:text="Name"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:textColor="@color/black"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="12dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Steve Torn"
+                                android:textSize="14sp"
+                                android:layout_marginEnd="8dp"/>
+                        </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="345dp"
+                        android:layout_height="1dp"
+                        android:background="@color/divider" />
+                    <!-- Phone Number Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="19dp"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Profile"
-                            android:textColor="@color/person_name_text"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:textAlignment="center"
+                            android:textColor="@color/profile_title_text"
+                            android:layout_weight="1"
+                            android:text="Phone Number"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:textColor="@color/black"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginBottom="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0900-123-456"
+                            android:textSize="14sp"
+                            android:layout_marginEnd="8dp"/>
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="345dp"
+                        android:layout_height="1dp"
+                        android:background="@color/divider" />
+                    <!-- Email Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="19dp"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Name"
-                            android:textColor="@color/person_other_info_text"
-                            android:textSize="16sp"
-                            tools:ignore="HardcodedText" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="PhoneNumber"
-                            android:textColor="@color/person_other_info_text"
-                            android:textSize="16sp"
-                            tools:ignore="HardcodedText" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:textColor="@color/profile_title_text"
+                            android:layout_weight="1"
                             android:text="Email"
-                            android:textColor="@color/person_other_info_text"
-                            android:textSize="16sp"
-                            tools:ignore="HardcodedText" />
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:textColor="@color/black"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginBottom="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="stavetorn001@gmail.com"
+                            android:textSize="14sp"
+                            android:layout_marginEnd="8dp"/>
                     </LinearLayout>
                 </LinearLayout>
-                <LinearLayout
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="345dp"
-                    android:layout_height="223dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
                     android:layout_marginBottom="26dp"
+                    android:orientation="vertical"
                     android:background="@drawable/bg_radius_20dp"
-                    android:backgroundTint="@color/person_image_button_background"
-                    android:orientation="horizontal"
-                    android:paddingStart="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <!-- 用戶名稱和其他信息 -->
+                    android:backgroundTint="@color/white">
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="19dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="81dp"
+                            android:layout_height="20dp"
+                            android:textColor="@color/black"
+                            android:text="App version"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:textColor="@color/black"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginBottom="18dp"
+                            android:layout_marginStart="180dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1.0.0"
+                            android:textSize="14sp"
+                            android:layout_marginEnd="8dp"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="345dp"
+                        android:layout_height="1dp"
+                        android:background="@color/divider" />
+                    <!-- Phone Number Row -->
+                    <!-- Email Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginBottom="20dp"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Profile"
-                            android:textColor="@color/person_name_text"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Name"
-                            android:textColor="@color/person_other_info_text"
-                            android:textSize="16sp"
-                            tools:ignore="HardcodedText" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="PhoneNumber"
-                            android:textColor="@color/person_other_info_text"
-                            android:textSize="16sp"
-                            tools:ignore="HardcodedText" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Email"
-                            android:textColor="@color/person_other_info_text"
-                            android:textSize="16sp"
-                            tools:ignore="HardcodedText" />
+                            android:layout_height="20dp"
+                            android:textColor="@color/profile_log_out_text"
+                            android:layout_weight="1"
+                            android:text="Log out"
+                            android:textSize="14sp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

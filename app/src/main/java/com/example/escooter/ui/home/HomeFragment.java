@@ -23,7 +23,7 @@ public class HomeFragment extends Fragment {
         final Button button= binding.homebutton;
         button.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-            navController.navigate(R.id.action_navigation_home_to_navigation_menu);
+            navController.navigate(R.id.action_navigation_home_to_loginFragment);
         });
 
         return root;

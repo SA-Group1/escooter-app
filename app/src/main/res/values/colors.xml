@@ -12,8 +12,12 @@
     <color name="menu_background">#2F3125</color>
     <color name="chosen_button_text">#253641</color>
     <color name="profile_button_background">#E2E8F3</color>
+    <color name="payment_button_background">#FCECD5</color>
     <color name="nonchosen_button_text">#C6C6C6</color>
     <color name="transparent">#00000000</color>
+    <color name="divider">#C6C6C6</color>
+    <color name="profile_title_text">#C6C6C6</color>
+    <color name="profile_log_out_text">#D08343</color>
     <color name="person_info_backround_start">#2f3135</color>
     <color name="person_info_backround_end">#18181D</color>
     <color name="purple_200">#FFBB86FC</color>
