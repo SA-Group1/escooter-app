@@ -1,4 +1,4 @@
-package com.example.escooter.ui.payment;
+package com.example.escooter.ui.rentrecord;
 
 import android.os.Bundle;
 
@@ -12,35 +12,36 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.escooter.R;
-import com.example.escooter.databinding.FragmentPaymentBinding;
+import com.example.escooter.databinding.ComponetPersoninfoBinding;
+import com.example.escooter.databinding.FragmentRentRecordBinding;
 import com.google.android.material.imageview.ShapeableImageView;
 
+public class RentRecordFragment extends Fragment {
 
-public class PaymentFragment extends Fragment {
-
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentPaymentBinding binding;
-        binding = FragmentPaymentBinding.inflate(inflater, container, false);
+        FragmentRentRecordBinding binding;
+        binding = FragmentRentRecordBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final ShapeableImageView goback_button = binding.gobackbutton;
+        final Button payment_button = binding.paymentButton;
         final Button profile_button = binding.profileButton;
-        final Button rent_record_button = binding.rentRecordButton;
 
         goback_button.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-            navController.navigate(R.id.action_paymentFragment_to_navigation_menuFragment);
+            navController.navigate(R.id.action_rentRecordFragment_to_navigation_menuFragment);
+        });
+
+        payment_button.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+            navController.navigate(R.id.action_rentRecordFragment_to_paymentFragment);
         });
 
         profile_button.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-            navController.navigate(R.id.action_paymentFragment_to_personinfoFragment);
-        });
-
-        rent_record_button.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-            navController.navigate(R.id.action_paymentFragment_to_rentRecordFragment);
+            navController.navigate(R.id.action_rentRecordFragment_to_personinfoFragment);
         });
 
         return root;

@@ -33,15 +33,18 @@
         tools:layout="@layout/fragment_maps" />
     <fragment
         android:id="@+id/personinfoFragment"
-        android:name="com.example.escooter.ui.personinfo.PersoninfoFragment"
+        android:name="com.example.escooter.ui.personinfo.PersonInfoFragment"
         android:label="fragment_personimage"
-        tools:layout="@layout/fragment_personinfo" >
+        tools:layout="@layout/fragment_person_info" >
         <action
             android:id="@+id/action_personinfoFragment_to_navigation_menu"
             app:destination="@id/navigation_menuFragment" />
         <action
             android:id="@+id/action_personinfoFragment_to_paymentFragment"
             app:destination="@id/paymentFragment" />
+        <action
+            android:id="@+id/action_personinfoFragment_to_rentRecordFragment"
+            app:destination="@id/rentRecordFragment" />
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"
@@ -54,6 +57,9 @@
         <action
             android:id="@+id/action_paymentFragment_to_navigation_menuFragment"
             app:destination="@id/navigation_menuFragment" />
+        <action
+            android:id="@+id/action_paymentFragment_to_rentRecordFragment"
+            app:destination="@id/rentRecordFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -62,6 +68,21 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_navigation_menuFragment"
+            app:destination="@id/navigation_menuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rentRecordFragment"
+        android:name="com.example.escooter.ui.rentrecord.RentRecordFragment"
+        android:label="fragment_rent_record"
+        tools:layout="@layout/fragment_rent_record" >
+        <action
+            android:id="@+id/action_rentRecordFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+        <action
+            android:id="@+id/action_rentRecordFragment_to_personinfoFragment"
+            app:destination="@id/personinfoFragment" />
+        <action
+            android:id="@+id/action_rentRecordFragment_to_navigation_menuFragment"
             app:destination="@id/navigation_menuFragment" />
     </fragment>
 </navigation>
