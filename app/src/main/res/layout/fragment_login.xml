@@ -100,7 +100,7 @@
             android:fontFamily="@font/lufga_light"
             android:textColor="@color/white"
             android:textColorHint="@color/profile_title_text"
-            android:hint="@string/prompt_email"
+            android:hint="@string/prompt_account"
             android:inputType="textEmailAddress"
             android:background="@drawable/bg_radius_8dp"
             android:backgroundTint="@color/login_frame"

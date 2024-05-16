@@ -4,6 +4,7 @@
     <string name="app_description2">Join the most most convenient transportation</string>
     <string name="app_description3">method in Yuntech.</string>
     <string name="app_description4">Join yunscoo to enjoy</string>
+    <string name="app_description5">e-scooter</string>
     <string name="account_login">Account Information</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="home_text">Campus\ne-scooter\nRental</string>
@@ -18,8 +19,11 @@
     <string name="show_password">Show Password</string>
     <string name="hide_password">Hide Password</string>
     <string name="invalid_input">Invalid input. Please check your username and password.</string>
-    <string name="prompt_email">Account</string>
+    <string name="prompt_account">Account</string>
+    <string name="prompt_phone_number">Phone Number</string>
+    <string name="prompt_user_name">Username</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_email">Email</string>
     <string name="action_log_in">Login</string>
     <string name="action_sign_up">Signup</string>
     <string name="welcome">"Welcome!"</string>
