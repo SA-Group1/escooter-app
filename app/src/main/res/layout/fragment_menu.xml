@@ -21,36 +21,6 @@
                 layout="@layout/componet_personinfo"/>
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        tools:ignore="SpeakableTextPresentCheck"
-        android:id="@+id/waringbutton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="309dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/bg_radius_20dp"
-        android:backgroundTint="@color/image_button_background"
-        android:src="@drawable/dangerimage"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        tools:ignore="SpeakableTextPresentCheck"
-        android:id="@+id/messagebutton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="309dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/bg_radius_20dp"
-        android:backgroundTint="@color/image_button_background"
-        android:src="@drawable/messageimage"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/NearstButton"
         android:layout_width="166dp"

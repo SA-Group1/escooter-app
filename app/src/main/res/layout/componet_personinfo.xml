@@ -40,18 +40,19 @@
                     android:id="@+id/personNameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/lufga_medium"
                     android:text="@string/person_name"
                     android:textColor="@color/person_name_text"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/otherInfoTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/persono_info"
+                    android:fontFamily="@font/lufga_regular"
                     android:textColor="@color/person_other_info_text"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 

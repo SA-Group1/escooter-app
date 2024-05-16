@@ -2,6 +2,9 @@
     <string name="app_name">Escooter</string>
     <string name="home_text">Campus\ne-scooter\nRental</string>
     <string name="home_button_text">Get Started</string>
+    <string name="profile_button_text">Profile</string>
+    <string name="payment_button_text">Payment</string>
+    <string name="rent_record_button_text">Rent Record</string>
     <string name="nearst_button_text">Nearst</string>
     <string name="person_name">Stave Torn</string>
     <string name="persono_info">Personal discount available</string>

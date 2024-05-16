@@ -10,9 +10,10 @@
     <color name="person_name_text">#FFFFFF</color>
     <color name="home_text">#FFFFFF</color>
     <color name="menu_background">#2F3125</color>
-    <color name="chosen_button_text">#253641</color>
+    <color name="chosen_button_text">#253241</color>
     <color name="profile_button_background">#E2E8F3</color>
     <color name="payment_button_background">#FCECD5</color>
+    <color name="rent_record_button_background">#FFFFFF"</color>
     <color name="nonchosen_button_text">#C6C6C6</color>
     <color name="transparent">#00000000</color>
     <color name="translucent">#80363636</color>
