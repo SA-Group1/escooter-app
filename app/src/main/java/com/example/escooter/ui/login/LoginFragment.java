@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.escooter.databinding.FragmentLoginBinding;
 
 import com.example.escooter.R;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginFragment extends Fragment {
 
@@ -39,6 +40,14 @@ public class LoginFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         binding = FragmentLoginBinding.inflate(inflater, container, false);
+
+        final Button signupButton = binding.signUpButton;
+
+        signupButton.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+            navController.navigate(R.id.action_loginFragment_to_signUpFragment);
+        });
+
         return binding.getRoot();
 
     }
@@ -51,8 +60,9 @@ public class LoginFragment extends Fragment {
 
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;
-        final Button loginButton = binding.login;
-        final ProgressBar loadingProgressBar = binding.loading;
+        final TextInputLayout passwordTextInputLayout = binding.textInputLayoutPassword;
+        final Button loginButton = binding.loginButton;
+        final Button forgotPasswordButton = binding.forgetPasswordButton;
 
         loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
             @Override
@@ -65,7 +75,7 @@ public class LoginFragment extends Fragment {
                     usernameEditText.setError(getString(loginFormState.getUsernameError()));
                 }
                 if (loginFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
+                    passwordTextInputLayout.setError(getString(loginFormState.getPasswordError()));
                 }
             }
         });
@@ -76,7 +86,6 @@ public class LoginFragment extends Fragment {
                 if (loginResult == null) {
                     return;
                 }
-                loadingProgressBar.setVisibility(View.GONE);
                 if (loginResult.getError() != null) {
                     showLoginFailed(loginResult.getError());
                 }
@@ -120,7 +129,6 @@ public class LoginFragment extends Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }

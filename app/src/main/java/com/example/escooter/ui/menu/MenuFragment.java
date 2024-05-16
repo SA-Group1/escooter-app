@@ -35,16 +35,6 @@ public class MenuFragment extends Fragment {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigate(R.id.action_navigation_menu_to_mapsFragment);
         });
-        final AppCompatImageButton button2= binding.waringbutton;
-        button2.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-            navController.navigate(R.id.action_navigation_menu_to_mapsFragment);
-        });
-        final AppCompatImageButton button3= binding.messagebutton;
-        button3.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-            navController.navigate(R.id.action_navigation_menu_to_mapsFragment);
-        });
 
         return root;
     }

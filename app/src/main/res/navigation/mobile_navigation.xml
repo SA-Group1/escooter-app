@@ -3,16 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
-
-    <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.escooter.ui.home.HomeFragment"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_navigation_home_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
+    app:startDestination="@+id/loginFragment">
 
     <fragment
         android:id="@+id/navigation_menuFragment"
@@ -69,6 +60,9 @@
         <action
             android:id="@+id/action_loginFragment_to_navigation_menuFragment"
             app:destination="@id/navigation_menuFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
     </fragment>
     <fragment
         android:id="@+id/rentRecordFragment"
@@ -84,5 +78,14 @@
         <action
             android:id="@+id/action_rentRecordFragment_to_navigation_menuFragment"
             app:destination="@id/navigation_menuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.escooter.ui.signup.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
 </navigation>
