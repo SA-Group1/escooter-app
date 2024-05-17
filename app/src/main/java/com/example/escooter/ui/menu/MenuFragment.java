@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -24,7 +25,7 @@ public class MenuFragment extends Fragment {
 
         binding = FragmentMenuBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        final FrameLayout personinfobutton = binding.personinfobutton.getRoot();
+        final ConstraintLayout personinfobutton = binding.personinfobutton.getRoot();
         personinfobutton.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigate(R.id.action_navigation_menu_to_personinfoFragment);

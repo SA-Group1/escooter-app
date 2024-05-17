@@ -1,4 +1,5 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -6,335 +7,337 @@
     tools:context=".ui.personinfo.PersonInfoFragment"
     android:background="@drawable/personinfobackgroud">
 
+    <!-- 返回按钮 -->
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/gobackbutton"
         android:layout_width="16.5dp"
         android:layout_height="16dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="18dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginStart="27dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_back_button" />
+        android:src="@drawable/ic_back_button"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
+    <!-- 主内容布局 -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/mainContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gobackbutton"
+        android:layout_marginTop="13dp"
+        android:layout_centerHorizontal="true"
         android:orientation="vertical"
-        android:layout_marginTop="72dp"
-        tools:context=".ui.personinfo.PersonInfoFragment">
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <include
             android:id="@+id/personinfobutton"
-            layout="@layout/componet_personinfo" />
+            layout="@layout/component_personinfo" />
 
-        <!-- 第二個部分：用戶個人信息切換按鈕 -->
+        <!-- 第二部分：用户个人信息切换按钮 -->
         <LinearLayout
             android:id="@+id/Personinfochangebutton"
-            android:layout_width="345dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:paddingStart="16dp"
-            android:paddingTop="32dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp">
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="18dp"
+            android:orientation="horizontal"
+            android:paddingStart="11dp"
+            android:paddingEnd="11dp">
 
-            <!-- 用戶個人檔案按鈕 -->
             <Button
                 android:id="@+id/profileButton"
                 android:layout_width="91dp"
                 android:layout_height="35dp"
                 android:background="@drawable/bg_radius_8dp"
                 android:backgroundTint="@color/profile_button_background"
+                android:fontFamily="@font/lufga_bold"
                 android:text="@string/profile_button_text"
+                android:textAllCaps="false"
                 android:textColor="@color/chosen_button_text"
                 android:textSize="12sp"
-                android:fontFamily="@font/lufga_bold"
-                tools:ignore="HardcodedText,TouchTargetSizeCheck"
-                android:textAllCaps="false"/>
+                tools:ignore="HardcodedText,TouchTargetSizeCheck" />
 
-            <!-- 使用空白的 View 來實現間距 -->
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <!-- 用戶付款按鈕 -->
             <Button
                 android:id="@+id/paymentButton"
                 android:layout_width="91dp"
                 android:layout_height="35dp"
+                android:background="@drawable/bg_radius_8dp"
+                android:backgroundTint="@color/nonchosen_button_background"
                 android:fontFamily="@font/lufga_bold"
                 android:text="@string/payment_button_text"
+                android:textAllCaps="false"
                 android:textColor="@color/nonchosen_button_text"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/transparent"
-                tools:ignore="HardcodedText"
-                android:textAllCaps="false"/>
+                tools:ignore="HardcodedText" />
 
-            <!-- 使用空白的 View 來實現間距 -->
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <!-- 用戶租賃記錄按鈕 -->
             <Button
                 android:id="@+id/rentRecordButton"
                 android:layout_width="91dp"
                 android:layout_height="35dp"
+                android:background="@drawable/bg_radius_8dp"
+                android:backgroundTint="@color/nonchosen_button_background"
                 android:fontFamily="@font/lufga_bold"
                 android:text="@string/rent_record_button_text"
+                android:textAllCaps="false"
                 android:textColor="@color/nonchosen_button_text"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/transparent"
-                tools:ignore="HardcodedText"
-                android:textAllCaps="false"/>
-
+                tools:ignore="HardcodedText" />
         </LinearLayout>
 
-        <!-- 第三個部分：用戶個人檔案信息 -->
+        <!-- 第三部分：用户个人档案信息 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <LinearLayout
-                android:layout_marginStart="24dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="36dp"
+                android:background="@drawable/bg_radius_20dp"
+                android:backgroundTint="@color/profile_button_background"
                 android:orientation="vertical">
 
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="345dp"
+                <!-- 档案部分标题 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="26dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_radius_20dp"
-                    android:backgroundTint="@color/profile_button_background">
+                    android:layout_marginStart="29dp"
+                    android:layout_marginTop="21dp">
 
-                    <LinearLayout
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="19dp"
-                        android:layout_marginTop="14dp">
-                    <!-- Profile Section Title -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/lufga_medium"
-                            android:text="@string/profile_button_text"
-                            android:textColor="@color/profile_main_title_text"
-                            android:textSize="14sp" />
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" />
+                        android:fontFamily="@font/lufga_medium"
+                        android:text="@string/profile_button_text"
+                        android:textColor="@color/profile_main_title_text"
+                        android:textSize="14sp" />
 
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
 
-                        <com.google.android.material.imageview.ShapeableImageView
-                            android:id="@+id/editprofilebutton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="29dp"
-                            android:src="@drawable/ic_edit_profile"/>
-
-                    </LinearLayout>
-
-                    <!-- Name Row -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/editprofilebutton"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginStart="19dp"
-                        android:orientation="vertical"
-                        android:gravity="center_vertical">
+                        android:layout_marginEnd="29dp"
+                        android:src="@drawable/ic_edit_profile" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/lufga_light"
-                                android:textAlignment="center"
-                                android:textColor="@color/profile_title_text"
-                                android:layout_weight="1"
-                                android:text="Name"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:textColor="@color/black"
-                                android:layout_marginTop="2dp"
-                                android:layout_marginBottom="12dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/lufga_light"
-                                android:text="Steve Torn"
-                                android:textSize="14sp"
-                                android:layout_marginEnd="8dp"/>
-                        </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="345dp"
-                        android:layout_height="1dp"
-                        android:background="@color/divider" />
-                    <!-- Phone Number Row -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginStart="19dp"
-                        android:orientation="vertical"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAlignment="center"
-                            android:fontFamily="@font/lufga_light"
-                            android:textColor="@color/profile_title_text"
-                            android:layout_weight="1"
-                            android:text="Phone Number"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:textColor="@color/black"
-                            android:layout_marginTop="2dp"
-                            android:layout_marginBottom="12dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/lufga_light"
-                            android:text="0900-123-456"
-                            android:textSize="14sp"
-                            android:layout_marginEnd="8dp"/>
-                    </LinearLayout>
-                    <ImageView
-                        android:layout_width="345dp"
-                        android:layout_height="1dp"
-                        android:background="@color/divider" />
-                    <!-- Email Row -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginStart="19dp"
-                        android:orientation="vertical"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/lufga_light"
-                            android:textAlignment="center"
-                            android:textColor="@color/profile_title_text"
-                            android:layout_weight="1"
-                            android:text="Email"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:textColor="@color/black"
-                            android:layout_marginTop="2dp"
-                            android:layout_marginBottom="12dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/lufga_light"
-                            android:text="stavetorn001@gmail.com"
-                            android:textSize="14sp"
-                            android:layout_marginEnd="8dp"/>
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="345dp"
-                        android:layout_height="1dp"
-                        android:background="@color/divider" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginStart="19dp"
-                        android:orientation="vertical"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/lufga_light"
-                            android:textAlignment="center"
-                            android:textColor="@color/profile_title_text"
-                            android:layout_weight="1"
-                            android:text="Identity"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:textColor="@color/black"
-                            android:layout_marginTop="2dp"
-                            android:layout_marginBottom="12dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/lufga_light"
-                            android:text="Student"
-                            android:textSize="14sp"
-                            android:layout_marginRight="8dp"/>
-                    </LinearLayout>
                 </LinearLayout>
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="345dp"
+
+                <!-- 名称行 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="26dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_radius_20dp"
-                    android:backgroundTint="@color/white">
-                    <LinearLayout
+                    android:layout_marginStart="29dp"
+                    android:layout_marginTop="9dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginStart="19dp"
-                        android:orientation="horizontal">
+                        android:layout_weight="1"
+                        android:fontFamily="@font/lufga_thin"
+                        android:text="Name"
+                        android:textAlignment="center"
+                        android:textColor="@color/profile_title_text"
+                        android:textSize="12sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="20dp"
-                            android:fontFamily="@font/lufga_light"
-                            android:textColor="@color/black"
-                            android:text="App version"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:textColor="@color/black"
-                            android:layout_marginTop="2dp"
-                            android:layout_marginBottom="18dp"
-                            android:layout_marginStart="180dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/lufga_light"
-                            android:text="1.0.0"
-                            android:textSize="14sp"
-                            android:layout_marginEnd="8dp"/>
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="345dp"
-                        android:layout_height="1dp"
-                        android:background="@color/divider" />
-                    <!-- Phone Number Row -->
-                    <!-- Email Row -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginStart="19dp"
-                        android:layout_marginBottom="20dp"
-                        android:orientation="vertical"
-                        android:gravity="center_vertical">
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="9dp"
+                        android:fontFamily="@font/lufga_light"
+                        android:text="Steve Torn"
+                        android:textColor="@color/profile_content_text"
+                        android:textSize="14sp" />
+                </LinearLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="20dp"
-                            android:textColor="@color/profile_log_out_text"
-                            android:fontFamily="@font/lufga_medium"
-                            android:layout_weight="1"
-                            android:text="Log out"
-                            android:textSize="14sp" />
-                    </LinearLayout>
+                <ImageView
+                    android:layout_width="345dp"
+                    android:layout_height="1dp"
+                    android:background="@color/divider" />
+
+                <!-- 电话号码行 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="29dp"
+                    android:layout_marginTop="9dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/lufga_thin"
+                        android:text="Phone Number"
+                        android:textAlignment="center"
+                        android:textColor="@color/profile_title_text"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="9dp"
+                        android:fontFamily="@font/lufga_light"
+                        android:text="0900-123-456"
+                        android:textColor="@color/profile_content_text"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="345dp"
+                    android:layout_height="1dp"
+                    android:background="@color/divider" />
+
+                <!-- 电子邮件行 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="29dp"
+                    android:layout_marginTop="9dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/lufga_thin"
+                        android:text="Email"
+                        android:textAlignment="center"
+                        android:textColor="@color/profile_title_text"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="9dp"
+                        android:fontFamily="@font/lufga_light"
+                        android:text="stavetorn001@gmail.com"
+                        android:textColor="@color/profile_content_text"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="345dp"
+                    android:layout_height="1dp"
+                    android:background="@color/divider" />
+
+                <!-- 身份行 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="29dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginBottom="21dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/lufga_thin"
+                        android:text="Identity"
+                        android:textAlignment="center"
+                        android:textColor="@color/profile_title_text"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/lufga_light"
+                        android:text="Student"
+                        android:textColor="@color/profile_content_text"
+                        android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
+
+            <!-- 应用版本信息 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_radius_20dp"
+                android:backgroundTint="@color/white"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="29dp"
+                    android:layout_marginTop="21dp"
+                    android:layout_marginBottom="18dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:fontFamily="@font/lufga_light"
+                        android:text="App version"
+                        android:textColor="@color/profile_content_text"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="177dp"
+                        android:fontFamily="@font/lufga_light"
+                        android:text="1.0.0"
+                        android:textColor="@color/profile_content_text"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="345dp"
+                    android:layout_height="1dp"
+                    android:background="@color/divider" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="29dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginBottom="21dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/lufga_medium"
+                        android:text="Log out"
+                        android:textColor="@color/profile_log_out_text"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-</FrameLayout>
+</RelativeLayout>

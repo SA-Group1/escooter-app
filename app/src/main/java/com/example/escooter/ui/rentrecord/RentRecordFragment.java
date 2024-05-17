@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.escooter.R;
-import com.example.escooter.databinding.ComponetPersoninfoBinding;
 import com.example.escooter.databinding.FragmentRentRecordBinding;
 import com.google.android.material.imageview.ShapeableImageView;
 

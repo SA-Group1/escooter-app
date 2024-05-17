@@ -1,97 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.rentrecord.RentRecordFragment"
     android:background="@drawable/personinfobackgroud">
 
+    <!-- 返回按钮 -->
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/gobackbutton"
         android:layout_width="16.5dp"
         android:layout_height="16dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="18dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginStart="27dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_back_button" />
+        android:src="@drawable/ic_back_button"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/mainContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gobackbutton"
+        android:layout_marginTop="13dp"
         android:orientation="vertical"
-        android:layout_marginTop="72dp"
-        tools:context=".ui.personinfo.PersonInfoFragment">
+        android:layout_centerHorizontal="true"
+        android:gravity="center">
 
         <include
             android:id="@+id/personinfobutton"
-            layout="@layout/componet_personinfo" />
+            layout="@layout/component_personinfo" />
 
         <LinearLayout
             android:id="@+id/Personinfochangebutton"
-            android:layout_width="345dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:paddingStart="16dp"
-            android:paddingTop="32dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp">
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="18dp"
+            android:orientation="horizontal"
+            android:paddingStart="11dp"
+            android:paddingEnd="11dp">
 
-            <!-- 用戶個人檔案按鈕 -->
             <Button
                 android:id="@+id/profileButton"
                 android:layout_width="91dp"
                 android:layout_height="35dp"
                 android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/transparent"
+                android:backgroundTint="@color/profile_button_background"
                 android:fontFamily="@font/lufga_bold"
                 android:text="@string/profile_button_text"
-                android:textColor="@color/nonchosen_button_text"
-                android:textSize="12sp"
                 android:textAllCaps="false"
+                android:textColor="@color/chosen_button_text"
+                android:textSize="12sp"
                 tools:ignore="HardcodedText,TouchTargetSizeCheck" />
 
-            <!-- 使用空白的 View 來實現間距 -->
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <!-- 用戶付款按鈕 -->
             <Button
                 android:id="@+id/paymentButton"
                 android:layout_width="91dp"
                 android:layout_height="35dp"
+                android:background="@drawable/bg_radius_8dp"
+                android:backgroundTint="@color/nonchosen_button_background"
                 android:fontFamily="@font/lufga_bold"
                 android:text="@string/payment_button_text"
+                android:textAllCaps="false"
                 android:textColor="@color/nonchosen_button_text"
                 android:textSize="12sp"
-                android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/transparent"
-                android:textAllCaps="false"
                 tools:ignore="HardcodedText" />
 
-            <!-- 使用空白的 View 來實現間距 -->
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <!-- 用戶租賃記錄按鈕 -->
             <Button
                 android:id="@+id/rentRecordButton"
                 android:layout_width="91dp"
                 android:layout_height="35dp"
+                android:background="@drawable/bg_radius_8dp"
+                android:backgroundTint="@color/nonchosen_button_background"
                 android:fontFamily="@font/lufga_bold"
                 android:text="@string/rent_record_button_text"
-                android:textColor="@color/chosen_button_text"
-                android:textSize="12sp"
-                android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/rent_record_button_background"
                 android:textAllCaps="false"
+                android:textColor="@color/nonchosen_button_text"
+                android:textSize="12sp"
                 tools:ignore="HardcodedText" />
-
         </LinearLayout>
+
     </LinearLayout>
-</FrameLayout>
+</RelativeLayout>

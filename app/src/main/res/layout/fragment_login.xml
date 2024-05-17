@@ -16,7 +16,7 @@
         android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/appname"
@@ -49,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_description2"
-        android:textColor="@color/profile_title_text"
+        android:textColor="@color/login_text"
         android:textSize="12sp"
         android:fontFamily="@font/lufga_light"
         android:layout_marginTop="8dp"
@@ -62,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_description3"
-        android:textColor="@color/profile_title_text"
+        android:textColor="@color/login_text"
         android:textSize="12sp"
         android:fontFamily="@font/lufga_light"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +87,9 @@
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:text="@string/account_login"
-            android:textColor="@color/profile_title_text"
+            android:textColor="@color/login_text"
+            android:textSize="12sp"
+            android:layout_marginStart="9dp"
             android:fontFamily="@font/lufga_light"/>
 
         <EditText
@@ -99,7 +101,7 @@
             android:paddingBottom="7dp"
             android:fontFamily="@font/lufga_light"
             android:textColor="@color/white"
-            android:textColorHint="@color/profile_title_text"
+            android:textColorHint="@color/login_text"
             android:hint="@string/prompt_account"
             android:inputType="textEmailAddress"
             android:background="@drawable/bg_radius_8dp"
@@ -124,7 +126,7 @@
                 android:hint="@string/prompt_password"
                 android:fontFamily="@font/lufga_light"
                 android:textColor="@color/white"
-                android:textColorHint="@color/profile_title_text"
+                android:textColorHint="@color/login_text"
                 android:background="@drawable/bg_radius_8dp"
                 android:backgroundTint="@color/login_frame"
                 android:inputType="textPassword"/>
