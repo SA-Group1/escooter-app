@@ -115,7 +115,7 @@
             android:layout_marginTop="8dp"
             app:hintEnabled="false"
             app:endIconMode="password_toggle"
-            app:endIconTint="@color/profile_title_text">
+            app:endIconTint="@color/login_text">
 
             <EditText
                 android:id="@+id/password"
