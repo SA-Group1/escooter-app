@@ -15,7 +15,8 @@
         app:layout_constraintBottom_toTopOf="@+id/homebutton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:context=".ui.map.MapsFragment" />
+        tools:context=".ui.map.MapsFragment"
+        hello/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/homebutton"
