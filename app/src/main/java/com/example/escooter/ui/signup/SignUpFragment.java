@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.escooter.R;
@@ -19,8 +21,9 @@ public class SignUpFragment extends Fragment {
     private FragmentSignUpBinding binding;
     private String[] spinnerOptions;  // 存储资源数据，避免重复访问
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // 使用View Binding初始化布局
         binding = FragmentSignUpBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -46,10 +49,8 @@ public class SignUpFragment extends Fragment {
             binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if (position != 0) { // 第一项是提示，不执行任何操作
-                        String selectedItem = parent.getItemAtPosition(position).toString();
-                        Toast.makeText(context, "选择了: " + selectedItem, Toast.LENGTH_LONG).show();
-                    }
+                    String selectedItem = parent.getItemAtPosition(position).toString();
+                    Toast.makeText(context, "选择了: " + selectedItem, Toast.LENGTH_LONG).show();
                 }
 
                 @Override
@@ -61,8 +62,34 @@ public class SignUpFragment extends Fragment {
     }
 
     private class CustomSpinnerAdapter extends ArrayAdapter<String> {
-        CustomSpinnerAdapter(Context context, int resource, int dropdownResource, String[] objects) {
-            super(context, resource, objects);
+        private int titleLayout;
+        private int dropdownLayout;
+
+        CustomSpinnerAdapter(Context context, int titleLayout, int dropdownLayout, String[] objects) {
+            super(context, titleLayout, objects);
+            this.titleLayout = titleLayout;
+            this.dropdownLayout = dropdownLayout;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(titleLayout, parent, false);
+            }
+            TextView textView = convertView.findViewById(R.id.text1);
+            textView.setText(getItem(position));
+            return convertView;
+        }
+
+        @Override
+        public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(dropdownLayout, parent, false);
+            }
+            TextView textView = convertView.findViewById(R.id.text2);
+            textView.setText(getItem(position));
+            return convertView;
         }
     }
 
