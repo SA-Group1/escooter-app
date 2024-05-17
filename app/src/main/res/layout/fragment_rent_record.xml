@@ -35,7 +35,7 @@
 
         <LinearLayout
             android:id="@+id/Personinfochangebutton"
-            android:layout_width="match_parent"
+            android:layout_width="345dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:layout_marginBottom="18dp"
@@ -92,6 +92,62 @@
                 android:textSize="12sp"
                 tools:ignore="HardcodedText" />
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/membercardnfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="26dp"
+            android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Member Card"
+                android:textColor="@color/login_text"
+                android:textSize="12sp"
+                android:fontFamily="@font/lufga_light"
+                android:layout_marginStart="18dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:paddingStart="29dp"
+                android:paddingTop="21dp"
+                android:orientation="vertical"
+                android:background="@drawable/bg_radius_20dp"
+                android:backgroundTint="@color/member_card_background">
+
+                <!-- 信用卡图标 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/member_card_text"
+                        android:text="Expiration date"
+                        android:fontFamily="@font/lufga_light"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/member_card_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/member_card_text"
+                        android:layout_marginEnd="29dp"
+                        android:text="2024/5/16"
+                        android:fontFamily="@font/lufga_light"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

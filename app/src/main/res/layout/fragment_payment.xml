@@ -274,7 +274,6 @@
                         android:fontFamily="@font/lufga_light"
                         android:textSize="14sp" />
                 </LinearLayout>
-
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
