@@ -21,8 +21,8 @@
 
     <LinearLayout
         android:id="@+id/mainContent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="345dp"
+        android:layout_height="match_parent"
         android:layout_below="@id/gobackbutton"
         android:layout_marginTop="13dp"
         android:orientation="vertical"
@@ -31,11 +31,11 @@
 
         <include
             android:id="@+id/personinfobutton"
-            layout="@layout/component_personinfo" />
+            layout="@layout/componet_person_info_button" />
 
         <LinearLayout
-            android:id="@+id/Personinfochangebutton"
-            android:layout_width="345dp"
+            android:id="@+id/changepagebutton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:layout_marginBottom="18dp"
@@ -48,11 +48,11 @@
                 android:layout_width="91dp"
                 android:layout_height="35dp"
                 android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/profile_button_background"
+                android:backgroundTint="@color/nonchosen_button_background"
                 android:fontFamily="@font/lufga_bold"
                 android:text="@string/profile_button_text"
                 android:textAllCaps="false"
-                android:textColor="@color/chosen_button_text"
+                android:textColor="@color/nonchosen_button_text"
                 android:textSize="12sp"
                 tools:ignore="HardcodedText,TouchTargetSizeCheck" />
 
@@ -84,70 +84,24 @@
                 android:layout_width="91dp"
                 android:layout_height="35dp"
                 android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/nonchosen_button_background"
+                android:backgroundTint="@color/rent_record_button_background"
                 android:fontFamily="@font/lufga_bold"
                 android:text="@string/rent_record_button_text"
                 android:textAllCaps="false"
-                android:textColor="@color/nonchosen_button_text"
+                android:textColor="@color/chosen_button_text"
                 android:textSize="12sp"
                 tools:ignore="HardcodedText" />
+
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/membercardnfo"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rent_record_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="26dp"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_below="@id/changepagebutton">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Member Card"
-                android:textColor="@color/login_text"
-                android:textSize="12sp"
-                android:fontFamily="@font/lufga_light"
-                android:layout_marginStart="18dp"/>
+        </androidx.recyclerview.widget.RecyclerView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="62dp"
-                android:paddingStart="29dp"
-                android:paddingTop="21dp"
-                android:orientation="vertical"
-                android:background="@drawable/bg_radius_20dp"
-                android:backgroundTint="@color/member_card_background">
-
-                <!-- 信用卡图标 -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/member_card_text"
-                        android:text="Expiration date"
-                        android:fontFamily="@font/lufga_light"
-                        android:textSize="14sp" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:id="@+id/member_card_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/member_card_text"
-                        android:layout_marginEnd="29dp"
-                        android:text="2024/5/16"
-                        android:fontFamily="@font/lufga_light"
-                        android:textSize="14sp" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

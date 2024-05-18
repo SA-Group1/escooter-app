@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/rent_record"
+        android:layout_width="345dp"
+        android:layout_height="184dp"
+        android:background="@drawable/bg_radius_20dp"
+        android:backgroundTint="@color/rent_record_button_background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/scooter_model"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:layout_marginStart="26dp"
+            android:text="@string/scooter_model"
+            android:textSize="18sp"
+            android:textColor="@color/scooter_model"
+            android:fontFamily="@font/lufga_regular"/>
+
+        <TextView
+            android:id="@+id/scooter_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:text="@string/scooter_id"
+            android:textSize="12sp"
+            android:textColor="@color/scooter_id_text"
+            android:layout_below="@id/scooter_model"
+            android:fontFamily="@font/lufga_regular"/>
+
+        <TextView
+            android:id="@+id/rent_record_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:layout_marginStart="143dp"
+            android:text="@string/rent_record_number"
+            android:textSize="12sp"
+            android:textColor="@color/scooter_id_text"
+            android:layout_toEndOf="@id/scooter_model"
+            android:fontFamily="@font/lufga_regular"/>
+
+        <ImageView
+            android:id="@+id/divider"
+            android:layout_width="345dp"
+            android:layout_height="1dp"
+            android:background="@color/divider"
+            android:layout_marginTop="13dp"
+            android:layout_below="@id/scooter_id"/>
+
+        <ImageView
+            android:id="@+id/clock1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="28dp"
+            android:layout_below="@id/divider"
+            android:src="@drawable/ic_clock"/>
+
+        <TextView
+            android:id="@+id/rent_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:layout_marginStart="11dp"
+            android:text="Rent"
+            android:textSize="12sp"
+            android:textColor="@color/scooter_id_text"
+            android:layout_toEndOf="@id/clock1"
+            android:layout_below="@id/divider"
+            android:fontFamily="@font/lufga_regular"/>
+
+        <TextView
+            android:id="@+id/rent_record_time_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/rent_record_time"
+            android:textSize="14sp"
+            android:textColor="@color/rent_record_time"
+            android:layout_toEndOf="@id/dash_line"
+            android:layout_below="@id/rent_text"
+            android:fontFamily="@font/lufga_regular"/>
+
+
+        
+        <View
+            android:id="@+id/dash_line"
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginStart="33dp"
+            android:background="@drawable/ic_dash_line"
+            android:layout_below="@id/clock1"/>
+
+        <ImageView
+            android:id="@+id/clock2"
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginStart="28dp"
+            android:layout_below="@id/dash_line"
+            android:src="@drawable/ic_clock"/>
+
+        <TextView
+            android:id="@+id/return_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="11dp"
+            android:text="Return"
+            android:textSize="12sp"
+            android:textColor="@color/scooter_id_text"
+            android:layout_toEndOf="@id/clock2"
+            android:layout_below="@id/rent_text"
+            android:fontFamily="@font/lufga_regular"/>
+
+        <TextView
+            android:id="@+id/return_record_time_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:text="@string/return_record_time"
+            android:textSize="14sp"
+            android:textColor="@color/return_record_time"
+            android:layout_below="@id/return_text"
+            android:fontFamily="@font/lufga_regular"/>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

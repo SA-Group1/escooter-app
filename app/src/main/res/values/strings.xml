@@ -15,6 +15,11 @@
     <string name="nearst_button_text">Nearst</string>
     <string name="person_name">Stave Torn</string>
     <string name="persono_info">Personal discount available</string>
+    <string name="scooter_model">Yunscoo1</string>
+    <string name="scooter_id">NYKD-114514</string>
+    <string name="rent_record_number">#NMSL-7414</string>
+    <string name="rent_record_time">2021/5/16 11:25</string>
+    <string name="return_record_time">2021/5/16 12:10</string>
     <!-- Strings related to login -->
     <string name="show_password">Show Password</string>
     <string name="hide_password">Hide Password</string>

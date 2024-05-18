@@ -35,11 +35,11 @@
 
         <include
             android:id="@+id/personinfobutton"
-            layout="@layout/component_personinfo" />
+            layout="@layout/componet_person_info_button" />
 
         <!-- 第二部分：用户个人信息切换按钮 -->
         <LinearLayout
-            android:id="@+id/Personinfochangebutton"
+            android:id="@+id/changepagebutton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
