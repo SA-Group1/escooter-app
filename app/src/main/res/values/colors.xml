@@ -37,6 +37,8 @@
     <color name="credit_card_background_end">#BA9035</color>
     <color name="member_card_background">#FCECD5</color>
     <color name="member_card_text">#253241</color>
+    <color name="sign_up_button_text">#253241</color>
+    <color name="sign_up_button_background">#FCECD5</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
