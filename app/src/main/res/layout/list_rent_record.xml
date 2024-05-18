@@ -94,7 +94,7 @@
             android:id="@+id/fee_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="25dp"
             android:layout_marginStart="30dp"
             android:text="@string/fee_text"
             android:textSize="12sp"
@@ -103,31 +103,36 @@
             android:layout_below="@id/divider"
             android:fontFamily="@font/lufga_regular"/>
 
-        <TextView
-            android:id="@+id/fee_image"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
-            android:layout_marginStart="54dp"
-            android:text="@string/fee_image"
-            android:textSize="12sp"
-            android:textColor="@color/rent_record_time"
-            android:layout_toEndOf="@id/fee_text"
-            android:layout_below="@id/divider"
-            android:fontFamily="@font/lufga_regular"/>
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal"
+            android:layout_alignEnd="@id/rent_time_unit"
+            android:layout_below="@id/divider">
 
-        <TextView
-            android:id="@+id/fee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_marginTop="17dp"
-            android:text="@string/fee"
-            android:textSize="12sp"
-            android:textColor="@color/rent_record_time"
-            android:layout_toEndOf="@id/fee_image"
-            android:layout_below="@id/divider"
-            android:fontFamily="@font/lufga_regular"/>
+            <TextView
+                android:id="@+id/fee_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fee_image"
+                android:textSize="12sp"
+                android:textColor="@color/rent_record_time"
+                android:fontFamily="@font/lufga_regular"/>
+
+            <TextView
+                android:id="@+id/fee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="@string/fee"
+                android:textSize="12sp"
+                android:textColor="@color/rent_record_time"
+                android:layout_toEndOf="@id/fee_image"
+                android:layout_below="@id/divider"
+                android:fontFamily="@font/lufga_regular"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/rent_time_text"
@@ -145,11 +150,23 @@
             android:id="@+id/rent_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:text="@string/rent_time_text"
+            android:layout_marginEnd="24dp"
+            android:text="@string/rent_time"
             android:textSize="12sp"
             android:textColor="@color/rent_record_time"
-            android:layout_toEndOf="@id/rent_record_time"
+            android:layout_alignEnd="@id/rent_time_unit"
+            android:layout_below="@id/fee_text"
+            android:fontFamily="@font/lufga_regular"/>
+
+        <TextView
+            android:id="@+id/rent_time_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="49dp"
+            android:text="@string/rent_time_unit"
+            android:textSize="12sp"
+            android:textColor="@color/rent_record_time"
+            android:layout_toEndOf="@id/rent_time_text"
             android:layout_below="@id/fee_text"
             android:fontFamily="@font/lufga_regular"/>
         
@@ -196,6 +213,48 @@
             android:layout_below="@id/return_text"
             android:fontFamily="@font/lufga_regular"/>
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/total_fee_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:layout_marginStart="30dp"
+            android:text="@string/rent_time_text"
+            android:textSize="12sp"
+            android:textColor="@color/rent_record_time"
+            android:layout_toEndOf="@id/rent_record_time"
+            android:layout_below="@id/rent_time_text"
+            android:fontFamily="@font/lufga_regular"/>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:orientation="horizontal"
+            android:layout_alignEnd="@id/rent_time_unit"
+            android:layout_below="@id/rent_time_unit">
+
+            <TextView
+                android:id="@+id/total_fee_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_fee_image"
+                android:textSize="12sp"
+                android:textColor="@color/total_fee"
+                android:fontFamily="@font/lufga_regular"/>
+
+            <TextView
+                android:id="@+id/total_fee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="@string/total_fee"
+                android:textSize="12sp"
+                android:textColor="@color/total_fee"
+                android:layout_toEndOf="@id/fee_image"
+                android:layout_below="@id/divider"
+                android:fontFamily="@font/lufga_regular"/>
+
+        </LinearLayout>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

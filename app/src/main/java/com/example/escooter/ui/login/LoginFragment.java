@@ -62,7 +62,6 @@ public class LoginFragment extends Fragment {
         final EditText passwordEditText = binding.password;
         final TextInputLayout passwordTextInputLayout = binding.textInputLayoutPassword;
         final Button loginButton = binding.loginButton;
-        final Button forgotPasswordButton = binding.forgetPasswordButton;
 
         loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
             @Override
