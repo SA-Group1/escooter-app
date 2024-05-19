@@ -11,17 +11,17 @@
         tools:layout="@layout/fragment_menu" >
         <action
             android:id="@+id/action_navigation_menu_to_mapsFragment"
-            app:destination="@id/mapsFragment" />
+            app:destination="@id/returnSuccessfulFragment" />
         <action
             android:id="@+id/action_navigation_menu_to_personinfoFragment"
             app:destination="@id/personinfoFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/mapsFragment"
-        android:name="com.example.escooter.ui.map.MapsFragment"
+        android:id="@+id/returnSuccessfulFragment"
+        android:name="com.example.escooter.ui.return_successful.ReturnSuccessfulFragment"
         android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_return_successful" />
     <fragment
         android:id="@+id/personinfoFragment"
         android:name="com.example.escooter.ui.personinfo.PersonInfoFragment"

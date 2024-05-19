@@ -20,6 +20,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
+
+
     <!-- 主内容布局 -->
     <LinearLayout
         android:id="@+id/mainContent"
@@ -99,96 +101,96 @@
                 tools:ignore="HardcodedText" />
         </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="120dp"
+            android:text="Credit Card"
+            android:textColor="@color/login_text"
+            android:textSize="12sp"
+            android:fontFamily="@font/lufga_light"/>
+
+        <LinearLayout
+            android:id="@+id/creditcardnfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="36dp"
+            android:orientation="vertical">
+
             <LinearLayout
-                android:id="@+id/creditcardnfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="36dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Credit Card"
-                    android:textColor="@color/login_text"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/lufga_light"
-                    android:layout_marginStart="18dp"/>
+                android:paddingStart="29dp"
+                android:paddingBottom="19dp"
+                android:orientation="vertical"
+                android:background="@drawable/bg_creditcard">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="204dp"
-                    android:paddingStart="29dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_creditcard">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="26dp"
+                    android:src="@drawable/ic_visa"/>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/delete_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19dp"
+                    android:layout_marginStart="206dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_delete"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="41dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                    <com.google.android.material.imageview.ShapeableImageView
+                        android:textColor="@color/white"
+                        android:text=". . . ."
+                        android:fontFamily="@font/lufga_medium"
+                        android:textSize="24sp" />
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="26dp"
-                        android:src="@drawable/ic_visa"/>
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/delete_button"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="16dp"
+                        android:text=". . . ."
+                        android:fontFamily="@font/lufga_medium"
+                        android:textSize="24sp" />
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="19dp"
-                        android:layout_marginStart="206dp"
-                        android:adjustViewBounds="true"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/ic_delete"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentStart="true" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                        android:textColor="@color/white"
+                        android:layout_marginStart="16dp"
+                        android:text=". . . ."
+                        android:fontFamily="@font/lufga_medium"
+                        android:textSize="24sp" />
+                    <TextView
+                        android:id="@+id/creditcard_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="41dp"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:text=". . . ."
-                            android:fontFamily="@font/lufga_medium"
-                            android:textSize="24sp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:layout_marginStart="16dp"
-                            android:text=". . . ."
-                            android:fontFamily="@font/lufga_medium"
-                            android:textSize="24sp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:layout_marginStart="16dp"
-                            android:text=". . . ."
-                            android:fontFamily="@font/lufga_medium"
-                            android:textSize="24sp" />
-                        <TextView
-                            android:id="@+id/creditcard_id"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="5dp"
-                            android:text="0123"
-                            android:fontFamily="@font/lufga_medium"
-                            android:textSize="24sp" />
-                    </LinearLayout>
+                        android:textColor="@color/white"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="5dp"
+                        android:text="0123"
+                        android:fontFamily="@font/lufga_medium"
+                        android:textSize="24sp" />
+                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -236,16 +238,48 @@
                         android:text=". . ."
                         android:fontFamily="@font/lufga_medium"
                         android:textSize="24sp" />
-
+                    
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/add_payment_button"
+            android:layout_width="345dp"
+            android:layout_height="58dp"
+            android:layout_marginBottom="26dp"
+            android:background="@drawable/bg_radius_20dp"
+            android:backgroundTint="@color/member_card_background">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="19dp"
+                android:layout_marginStart="17dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_add_payment"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="21dp"
+                android:layout_marginStart="37dp"
+                android:text="@string/add_card_text"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:fontFamily="@font/lufga_regular"
+                android:layout_toEndOf="@id/add_button"/>
+
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/membercardnfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="26dp"
             android:orientation="vertical">
 
             <TextView
@@ -297,37 +331,5 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/add_payment_button"
-            android:layout_width="345dp"
-            android:layout_height="58dp"
-            android:background="@drawable/bg_radius_20dp"
-            android:backgroundTint="@color/member_card_background">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/add_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="19dp"
-                android:layout_marginStart="17dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_add_payment"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="21dp"
-                android:layout_marginStart="37dp"
-                android:text="@string/add_card_text"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:fontFamily="@font/lufga_regular"
-                android:layout_toEndOf="@id/add_button"/>
-
-        </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>
