@@ -122,12 +122,31 @@
                     android:orientation="vertical"
                     android:background="@drawable/bg_creditcard">
 
-                    <!-- 信用卡图标 -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
                     <com.google.android.material.imageview.ShapeableImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="26dp"
-                        android:src="@drawable/ic_visa" />
+                        android:paddingTop="26dp"
+                        android:src="@drawable/ic_visa"/>
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/delete_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="19dp"
+                        android:layout_marginStart="206dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_delete"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true" />
+
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
