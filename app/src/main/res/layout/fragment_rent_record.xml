@@ -3,21 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.rentrecord.RentRecordFragment"
     android:background="@drawable/bg_main">
 
     <!-- 返回按钮 -->
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/gobackbutton"
-        android:layout_width="16.5dp"
-        android:layout_height="16dp"
-        android:layout_marginTop="31dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:strokeColor="@null"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_marginStart="27dp"
+        android:layout_marginTop="31dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_back_button"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:src="@drawable/ic_back_button" />
 
     <LinearLayout
         android:id="@+id/mainContent"
