@@ -22,4 +22,13 @@ public class CreditCard {
     }
 
     // Getter 和 Setter 方法
+    public String getCreditCardNumber() {
+        return cardNumber;
+    }
+
+    public String getExpirationDate() {
+        return expirationDate;
+    }
+
+    public String getCardHolderName() { return cardHolderName; }
 }

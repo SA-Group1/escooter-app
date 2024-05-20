@@ -21,7 +21,12 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.escooter.R;
+import com.example.escooter.data.model.LoggedInUser;
 import com.example.escooter.databinding.FragmentSignUpBinding;
+import com.example.escooter.network.HttpRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SignUpFragment extends Fragment {
 
@@ -49,8 +54,38 @@ public class SignUpFragment extends Fragment {
 
         signUpButton.setOnClickListener(v -> {
             if (validateInputs()) {
-                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-                navController.navigate(R.id.action_signUpFragment_to_loginFragment);
+                JSONObject postData = new JSONObject();
+                try {
+                    // 準備 POST 請求的資料
+                    postData.put("account", binding.userAccount.getText().toString());
+                    postData.put("password", binding.userPassword.getText().toString());
+                    postData.put("userName", binding.userName.getText().toString());
+                    postData.put("email", binding.userEmail.getText().toString());
+
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+                String registerUrl = "http://36.232.88.50:8080/api/register";
+                HttpRequest registerData = new HttpRequest(registerUrl);
+
+                registerData.httpPost(postData, Result -> {
+                    try {
+                        if (Result.getBoolean("status")) {
+                            String message = Result.getString("message");
+                            getActivity().runOnUiThread(() -> {Toast.makeText(getContext(),message , Toast.LENGTH_SHORT).show();});
+                            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+                            navController.navigate(R.id.action_signUpFragment_to_loginFragment);
+                        } else {
+                            getActivity().runOnUiThread(() -> {Toast.makeText(getContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show();});
+                        }
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+//                String phoneNumber = binding.userPhoneNumber.getText().toString();
+//                int selectedPosition = binding.userIdentity.getSelectedItemPosition();
+
             } else {
                 Toast.makeText(getContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
             }

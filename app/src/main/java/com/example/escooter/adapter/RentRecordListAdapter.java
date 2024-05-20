@@ -7,16 +7,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.escooter.R;
-import com.example.escooter.data.model.RentRecord;
+import com.example.escooter.data.model.RentalRecord;
 import com.example.escooter.databinding.ListRentRecordBinding;
 
 import java.util.List;
 
 public class RentRecordListAdapter extends RecyclerView.Adapter<RentRecordListAdapter.ViewHolder> {
 
-    private final List<RentRecord> rentRecordList;
+    private final List<RentalRecord> rentRecordList;
 
-    public RentRecordListAdapter(List<RentRecord> rentRecordList) {
+    public RentRecordListAdapter(List<RentalRecord> rentRecordList) {
         this.rentRecordList= rentRecordList;
     }
 
@@ -28,7 +28,7 @@ public class RentRecordListAdapter extends RecyclerView.Adapter<RentRecordListAd
             binding = ListRentRecordBinding.bind(view);
         }
 
-        public void bind(RentRecord rentRecord) {
+        public void bind(RentalRecord rentRecord) {
             binding.escooterModel.setText(rentRecord.getEscooterModel());
             binding.rentRecordId.setText(rentRecord.getRentRecordId());
             binding.escooterId.setText(rentRecord.getEscooterId());

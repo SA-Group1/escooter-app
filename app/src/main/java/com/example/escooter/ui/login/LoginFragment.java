@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -92,7 +94,7 @@ public class LoginFragment extends Fragment {
                     showLoginFailed(loginResult.getError());
                 }
                 if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
+                    updateUiWithUser(loginResult.getSuccess(),passwordEditText.getText().toString());
                 }
             }
         });
@@ -137,8 +139,15 @@ public class LoginFragment extends Fragment {
         });
     }
 
-    private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
+    private void updateUiWithUser(LoggedInUserView model,String passward) {
+        SharedPreferences UserData = requireContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = UserData.edit();
+        edit.putString("account", model.getUserName());
+        edit.putString("password", passward);
+        edit.putBoolean("signed",true); //註冊成功時存成true用來讓下次開啟APP時判斷
+        edit.apply();
+
+        String welcome = getString(R.string.welcome) + model.getUserName();
         // TODO : initiate successful logged in experience
         if (getContext() != null && getContext().getApplicationContext() != null) {
             Toast.makeText(getContext().getApplicationContext(), welcome, Toast.LENGTH_LONG).show();

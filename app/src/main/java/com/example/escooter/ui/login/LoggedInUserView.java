@@ -11,7 +11,7 @@ class LoggedInUserView {
         this.getUserName = userName;
     }
 
-    String getDisplayName() {
+    String getUserName() {
         return getUserName;
     }
 }

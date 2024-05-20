@@ -1,4 +1,5 @@
 <resources>
+    <string name="API_url">http://36.232.88.50:8080</string>
     <string name="app_name">Yunscoo</string>
     <string name="app_description1">Welcome to Yunscoo</string>
     <string name="app_description2">Join the most most convenient transportation</string>
