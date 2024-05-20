@@ -28,7 +28,15 @@
     <string name="total_fee">201</string>
     <string name="rent_time">51</string>
     <string name="rent_time_unit">min</string>
+    <string name="battery_time_unit">km</string>
+    <string name="distance_text">4</string>
+    <string name="battery_time_text">10</string>
+    <string name="max_speed_text">24</string>
+    <string name="max_speed_unit">mph</string>
     <string name="add_card_text">Add a new credit/debit card</string>
+    <string name="dialog_menu_rent_info_rent_fee">$0.8</string>
+    <string name="dialog_menu_rent_info_rent_fee_unit">/min</string>
+    <string name="dialog_dialog_menu_rent_info_button_text">Rent</string>
     <string name="dialog_unbinding_credit_card_cancel_text">Cancel</string>
     <string name="dialog_unbinding_credit_card_unbind_text">Unbind</string>
     <string name="dialog_personinfo_edit_profile_cancel_text">Cancel</string>

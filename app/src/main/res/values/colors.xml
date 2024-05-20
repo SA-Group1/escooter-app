@@ -43,6 +43,9 @@
     <color name="scooter_id_text">#CACACA</color>
     <color name="rent_record_time">#253241</color>
     <color name="return_record_time">#253241</color>
+    <color name="rent_info_text">#3F3F45</color>
+    <color name="dialog_dialog_menu_rent_info_button_text">#FFFFFF</color>
+    <color name="dialog_dialog_menu_rent_info_button_background">#3F3F45</color>
     <color name="dialog_payment_unbind_credit_card_background">#212126</color>
     <color name="dialog_personinfo_edit_profile_background">#212126</color>
     <color name="dialog_payment_unbind_credit_card_unbind_button_background">#FF6767</color>

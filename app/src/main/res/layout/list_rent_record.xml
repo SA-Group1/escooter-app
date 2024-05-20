@@ -254,7 +254,6 @@
                 android:layout_toEndOf="@id/fee_image"
                 android:layout_below="@id/divider"
                 android:fontFamily="@font/lufga_regular"/>
-
         </LinearLayout>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
