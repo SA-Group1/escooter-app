@@ -1,8 +1,5 @@
-package com.example.escooter.ui.rentrecord;
+package com.example.escooter.adapter;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.escooter.R;
 import com.example.escooter.data.model.RentRecord;
-import com.example.escooter.data.model.RentalRecord;
 import com.example.escooter.databinding.ListRentRecordBinding;
 
 import java.util.List;

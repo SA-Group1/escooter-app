@@ -1,7 +1,5 @@
 package com.example.escooter.ui.rentrecord;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.escooter.R;
+import com.example.escooter.adapter.RentRecordListAdapter;
 import com.example.escooter.data.model.RentRecord;
 import com.example.escooter.databinding.FragmentRentRecordBinding;
 import com.google.android.material.imageview.ShapeableImageView;
