@@ -79,7 +79,10 @@ public class MenuFragment extends Fragment {
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 for (Location location : locationResult.getLocations()) {
                     LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));                }
+                    if (googleMap != null){
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
+                    }
+                }
             }
         };
         startLocationUpdates();
@@ -128,7 +131,7 @@ public class MenuFragment extends Fragment {
                     ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 //設定google map的我的位置與定位按鈕
                 googleMap.setMyLocationEnabled(true);
-                googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+                googleMap.getUiSettings().setMyLocationButtonEnabled(false);
                 //設定固定位置
                 LatLng startLocation = new LatLng(23.693802, 120.533492);
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLocation, 18));
