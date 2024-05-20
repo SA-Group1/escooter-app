@@ -15,7 +15,7 @@ import android.widget.Button;
 
 import com.example.escooter.R;
 import com.example.escooter.adapter.RentRecordListAdapter;
-import com.example.escooter.data.model.RentRecord;
+import com.example.escooter.data.model.RentalRecord;
 import com.example.escooter.databinding.FragmentRentRecordBinding;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -57,9 +57,9 @@ public class RentRecordFragment extends Fragment {
 
     @NonNull
     private static RentRecordListAdapter getRentRecordListAdapter() {
-        ArrayList<RentRecord> rentRecordList = new ArrayList<>();
+        ArrayList<RentalRecord> rentRecordList = new ArrayList<>();
 
-        RentRecord rentRecord1 = new RentRecord();
+        RentalRecord rentRecord1 = new RentalRecord();
 
         rentRecord1.setDuration(10);
         rentRecord1.setRentRecordId("7414");
@@ -72,7 +72,7 @@ public class RentRecordFragment extends Fragment {
 
         rentRecordList.add(rentRecord1);
 
-        RentRecord rentRecord2 = new RentRecord();
+        RentalRecord rentRecord2 = new RentalRecord();
         rentRecord2.setDuration(20);
         rentRecord2.setRentRecordId("7410154");
         rentRecord2.setEscooterRentTime("2024/12/8 13:20");

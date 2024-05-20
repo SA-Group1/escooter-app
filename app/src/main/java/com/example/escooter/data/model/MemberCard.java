@@ -23,4 +23,13 @@ public class MemberCard {
     }
 
     // Getter 和 Setter 方法
+    public String getMemberCardNumber() {
+        return cardNumber;
+    }
+
+    public String getExpirationDate() {
+        return expirationDate;
+    }
+
+    public boolean getValid() { return valid; }
 }

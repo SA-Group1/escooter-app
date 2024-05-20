@@ -4,16 +4,21 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Patterns;
 
 import com.example.escooter.data.LoginRepository;
 import com.example.escooter.data.Result;
+import com.example.escooter.data.model.CreditCard;
 import com.example.escooter.data.model.LoggedInUser;
 import com.example.escooter.R;
+import com.example.escooter.data.model.MemberCard;
 import com.example.escooter.network.HttpRequest;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,7 +42,10 @@ public class LoginViewModel extends ViewModel {
     LiveData<LoginResult> getLoginResult() {
         return loginResult;
     }
-
+    private Context context;
+    public LoginViewModel(Context context) {
+        this.context = context.getApplicationContext();
+    }
     public void login(String username, String password) {
         // 定義登入 API 的 URL
         String apiUrl = "http://36.232.88.50:8080/api/login";
@@ -80,7 +88,6 @@ public class LoginViewModel extends ViewModel {
             }
         });
     }
-
     public void loginDataChanged(String username, String password) {
         if (isUserNameValid(username) && isPasswordValid(password)) {
             loginFormState.setValue(new LoginFormState(true));
