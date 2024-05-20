@@ -221,7 +221,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="26dp"
             android:layout_marginStart="30dp"
-            android:text="@string/rent_time_text"
+            android:text="@string/total_fee_text"
             android:textSize="12sp"
             android:textColor="@color/rent_record_time"
             android:layout_toEndOf="@id/escooter_rent_time"

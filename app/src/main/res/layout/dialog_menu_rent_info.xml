@@ -10,7 +10,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/bg_radius_20dp"
+        android:backgroundTint="@color/white">
 
         <TextView
             android:id="@+id/scooter_model"
@@ -79,17 +81,17 @@
             android:src="@drawable/ic_escooter"/>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/unbind_button"
+            android:id="@+id/rent_button"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="18dp"
             android:layout_marginStart="172dp"
             android:layout_width="166dp"
             android:layout_height="60dp"
-            android:text="@string/dialog_dialog_menu_rent_info_button_text"
-            android:textColor="@color/dialog_dialog_menu_rent_info_button_text"
+            android:text="@string/dialog_menu_rent_info_button_text"
+            android:textColor="@color/dialog_menu_rent_info_button_text"
             android:textSize="18sp"
             android:background="@drawable/bg_radius_20dp"
-            android:backgroundTint="@color/dialog_dialog_menu_rent_info_button_background"
+            android:backgroundTint="@color/dialog_menu_rent_info_button_background"
             android:fontFamily="@font/lufga_bold"
             android:textAllCaps="false"
             android:layout_below="@id/escooter_icon"/>

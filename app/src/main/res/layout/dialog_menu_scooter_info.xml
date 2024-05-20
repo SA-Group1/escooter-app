@@ -1,6 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/rent_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/bg_radius_20dp"
+        android:backgroundTint="@color/white">
+
+        <TextView
+            android:id="@+id/scooter_model"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="35dp"
+            android:text="@string/scooter_model"
+            android:textSize="18sp"
+            android:textColor="@color/scooter_model"
+            android:fontFamily="@font/lufga_regular"/>
+
+        <TextView
+            android:id="@+id/scooter_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:text="@string/scooter_id"
+            android:textSize="12sp"
+            android:textColor="@color/scooter_id_text"
+            android:layout_below="@id/scooter_model"
+            android:fontFamily="@font/lufga_regular"/>
+
+        <ImageView
+            android:id="@+id/battery_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="170dp"
+            android:layout_marginTop="33dp"
+            android:src="@drawable/ic_battery"
+            android:layout_toEndOf="@id/scooter_model"/>
+
+        <TextView
+            android:id="@+id/battery_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginStart="15dp"
+            android:text="@string/battery_time_text"
+            android:textSize="15sp"
+            android:textColor="@color/rent_record_time"
+            android:layout_toEndOf="@id/battery_icon"
+            android:fontFamily="@font/lufga_regular"/>
+
+        <TextView
+            android:id="@+id/battery_time_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginTop="28dp"
+            android:text="@string/battery_time_unit"
+            android:textSize="15sp"
+            android:textColor="@color/rent_info_text"
+            android:layout_toEndOf="@id/battery_time_text"
+            android:fontFamily="@font/lufga_regular"/>
+
+        <ImageView
+            android:id="@+id/clock1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="35dp"
+            android:layout_below="@id/scooter_id"
+            android:src="@drawable/ic_clock"/>
+
+        <TextView
+            android:id="@+id/rent_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:layout_marginStart="11dp"
+            android:text="Rent"
+            android:textSize="12sp"
+            android:textColor="@color/scooter_id_text"
+            android:layout_toEndOf="@id/clock1"
+            android:layout_below="@id/scooter_id"
+            android:fontFamily="@font/lufga_regular"/>
+
+        <TextView
+            android:id="@+id/escooter_rent_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:text="@string/rent_record_time"
+            android:textSize="14sp"
+            android:textColor="@color/rent_record_time"
+            android:layout_below="@id/rent_text"
+            android:fontFamily="@font/lufga_regular"/>
+
+        <TextView
+            android:id="@+id/fee_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:layout_marginStart="62dp"
+            android:text="@string/fee_text"
+            android:textSize="12sp"
+            android:textColor="@color/rent_record_time"
+            android:layout_toEndOf="@id/escooter_rent_time"
+            android:layout_below="@id/battery_time_unit"
+            android:fontFamily="@font/lufga_regular"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:orientation="horizontal"
+            android:layout_alignEnd="@id/battery_time_unit"
+            android:layout_below="@id/battery_time_unit">
+
+            <TextView
+                android:id="@+id/fee_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fee_image"
+                android:textSize="12sp"
+                android:textColor="@color/rent_record_time"
+                android:fontFamily="@font/lufga_regular"/>
+
+            <TextView
+                android:id="@+id/feePerMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="@string/fee"
+                android:textSize="12sp"
+                android:textColor="@color/rent_record_time"
+                android:fontFamily="@font/lufga_regular"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/rent_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="62dp"
+            android:text="@string/rent_time_text"
+            android:textSize="12sp"
+            android:textColor="@color/rent_record_time"
+            android:layout_toEndOf="@id/escooter_rent_time"
+            android:layout_below="@id/fee_text"
+            android:fontFamily="@font/lufga_regular"/>
+
+        <TextView
+            android:id="@+id/duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="@string/rent_time"
+            android:textSize="12sp"
+            android:textColor="@color/rent_record_time"
+            android:layout_alignEnd="@id/duration_unit"
+            android:layout_below="@id/fee_text"
+            android:fontFamily="@font/lufga_regular"/>
+
+        <TextView
+            android:id="@+id/duration_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rent_time_unit"
+            android:textSize="12sp"
+            android:textColor="@color/rent_record_time"
+            android:layout_below="@id/fee_text"
+            android:fontFamily="@font/lufga_regular"
+            android:layout_alignEnd="@id/battery_time_unit"/>
+
+        <TextView
+            android:id="@+id/total_fee_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="62dp"
+            android:text="@string/total_fee_text"
+            android:textSize="12sp"
+            android:textColor="@color/rent_record_time"
+            android:layout_toEndOf="@id/escooter_rent_time"
+            android:layout_below="@id/rent_time_text"
+            android:fontFamily="@font/lufga_regular"/>
+
+        <LinearLayout
+            android:id="@+id/total_fee_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_alignEnd="@id/duration_unit"
+            android:layout_below="@id/duration_unit">
+
+            <TextView
+                android:id="@+id/total_fee_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_fee_image"
+                android:textSize="12sp"
+                android:textColor="@color/total_fee"
+                android:fontFamily="@font/lufga_regular"/>
+
+            <TextView
+                android:id="@+id/total_fee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="@string/total_fee"
+                android:textSize="12sp"
+                android:textColor="@color/total_fee"
+                android:fontFamily="@font/lufga_regular"/>
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/park_button"
+            android:layout_marginTop="27dp"
+            android:layout_marginBottom="13dp"
+            android:layout_marginStart="25dp"
+            android:layout_width="166dp"
+            android:layout_height="60dp"
+            android:text="@string/dialog_menu_scooter_info_park_button_text"
+            android:textColor="@color/dialog_menu_scooter_info_park_button_text"
+            android:textSize="18sp"
+            android:background="@drawable/bg_dialog_menu_scooter_info_park_button"
+            android:fontFamily="@font/lufga_bold"
+            android:textAllCaps="false"
+            android:layout_below="@id/total_fee_layout" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/return_button"
+            android:layout_marginTop="27dp"
+            android:layout_marginBottom="13dp"
+            android:layout_marginStart="28dp"
+            android:layout_width="166dp"
+            android:layout_height="60dp"
+            android:text="@string/dialog_menu_scooter_info_return_button_text"
+            android:textColor="@color/dialog_menu_rent_info_button_text"
+            android:textSize="18sp"
+            android:background="@drawable/bg_radius_20dp"
+            android:backgroundTint="@color/dialog_menu_rent_info_button_background"
+            android:fontFamily="@font/lufga_bold"
+            android:textAllCaps="false"
+            android:layout_below="@id/total_fee_layout"
+            android:layout_toEndOf="@id/park_button"/>
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
