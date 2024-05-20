@@ -43,6 +43,9 @@ public class LoginFragment extends Fragment {
 
         final Button signupButton = binding.signUpButton;
 
+        binding.username.setText("acc001");
+        binding.password.setText("pwd001");
+
         signupButton.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigate(R.id.action_loginFragment_to_signUpFragment);
