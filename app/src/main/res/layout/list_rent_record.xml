@@ -8,16 +8,14 @@
         android:id="@+id/rent_record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:background="@drawable/bg_radius_20dp"
         android:backgroundTint="@color/rent_record_button_background"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
-            android:id="@+id/escooter_model"
+            android:id="@+id/scooter_model"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
@@ -28,18 +26,18 @@
             android:fontFamily="@font/lufga_regular"/>
 
         <TextView
-            android:id="@+id/escooter_id"
+            android:id="@+id/scooter_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="26dp"
             android:text="@string/scooter_id"
             android:textSize="12sp"
             android:textColor="@color/scooter_id_text"
-            android:layout_below="@id/escooter_model"
+            android:layout_below="@id/scooter_model"
             android:fontFamily="@font/lufga_regular"/>
 
         <TextView
-            android:id="@+id/rent_record_id"
+            android:id="@+id/rent_record_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
@@ -47,7 +45,7 @@
             android:text="@string/rent_record_number"
             android:textSize="12sp"
             android:textColor="@color/scooter_id_text"
-            android:layout_toEndOf="@id/escooter_model"
+            android:layout_toEndOf="@id/scooter_model"
             android:fontFamily="@font/lufga_regular"/>
 
         <ImageView
@@ -56,7 +54,7 @@
             android:layout_height="1dp"
             android:background="@color/divider"
             android:layout_marginTop="13dp"
-            android:layout_below="@id/escooter_id"/>
+            android:layout_below="@id/scooter_id"/>
 
         <ImageView
             android:id="@+id/clock1"
@@ -81,7 +79,7 @@
             android:fontFamily="@font/lufga_regular"/>
 
         <TextView
-            android:id="@+id/escooter_rent_time"
+            android:id="@+id/rent_record_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -101,7 +99,7 @@
             android:text="@string/fee_text"
             android:textSize="12sp"
             android:textColor="@color/rent_record_time"
-            android:layout_toEndOf="@id/escooter_rent_time"
+            android:layout_toEndOf="@id/rent_record_time"
             android:layout_below="@id/divider"
             android:fontFamily="@font/lufga_regular"/>
 
@@ -110,7 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:orientation="horizontal"
-            android:layout_alignEnd="@id/duration_unit"
+            android:layout_alignEnd="@id/rent_time_unit"
             android:layout_below="@id/divider">
 
             <TextView
@@ -123,7 +121,7 @@
                 android:fontFamily="@font/lufga_regular"/>
 
             <TextView
-                android:id="@+id/feePerMin"
+                android:id="@+id/fee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
@@ -144,24 +142,24 @@
             android:text="@string/rent_time_text"
             android:textSize="12sp"
             android:textColor="@color/rent_record_time"
-            android:layout_toEndOf="@id/escooter_rent_time"
+            android:layout_toEndOf="@id/rent_record_time"
             android:layout_below="@id/fee_text"
             android:fontFamily="@font/lufga_regular"/>
 
         <TextView
-            android:id="@+id/duration"
+            android:id="@+id/rent_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             android:text="@string/rent_time"
             android:textSize="12sp"
             android:textColor="@color/rent_record_time"
-            android:layout_alignEnd="@id/duration_unit"
+            android:layout_alignEnd="@id/rent_time_unit"
             android:layout_below="@id/fee_text"
             android:fontFamily="@font/lufga_regular"/>
 
         <TextView
-            android:id="@+id/duration_unit"
+            android:id="@+id/rent_time_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="49dp"
@@ -204,7 +202,7 @@
             android:fontFamily="@font/lufga_regular"/>
 
         <TextView
-            android:id="@+id/escooter_return_time"
+            android:id="@+id/return_record_time_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
@@ -224,7 +222,7 @@
             android:text="@string/rent_time_text"
             android:textSize="12sp"
             android:textColor="@color/rent_record_time"
-            android:layout_toEndOf="@id/escooter_rent_time"
+            android:layout_toEndOf="@id/rent_record_time"
             android:layout_below="@id/rent_time_text"
             android:fontFamily="@font/lufga_regular"/>
 
@@ -233,8 +231,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="26dp"
             android:orientation="horizontal"
-            android:layout_alignEnd="@id/duration_unit"
-            android:layout_below="@id/duration_unit">
+            android:layout_alignEnd="@id/rent_time_unit"
+            android:layout_below="@id/rent_time_unit">
 
             <TextView
                 android:id="@+id/total_fee_image"

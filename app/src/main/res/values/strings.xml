@@ -21,7 +21,7 @@
     <string name="rent_record_time">2021/5/16 11:25</string>
     <string name="return_record_time">2021/5/16 12:10</string>
     <string name="fee_text">fee per/min</string>
-    <string name="rent_time_text">duration</string>
+    <string name="rent_time_text">renting time</string>
     <string name="fee_image">$ </string>
     <string name="total_fee_image">$</string>
     <string name="fee">10</string>
