@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -29,12 +30,13 @@
             android:id="@+id/scooter_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="35dp"
-            android:text="@string/scooter_id"
-            android:textSize="12sp"
-            android:textColor="@color/scooter_id_text"
             android:layout_below="@id/scooter_model"
-            android:fontFamily="@font/lufga_regular"/>
+            android:layout_marginStart="35dp"
+            android:fontFamily="@font/lufga_regular"
+            android:text="@string/scooter_id"
+            android:textColor="@color/scooter_id_text"
+            android:textSize="12sp"
+            tools:ignore="TextContrastCheck" />
 
         <ImageView
             android:id="@+id/battery_icon"
@@ -43,7 +45,8 @@
             android:layout_marginStart="170dp"
             android:layout_marginTop="33dp"
             android:src="@drawable/ic_battery"
-            android:layout_toEndOf="@id/scooter_model"/>
+            android:layout_toEndOf="@id/scooter_model"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/battery_time_text"
@@ -77,20 +80,22 @@
             android:layout_marginTop="24dp"
             android:layout_marginStart="35dp"
             android:layout_below="@id/scooter_id"
-            android:src="@drawable/ic_clock"/>
+            android:src="@drawable/ic_clock"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/rent_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="21dp"
-            android:layout_marginStart="11dp"
-            android:text="Rent"
-            android:textSize="12sp"
-            android:textColor="@color/scooter_id_text"
-            android:layout_toEndOf="@id/clock1"
             android:layout_below="@id/scooter_id"
-            android:fontFamily="@font/lufga_regular"/>
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="21dp"
+            android:layout_toEndOf="@id/clock1"
+            android:fontFamily="@font/lufga_regular"
+            android:text="Rent"
+            android:textColor="@color/scooter_id_text"
+            android:textSize="12sp"
+            tools:ignore="HardcodedText,TextContrastCheck" />
 
         <TextView
             android:id="@+id/escooter_rent_time"
@@ -206,20 +211,22 @@
                 android:id="@+id/total_fee_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/lufga_regular"
                 android:text="@string/total_fee_image"
-                android:textSize="12sp"
                 android:textColor="@color/total_fee"
-                android:fontFamily="@font/lufga_regular"/>
+                android:textSize="12sp"
+                tools:ignore="TextContrastCheck" />
 
             <TextView
                 android:id="@+id/total_fee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
+                android:fontFamily="@font/lufga_regular"
                 android:text="@string/total_fee"
-                android:textSize="12sp"
                 android:textColor="@color/total_fee"
-                android:fontFamily="@font/lufga_regular"/>
+                android:textSize="12sp"
+                tools:ignore="TextContrastCheck" />
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton

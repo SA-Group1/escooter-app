@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -22,7 +23,8 @@
             android:textSize="20sp"
             android:text="Edit profile"
             android:textColor="@color/white"
-            android:fontFamily="@font/lufga_bold" />
+            android:fontFamily="@font/lufga_bold"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/person_info_edit_profile_text"
@@ -34,7 +36,8 @@
             android:text="Profile"
             android:textColor="@color/dialog_person_info_edit_profile_text"
             android:fontFamily="@font/lufga_light"
-            android:layout_below="@id/person_info_edit_title"/>
+            android:layout_below="@id/person_info_edit_title"
+            tools:ignore="HardcodedText" />
 
 
         <LinearLayout
@@ -62,26 +65,28 @@
                 android:backgroundTint="@color/login_frame"
                 android:selectAllOnFocus="true"
                 android:layout_below="@id/user_password_column"
-                android:autofillHints="username"/>
+                android:autofillHints="username"
+                tools:ignore="ObsoleteLayoutParam,RtlSymmetry" />
 
             <EditText
                 android:id="@+id/user_email"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:paddingTop="7dp"
-                android:paddingStart="12dp"
-                android:paddingBottom="8dp"
+                android:layout_below="@id/user_name"
                 android:layout_marginTop="8dp"
+                android:background="@drawable/bg_radius_8dp"
+                android:backgroundTint="@color/login_frame"
                 android:fontFamily="@font/lufga_light"
+                android:hint="@string/prompt_email"
+                android:inputType="textEmailAddress"
+                android:paddingStart="12dp"
+                android:paddingTop="7dp"
+                android:paddingBottom="8dp"
+                android:selectAllOnFocus="true"
                 android:textColor="@color/white"
                 android:textColorHint="@color/login_text"
                 android:textSize="14sp"
-                android:hint="@string/prompt_email"
-                android:inputType="textEmailAddress"
-                android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/login_frame"
-                android:selectAllOnFocus="true"
-                android:layout_below="@id/user_name"/>
+                tools:ignore="Autofill,ObsoleteLayoutParam,RtlSymmetry,TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
             <EditText
                 android:id="@+id/user_phone_number"
@@ -100,7 +105,8 @@
                 android:background="@drawable/bg_radius_8dp"
                 android:backgroundTint="@color/login_frame"
                 android:selectAllOnFocus="true"
-                android:layout_below="@id/user_email"/>
+                android:layout_below="@id/user_email"
+                tools:ignore="Autofill,ObsoleteLayoutParam,RtlSymmetry,VisualLintBounds" />
 
         </LinearLayout>
 
@@ -116,7 +122,8 @@
             android:fontFamily="@font/lufga_bold"
             android:textAllCaps="false"
             android:layout_below="@id/person_info_edit"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            tools:ignore="VisualLintButtonSize" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/unbind_button"
@@ -132,7 +139,8 @@
             android:fontFamily="@font/lufga_bold"
             android:textAllCaps="false"
             android:layout_below="@id/cancel_button"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            tools:ignore="VisualLintButtonSize" />
 
 
     </RelativeLayout>

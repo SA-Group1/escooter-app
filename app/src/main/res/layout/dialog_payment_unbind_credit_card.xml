@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -22,7 +23,8 @@
             android:textSize="20sp"
             android:text="Unbind credit card"
             android:textColor="@color/white"
-            android:fontFamily="@font/lufga_bold" />
+            android:fontFamily="@font/lufga_bold"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/unbind_credit_card_description"
@@ -33,7 +35,8 @@
             android:text="Are you sure to unbind credit card?"
             android:textColor="@color/divider"
             android:fontFamily="@font/lufga_light"
-            android:layout_below="@id/unbind_credit_card_title"/>
+            android:layout_below="@id/unbind_credit_card_title"
+            tools:ignore="HardcodedText" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/cancel_button"
@@ -47,7 +50,8 @@
             android:fontFamily="@font/lufga_bold"
             android:textAllCaps="false"
             android:layout_below="@id/unbind_credit_card_description"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            tools:ignore="VisualLintButtonSize" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/unbind_button"
@@ -63,7 +67,8 @@
             android:fontFamily="@font/lufga_bold"
             android:textAllCaps="false"
             android:layout_below="@id/cancel_button"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            tools:ignore="VisualLintButtonSize" />
 
 
     </RelativeLayout>

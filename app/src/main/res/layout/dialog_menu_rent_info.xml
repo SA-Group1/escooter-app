@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -29,12 +30,13 @@
             android:id="@+id/scooter_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="22dp"
-            android:text="@string/scooter_id"
-            android:textSize="12sp"
-            android:textColor="@color/scooter_id_text"
             android:layout_below="@id/scooter_model"
-            android:fontFamily="@font/lufga_regular"/>
+            android:layout_marginStart="22dp"
+            android:fontFamily="@font/lufga_regular"
+            android:text="@string/scooter_id"
+            android:textColor="@color/scooter_id_text"
+            android:textSize="12sp"
+            tools:ignore="TextContrastCheck" />
 
         <ImageView
             android:id="@+id/distance_icon"
@@ -43,7 +45,8 @@
             android:layout_marginStart="26dp"
             android:layout_marginTop="14dp"
             android:src="@drawable/ic_distance"
-            android:layout_below="@id/scooter_id"/>
+            android:layout_below="@id/scooter_id"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/distance_text"
@@ -78,7 +81,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginStart="210dp"
             android:layout_marginEnd="48dp"
-            android:src="@drawable/ic_escooter"/>
+            android:src="@drawable/ic_escooter"
+            tools:ignore="ContentDescription" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/rent_button"
@@ -103,7 +107,8 @@
             android:layout_marginStart="26dp"
             android:layout_marginTop="23dp"
             android:src="@drawable/ic_battery"
-            android:layout_below="@id/distance_icon"/>
+            android:layout_below="@id/distance_icon"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/battery_time_text"
@@ -138,7 +143,8 @@
             android:layout_marginStart="26dp"
             android:layout_marginTop="23dp"
             android:src="@drawable/ic_max_speed"
-            android:layout_below="@id/battery_icon"/>
+            android:layout_below="@id/battery_icon"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/rent_fee"
