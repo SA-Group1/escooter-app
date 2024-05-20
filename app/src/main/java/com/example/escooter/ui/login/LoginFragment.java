@@ -25,10 +25,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.FragmentLoginBinding;
 
 import com.example.escooter.R;
+import com.example.escooter.network.HttpRequest;
+import com.example.escooter.viewmodel.UserViewModel;
 import com.google.android.material.textfield.TextInputLayout;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginFragment extends Fragment {
 
@@ -146,6 +152,34 @@ public class LoginFragment extends Fragment {
         edit.putString("password", passward);
         edit.putBoolean("signed",true); //註冊成功時存成true用來讓下次開啟APP時判斷
         edit.apply();
+
+        JSONObject postData = new JSONObject();
+        try {
+            // 準備 POST 請求的資料
+            postData.put("account", model.getUserName());
+            postData.put("password", passward);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        String userDataUrl = "http://36.232.88.50:8080/api/getUserData";
+        HttpRequest getUserData = new HttpRequest(userDataUrl);
+
+        getUserData.httpPost(postData, userResult -> {
+            try {
+                // 處理用戶資料回應的 JSON 資料
+                JSONObject userData = userResult.getJSONObject("user");
+                User data = User.fromJson(userData);
+                System.out.println(data);
+                // 使用 runOnUiThread 切换到主线程
+                requireActivity().runOnUiThread(() -> {
+                    UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+                    userViewModel.setUserData(data);
+                });
+
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         String welcome = getString(R.string.welcome) + model.getUserName();
         // TODO : initiate successful logged in experience

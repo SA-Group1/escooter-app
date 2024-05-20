@@ -6,11 +6,13 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,12 +20,16 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.escooter.R;
+import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.FragmentMenuBinding;
 import com.example.escooter.network.HttpRequest;
+import com.example.escooter.viewmodel.UserViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -50,6 +56,7 @@ import java.util.Iterator;
 public class MenuFragment extends Fragment {
 
     private FragmentMenuBinding binding;
+    private UserViewModel userViewModel;
     private GoogleMap googleMap;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationCallback locationCallback;
@@ -58,6 +65,8 @@ public class MenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMenuBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        // 初始化 UserViewModel
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         final ConstraintLayout personinfobutton = binding.personinfobutton.getRoot();
         personinfobutton.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
@@ -86,6 +95,17 @@ public class MenuFragment extends Fragment {
             }
         };
         startLocationUpdates();
+
+        // 观察UserViewModel中的用户数据
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        userViewModel.getUserData().observe(getViewLifecycleOwner(), user -> {
+            if (user != null) {
+                Log.d("UserData", "User: " + user.toString());
+                // 更新personNameTextView的文本为用户名
+                TextView personNameTextView = binding.personinfobutton.personNameTextView;;
+                personNameTextView.setText(user.getUserName());
+            }
+        });
 
         return root;
     }

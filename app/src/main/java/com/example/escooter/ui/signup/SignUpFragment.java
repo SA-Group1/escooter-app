@@ -61,6 +61,7 @@ public class SignUpFragment extends Fragment {
                     postData.put("password", binding.userPassword.getText().toString());
                     postData.put("userName", binding.userName.getText().toString());
                     postData.put("email", binding.userEmail.getText().toString());
+                    postData.put("phoneNumber", binding.userPhoneNumber.getText().toString());
 
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
@@ -83,7 +84,6 @@ public class SignUpFragment extends Fragment {
                         throw new RuntimeException(e);
                     }
                 });
-//                String phoneNumber = binding.userPhoneNumber.getText().toString();
 //                int selectedPosition = binding.userIdentity.getSelectedItemPosition();
 
             } else {

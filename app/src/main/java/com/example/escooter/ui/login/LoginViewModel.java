@@ -65,20 +65,10 @@ public class LoginViewModel extends ViewModel {
             try {
                 // 處理登入回應的 JSON 資料
                 if (result.getBoolean("status")) {
-                    // 成功登入，繼續發送獲取用戶資料的請求
-                    String userDataUrl = "http://36.232.88.50:8080/api/getUserData";
-                    HttpRequest getUserData = new HttpRequest(userDataUrl);
 
-                    getUserData.httpPost(postData, userResult -> {
-                        try {
-                            // 處理用戶資料回應的 JSON 資料
-                            JSONObject userData = userResult.getJSONObject("user");
-                            LoggedInUser data = LoggedInUser.fromJson(userData);
-                            loginResult.postValue(new LoginResult(new LoggedInUserView(data.getUserName())));
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
+                    LoggedInUser data = new LoggedInUser(username,password);
+                    loginResult.postValue(new LoginResult(new LoggedInUserView(data.getAccount())));
+
                 } else {
                     // 登入失敗
                     loginResult.postValue(new LoginResult(R.string.login_failed));

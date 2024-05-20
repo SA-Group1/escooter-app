@@ -18,20 +18,10 @@ public class LoginDataSource {
 
         try {
             // TODO: handle loggedInUser authentication
-            CreditCard creditCard = new CreditCard("", "", "");
-            MemberCard memberCard = new MemberCard("", "", true);
-            List<RentalRecord> rentalRecords = new ArrayList<>();
 
             LoggedInUser fakeUser = new LoggedInUser(
-                    0,
                     username,
-                    "Jane Doe",
-                    password,
-                    "jane.doe@example.com",
-                    "2024-05-13T12:07:40",
-                    creditCard,
-                    memberCard,
-                    rentalRecords
+                    password
             );
 
             return new Result.Success<>(fakeUser);
