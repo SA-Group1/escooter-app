@@ -1,6 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/unbind_credit_card_dialog"
+        android:layout_width="359dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/bg_dialog_payment_unbind_credit_card">
+
+        <TextView
+            android:id="@+id/unbind_credit_card_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:text="Unbind credit card"
+            android:textColor="@color/white"
+            android:fontFamily="@font/lufga_bold" />
+
+        <TextView
+            android:id="@+id/unbind_credit_card_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:textSize="12sp"
+            android:text="Are you sure to unbind credit card?"
+            android:textColor="@color/divider"
+            android:fontFamily="@font/lufga_light"
+            android:layout_below="@id/unbind_credit_card_title"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cancel_button"
+            android:layout_marginTop="16dp"
+            android:layout_width="322dp"
+            android:layout_height="61dp"
+            android:text="@string/dialog_unbinding_credit_card_cancel_text"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:background="@drawable/bg_dialog_payment_unbind_credit_card_cancel_button"
+            android:fontFamily="@font/lufga_bold"
+            android:textAllCaps="false"
+            android:layout_below="@id/unbind_credit_card_description"
+            android:layout_centerHorizontal="true"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/unbind_button"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp"
+            android:layout_width="322dp"
+            android:layout_height="61dp"
+            android:text="@string/dialog_unbinding_credit_card_unbind_text"
+            android:textColor="@color/dialog_payment_unbind_credit_card_unbind_button_text"
+            android:textSize="20sp"
+            android:background="@drawable/bg_radius_8dp"
+            android:backgroundTint="@color/dialog_payment_unbind_credit_card_unbind_button_background"
+            android:fontFamily="@font/lufga_bold"
+            android:textAllCaps="false"
+            android:layout_below="@id/cancel_button"
+            android:layout_centerHorizontal="true"/>
+
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

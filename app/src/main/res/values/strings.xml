@@ -29,6 +29,10 @@
     <string name="rent_time">51</string>
     <string name="rent_time_unit">min</string>
     <string name="add_card_text">Add a new credit/debit card</string>
+    <string name="dialog_unbinding_credit_card_cancel_text">Cancel</string>
+    <string name="dialog_unbinding_credit_card_unbind_text">Unbind</string>
+    <string name="dialog_personinfo_edit_profile_cancel_text">Cancel</string>
+    <string name="dialog_personinfo_edit_profile_confirm_button_text">Confirm</string>
     <!-- Strings related to login -->
     <string name="show_password">Show Password</string>
     <string name="hide_password">Hide Password</string>

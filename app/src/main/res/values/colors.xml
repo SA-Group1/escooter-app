@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="home_button_background">#F6F6F6</color>
-    <color name="nearst_button_background">#1AB7FC</color>
-    <color name="nearst_button_text">#FFFFFF</color>
+    <color name="nearest_button_background">#1AB7FC</color>
+    <color name="nearest_button_text">#FFFFFF</color>
     <color name="person_image_button_background">#FFFFFF</color>"
     <color name="image_button_background">#FFFFFF</color>
     <color name="person_other_info_text">#C6C6C6</color>
@@ -17,7 +17,7 @@
     <color name="signup_button_text">#FFFFFF</color>
     <color name="menu_background">#2F3125</color>
     <color name="chosen_button_text">#253241</color>
-    <color name="profile_button_background">#E2E8F3</color>
+    <color name="profile_button_background">#ECF3FF</color>
     <color name="payment_button_background">#FCECD5</color>
     <color name="nonchosen_button_background">#3F3F45</color>
     <color name="rent_record_button_background">#FFFFFF</color>
@@ -43,6 +43,13 @@
     <color name="scooter_id_text">#CACACA</color>
     <color name="rent_record_time">#253241</color>
     <color name="return_record_time">#253241</color>
+    <color name="dialog_payment_unbind_credit_card_background">#212126</color>
+    <color name="dialog_personinfo_edit_profile_background">#212126</color>
+    <color name="dialog_payment_unbind_credit_card_unbind_button_background">#FF6767</color>
+    <color name="dialog_payment_unbind_credit_card_unbind_button_text">#253241</color>
+    <color name="dialog_personinfo_edit_profile_confirm_button_background">#ECF3FF</color>
+    <color name="dialog_personinfo_edit_profile_confirm_button_text">#253241</color>
+    <color name="dialog_person_info_edit_profile_text">#C6C6C6</color>
     <color name="total_fee">#D08343</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>

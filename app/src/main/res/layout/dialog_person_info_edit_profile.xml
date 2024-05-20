@@ -4,5 +4,137 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <RelativeLayout
+        android:id="@+id/person_info_edit_dialog"
+        android:layout_width="359dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/bg_dialog_personinfo_edit_profile">
+
+        <TextView
+            android:id="@+id/person_info_edit_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:text="Edit profile"
+            android:textColor="@color/white"
+            android:fontFamily="@font/lufga_bold" />
+
+        <TextView
+            android:id="@+id/person_info_edit_profile_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:textSize="12sp"
+            android:text="Profile"
+            android:textColor="@color/dialog_person_info_edit_profile_text"
+            android:fontFamily="@font/lufga_light"
+            android:layout_below="@id/person_info_edit_title"/>
+
+
+        <LinearLayout
+            android:id="@+id/person_info_edit"
+            android:layout_width="322dp"
+            android:layout_height="121dp"
+            android:orientation="vertical"
+            android:layout_below="@id/person_info_edit_profile_text"
+            android:layout_centerHorizontal="true">
+
+            <EditText
+                android:id="@+id/user_name"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:paddingTop="7dp"
+                android:paddingStart="12dp"
+                android:paddingBottom="8dp"
+                android:fontFamily="@font/lufga_light"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textColorHint="@color/login_text"
+                android:hint="@string/prompt_user_name"
+                android:inputType="textCapSentences"
+                android:background="@drawable/bg_radius_8dp"
+                android:backgroundTint="@color/login_frame"
+                android:selectAllOnFocus="true"
+                android:layout_below="@id/user_password_column"
+                android:autofillHints="username"/>
+
+            <EditText
+                android:id="@+id/user_email"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:paddingTop="7dp"
+                android:paddingStart="12dp"
+                android:paddingBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/lufga_light"
+                android:textColor="@color/white"
+                android:textColorHint="@color/login_text"
+                android:textSize="14sp"
+                android:hint="@string/prompt_email"
+                android:inputType="textEmailAddress"
+                android:background="@drawable/bg_radius_8dp"
+                android:backgroundTint="@color/login_frame"
+                android:selectAllOnFocus="true"
+                android:layout_below="@id/user_name"/>
+
+            <EditText
+                android:id="@+id/user_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:paddingTop="7dp"
+                android:paddingStart="12dp"
+                android:paddingBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/lufga_light"
+                android:textColor="@color/white"
+                android:textColorHint="@color/login_text"
+                android:textSize="14sp"
+                android:hint="@string/prompt_phone_number"
+                android:inputType="phone"
+                android:background="@drawable/bg_radius_8dp"
+                android:backgroundTint="@color/login_frame"
+                android:selectAllOnFocus="true"
+                android:layout_below="@id/user_email"/>
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cancel_button"
+            android:layout_marginTop="21dp"
+            android:layout_width="322dp"
+            android:layout_height="61dp"
+            android:text="@string/dialog_personinfo_edit_profile_cancel_text"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:background="@drawable/bg_dialog_personinfo_edit_profile_cancel_button"
+            android:fontFamily="@font/lufga_bold"
+            android:textAllCaps="false"
+            android:layout_below="@id/person_info_edit"
+            android:layout_centerHorizontal="true"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/unbind_button"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="37dp"
+            android:layout_width="322dp"
+            android:layout_height="61dp"
+            android:text="@string/dialog_personinfo_edit_profile_confirm_button_text"
+            android:textColor="@color/dialog_personinfo_edit_profile_confirm_button_text"
+            android:textSize="20sp"
+            android:background="@drawable/bg_radius_8dp"
+            android:backgroundTint="@color/dialog_personinfo_edit_profile_confirm_button_background"
+            android:fontFamily="@font/lufga_bold"
+            android:textAllCaps="false"
+            android:layout_below="@id/cancel_button"
+            android:layout_centerHorizontal="true"/>
+
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
