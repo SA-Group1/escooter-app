@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.login.LoginFragment"
-    android:background="@drawable/personinfobackgroud">
+    android:background="@drawable/bg_main">
 
     <ImageView
         android:id="@+id/app_logo"
@@ -40,7 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
-            android:id="@+id/appdescription1"
+            android:id="@+id/login_text_welcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lufga_bold"
@@ -48,7 +48,7 @@
             android:textColor="@color/login_text"
             android:textSize="20sp"/>
         <TextView
-            android:id="@+id/appdescription2"
+            android:id="@+id/login_text_app_description_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lufga_bold"
@@ -56,7 +56,7 @@
             android:textColor="@color/login_text"
             android:textSize="20sp"
             android:layout_centerInParent="true"
-            android:layout_below="@id/appdescription1" />
+            android:layout_below="@id/login_text_welcome" />
     </RelativeLayout>
 
     <RelativeLayout
