@@ -33,6 +33,7 @@ import java.util.Objects;
 public class PaymentFragment extends Fragment {
     private String account;
     private String password;
+    private String username;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,12 +45,15 @@ public class PaymentFragment extends Fragment {
         final Button profile_button = binding.profileButton;
         final Button rent_record_button = binding.rentRecordButton;
 
+        binding.creditcardnfo.setVisibility(View.GONE);
+
         // 初始化UserViewModel
         UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
         // 观察UserViewModel中的用户数据
         userViewModel.getUserData().observe(getViewLifecycleOwner(), user -> {
             if (user != null) {
+                username = user.getUserName();
                 account = user.getAccount();
                 password = user.getPassword();
                 // 更新TextView的文本为用户信息
@@ -57,7 +61,13 @@ public class PaymentFragment extends Fragment {
                 personNameTextView.setText(user.getUserName());
                 TextView creditCardTextView = root.findViewById(R.id.creditcard_id);
                 String creditCardNumber = user.getCreditCard().getCreditCardNumber();
-                creditCardTextView.setText(creditCardNumber.substring(creditCardNumber.length() - 4));
+                System.out.println(creditCardNumber + "31303132131213");
+                if (creditCardNumber.isEmpty()){
+                    binding.creditcardnfo.setVisibility(View.GONE);
+                }else {
+                    binding.creditcardnfo.setVisibility(View.VISIBLE);
+                    creditCardTextView.setText(creditCardNumber.substring(creditCardNumber.length() - 4));
+                }
             }
         });
 
@@ -95,6 +105,7 @@ public class PaymentFragment extends Fragment {
                         throw new RuntimeException(e);
                     }
                 });
+                binding.creditcardnfo.setVisibility(View.GONE);
                 dialog.dismiss();
             });
         });
@@ -108,33 +119,42 @@ public class PaymentFragment extends Fragment {
             Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
             DialogPaymentAddCreditCardBinding dialogBinding = DialogPaymentAddCreditCardBinding.bind(dialogView);
 
-//            dialogBinding.cancelButton.setOnClickListener(b -> {
-//                dialog.dismiss();
-//            });
-//
-//            dialogBinding.unbindButton.setOnClickListener(b -> {
-//                String apiUrl = "http://36.232.88.50:8080/api/unbindCreditCard";
-//                JSONObject PostData = new JSONObject();
-//                try {
-//                    PostData.put("account", account);
-//                    PostData.put("password", password);
-//                } catch (JSONException e) {
-//                    throw new RuntimeException(e);
-//                }
-//                HttpRequest putupdateUserData= new HttpRequest(apiUrl);
-//                // 發送 HTTP POST 請求
-//                putupdateUserData.httpPost(PostData, result -> {
-//                    try {
-//                        if (result.getBoolean("status")){
-//                            System.out.println(result.getString("message"));
-//                            //信用卡消失
-//                        }
-//                    } catch (JSONException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                });
-//                dialog.dismiss();
-//            });
+            dialogBinding.cancelButton.setOnClickListener(b -> {
+                dialog.dismiss();
+            });
+
+            dialogBinding.confirmButton.setOnClickListener(b -> {
+                String apiUrl = "http://36.232.88.50:8080/api/bindCreditCard";
+                JSONObject PostData = new JSONObject();
+                try {
+                    JSONObject userJson = new JSONObject();
+                    userJson.put("account", account);
+                    userJson.put("password", password);
+
+                    JSONObject creditCardJson = new JSONObject();
+                    creditCardJson.put("cardNumber", dialogBinding.userCardNumber.getText().toString());
+                    creditCardJson.put("expirationDate", dialogBinding.userVaildThru.getText().toString());
+                    creditCardJson.put("cardHolderName", username);
+                    creditCardJson.put("cvv", dialogBinding.userCvv.getText().toString());
+
+                    PostData.put("user", userJson);
+                    PostData.put("creditCard", creditCardJson);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                HttpRequest putupdateUserData = new HttpRequest(apiUrl);
+                // 發送 HTTP POST 請求
+                putupdateUserData.httpPost(PostData, result -> {
+                    try {
+                        if (result.getBoolean("status")) {
+                            System.out.println(result.getString("message"));
+                        }
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                dialog.dismiss();
+            });
         });
 
         goback_button.setOnClickListener(v -> {

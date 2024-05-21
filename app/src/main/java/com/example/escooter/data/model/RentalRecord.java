@@ -1,7 +1,11 @@
 package com.example.escooter.data.model;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RentalRecord {
     // 根據你的需要填寫 RentalRecord 的屬性和方法
@@ -86,8 +90,17 @@ public class RentalRecord {
         this.totalFee = totalFee;
     }
 
+    // fromJson 方法
     public static RentalRecord fromJson(JSONObject jsonObject) throws JSONException {
-        // 根據 JSON 解析並返回 RentalRecord 實例
-        return new RentalRecord();
+        RentalRecord record = new RentalRecord();
+        record.setEscooterModel(jsonObject.getString("escooterModel"));
+        record.setRentRecordId(jsonObject.getString("rentRecordId"));
+        record.setEscooterId(jsonObject.getString("escooterId"));
+        record.setEscooterRentTime(jsonObject.getString("escooterRentTime"));
+        record.setEscooterReturnTime(jsonObject.getString("escooterReturnTime"));
+        record.setFeePerMin(jsonObject.getDouble("feePerMin"));
+        record.setDuration(jsonObject.getInt("duration"));
+        record.setTotalFee(jsonObject.getInt("totalFee"));
+        return record;
     }
 }

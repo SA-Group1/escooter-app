@@ -28,11 +28,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.imageview.ShapeableImageView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class RentRecordFragment extends Fragment {
 
@@ -72,8 +74,6 @@ public class RentRecordFragment extends Fragment {
     private RentRecordListAdapter getRentRecordListAdapter() {
         ArrayList<RentalRecord> rentRecordList = new ArrayList<>();
 
-        RentalRecord rentRecord1 = new RentalRecord();
-
         // 初始化UserViewModel
         UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
@@ -92,66 +92,20 @@ public class RentRecordFragment extends Fragment {
                 HttpRequest getRentableEscooterList= new HttpRequest(apiUrl);
                 // 發送 HTTP POST 請求
                 getRentableEscooterList.httpPost(postData, result -> {
+
                     try {
-                        //json檔案資料處理
-                        JSONObject rentalRecords = result.getJSONObject("rentalRecords");
-                        Iterator<String> keys = rentalRecords.keys();
-                        while (keys.hasNext()){
-                            String key = keys.next();
-                            JSONObject rentalRecord = rentalRecords.getJSONObject(key);
-                            String userId = rentalRecord.getString("userId");
-                            String escooterId = rentalRecord.getString("escooterId");
-                            String startTime = rentalRecord.getString("startTime");
-                            String endTime = rentalRecord.getString("endTime");
-                            String isPaid = rentalRecord.getString("isPaid");;
+                        JSONObject rentalRecordsData = result.getJSONObject("rentalRecords");
+                        RentalRecord record = RentalRecord.fromJson(rentalRecordsData);
+                        rentRecordList.add(record);
 
-                            //切換為ui線程，才能使用google map的更改
-                            runOnUiThread(() -> {
-
-                            });
-                        }
                     } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
                 });
 
             }
         });
 
-
-        rentRecord1.setDuration(10);
-        rentRecord1.setRentRecordId("7414");
-        rentRecord1.setEscooterRentTime("2024/12/8 13:20");
-        rentRecord1.setEscooterReturnTime("2024/12/8 13:71");
-        rentRecord1.setEscooterModel("NMSL7414");
-        rentRecord1.setFeePerMin(50);
-        rentRecord1.setEscooterId("hello");
-        rentRecord1.setTotalFee(174);
-
-        rentRecordList.add(rentRecord1);
-
-        RentalRecord rentRecord2 = new RentalRecord();
-        rentRecord2.setDuration(20);
-        rentRecord2.setRentRecordId("7410154");
-        rentRecord2.setEscooterRentTime("2024/12/8 13:20");
-        rentRecord2.setEscooterReturnTime("2024/12/8 13:71");
-        rentRecord2.setEscooterModel("您好");
-        rentRecord2.setFeePerMin(50);
-        rentRecord2.setEscooterId("hello");
-        rentRecord2.setTotalFee(174);
-
-        rentRecordList.add(rentRecord2);
-        rentRecordList.add(rentRecord1);
-        rentRecordList.add(rentRecord1);
-        rentRecordList.add(rentRecord1);
-        rentRecordList.add(rentRecord1);
-        rentRecordList.add(rentRecord1);
-
         return new RentRecordListAdapter(rentRecordList);
-    }
-
-    private void runOnUiThread(Runnable action) {
-        //切換為ui線程
-        new Handler(Looper.getMainLooper()).post(action);
     }
 }

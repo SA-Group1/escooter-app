@@ -39,6 +39,7 @@ public class getUserDataService {
                 // 處理用戶資料回應的 JSON 資料
                 JSONObject userData = userResult.getJSONObject("user");
                 User data = User.fromJson(userData);
+                System.out.println(userData);
 
                 // 使用 runOnUiThread 切换到主线程
                 ((Activity) context).runOnUiThread(() -> {

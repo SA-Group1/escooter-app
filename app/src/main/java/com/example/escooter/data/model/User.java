@@ -18,11 +18,11 @@ public class User {
     private String phoneNumber;
     private CreditCard creditCard;
     private MemberCard memberCard;
-    private List<RentalRecord> rentalRecords;
+    private String image;
 
     // 構造函數
     public User(int userId, String account, String userName, String password, String email,
-                        String registrationTime,String phoneNumber,CreditCard creditCard,MemberCard memberCard,List<RentalRecord> rentalRecords) {
+                        String registrationTime,String phoneNumber,CreditCard creditCard,MemberCard memberCard,String image) {
         this.userId = userId;
         this.account = account;
         this.userName = userName;
@@ -32,7 +32,7 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.creditCard = creditCard;
         this.memberCard = memberCard;
-        this.rentalRecords = rentalRecords;
+        this.image = image;
     }
 
     // 從 JSON 創建 LoggedInUser 實例的靜態方法
@@ -54,15 +54,9 @@ public class User {
             memberCard = MemberCard.fromJson(jsonObject.getJSONObject("memberCard"));
         }
 
-        List<RentalRecord> rentalRecords = new ArrayList<>();
-        if (jsonObject.has("rentalRecords")) {
-            JSONArray rentalRecordsArray = jsonObject.getJSONArray("rentalRecords");
-            for (int i = 0; i < rentalRecordsArray.length(); i++) {
-                rentalRecords.add(RentalRecord.fromJson(rentalRecordsArray.getJSONObject(i)));
-            }
-        }
+        String image = jsonObject.getString("image");
 
-        return new User(userId, account, userName, password, email, registrationTime,phoneNumber,creditCard, memberCard, rentalRecords);
+        return new User(userId, account, userName, password, email, registrationTime,phoneNumber,creditCard, memberCard, image);
     }
 
     // Getter 方法
@@ -102,7 +96,8 @@ public class User {
         return memberCard;
     }
 
-    public List<RentalRecord> getRentalRecords() {
-        return rentalRecords;
+    public String getImage() {
+        return image;
     }
+
 }

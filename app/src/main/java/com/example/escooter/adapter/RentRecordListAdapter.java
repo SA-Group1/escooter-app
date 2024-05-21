@@ -56,6 +56,7 @@ public class RentRecordListAdapter extends RecyclerView.Adapter<RentRecordListAd
     public int getItemCount() {
         return rentRecordList.size();
     }
+
 }
 
 
