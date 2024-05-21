@@ -59,6 +59,7 @@
     <color name="dialog_personinfo_edit_profile_confirm_button_text">#253241</color>
     <color name="dialog_person_info_edit_profile_text">#C6C6C6</color>
     <color name="dialog_menu_scooter_info_park_button_text">#253241</color>
+    <color name="dialog_payment_add_credit_card_confirm_button_background">#FCECD5</color>
     <color name="fragment_return_successful_payment_method">#C6C6C6</color>
     <color name="total_fee">#D08343</color>
     <color name="purple_200">#FFBB86FC</color>

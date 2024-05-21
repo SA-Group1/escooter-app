@@ -63,6 +63,9 @@
     <string name="action_continue">Continue</string>
     <string name="welcome">"Welcome!"</string>
     <string name="prompt_select_option">User Identity</string>
+    <string name="prompt_card_number">Card Number</string>
+    <string name="prompt_vaild_thru">Valid Thru</string>
+    <string name="prompt_user_cvv">CVV</string>"
     <string-array name="spinner_options">
         <item>User Identity</item>
         <item>Student</item>

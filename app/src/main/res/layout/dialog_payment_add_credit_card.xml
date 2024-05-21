@@ -1,8 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <RelativeLayout
+        android:id="@+id/person_info_edit_dialog"
+        android:layout_width="359dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/bg_dialog_personinfo_edit_profile">
+
+        <TextView
+            android:id="@+id/person_info_edit_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:text="Add Credit Card"
+            android:textColor="@color/white"
+            android:fontFamily="@font/lufga_bold"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/person_info_edit_profile_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:textSize="12sp"
+            android:text="Credit Card"
+            android:textColor="@color/dialog_person_info_edit_profile_text"
+            android:fontFamily="@font/lufga_light"
+            android:layout_below="@id/person_info_edit_title"
+            tools:ignore="HardcodedText" />
+
+
+        <LinearLayout
+            android:id="@+id/person_info_edit"
+            android:layout_width="322dp"
+            android:layout_height="121dp"
+            android:orientation="vertical"
+            android:layout_below="@id/person_info_edit_profile_text"
+            android:layout_centerHorizontal="true">
+
+            <EditText
+                android:id="@+id/user_card_number"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@id/user_password_column"
+                android:autofillHints="Card Number"
+                android:background="@drawable/bg_radius_8dp"
+                android:backgroundTint="@color/login_frame"
+                android:fontFamily="@font/lufga_light"
+                android:hint="@string/prompt_card_number"
+                android:inputType="textCapSentences"
+                android:paddingStart="12dp"
+                android:paddingTop="7dp"
+                android:paddingBottom="8dp"
+                android:selectAllOnFocus="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/login_text"
+                android:textSize="14sp"
+                tools:ignore="ObsoleteLayoutParam,RtlSymmetry,TouchTargetSizeCheck" />
+
+            <EditText
+                android:id="@+id/user_vaild_thru"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@id/user_card_number"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_radius_8dp"
+                android:backgroundTint="@color/login_frame"
+                android:fontFamily="@font/lufga_light"
+                android:hint="@string/prompt_vaild_thru"
+                android:inputType="textEmailAddress"
+                android:paddingStart="12dp"
+                android:paddingTop="7dp"
+                android:paddingBottom="8dp"
+                android:selectAllOnFocus="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/login_text"
+                android:textSize="14sp"
+                tools:ignore="Autofill,ObsoleteLayoutParam,RtlSymmetry,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+            <EditText
+                android:id="@+id/user_cvv"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@id/user_email"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_radius_8dp"
+                android:backgroundTint="@color/login_frame"
+                android:fontFamily="@font/lufga_light"
+                android:hint="@string/prompt_user_cvv"
+                android:inputType="phone"
+                android:paddingStart="12dp"
+                android:paddingTop="7dp"
+                android:paddingBottom="8dp"
+                android:selectAllOnFocus="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/login_text"
+                android:textSize="14sp"
+                tools:ignore="Autofill,ObsoleteLayoutParam,RtlSymmetry,VisualLintBounds,TouchTargetSizeCheck" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cancel_button"
+            android:layout_marginTop="21dp"
+            android:layout_width="322dp"
+            android:layout_height="61dp"
+            android:text="@string/dialog_personinfo_edit_profile_cancel_text"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:background="@drawable/bg_dialog_payment_add_credit_card_cancel_button"
+            android:fontFamily="@font/lufga_bold"
+            android:textAllCaps="false"
+            android:layout_below="@id/person_info_edit"
+            android:layout_centerHorizontal="true"
+            tools:ignore="VisualLintButtonSize" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/confirm_button"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="37dp"
+            android:layout_width="322dp"
+            android:layout_height="61dp"
+            android:text="@string/dialog_personinfo_edit_profile_confirm_button_text"
+            android:textColor="@color/dialog_personinfo_edit_profile_confirm_button_text"
+            android:textSize="20sp"
+            android:background="@drawable/bg_radius_8dp"
+            android:backgroundTint="@color/dialog_payment_add_credit_card_confirm_button_background"
+            android:fontFamily="@font/lufga_bold"
+            android:textAllCaps="false"
+            android:layout_below="@id/cancel_button"
+            android:layout_centerHorizontal="true"
+            tools:ignore="VisualLintButtonSize" />
+
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
