@@ -22,7 +22,8 @@
             android:src="@drawable/ic_app_logo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/login_text_app_name"
@@ -92,27 +93,29 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
+                android:layout_marginStart="9dp"
+                android:fontFamily="@font/lufga_light"
                 android:text="@string/account_login"
                 android:textColor="@color/login_text"
                 android:textSize="12sp"
-                android:layout_marginStart="9dp"
-                android:fontFamily="@font/lufga_light"/>
+                tools:ignore="TextSizeCheck" />
 
             <EditText
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:paddingTop="8dp"
-                android:paddingStart="12dp"
-                android:paddingBottom="7dp"
-                android:fontFamily="@font/lufga_light"
-                android:textColor="@color/white"
-                android:textColorHint="@color/login_text"
-                android:hint="@string/prompt_account"
-                android:inputType="textEmailAddress"
                 android:background="@drawable/bg_radius_8dp"
                 android:backgroundTint="@color/login_frame"
-                android:selectAllOnFocus="true" />
+                android:fontFamily="@font/lufga_light"
+                android:hint="@string/prompt_account"
+                android:inputType="textEmailAddress"
+                android:paddingStart="12dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="7dp"
+                android:selectAllOnFocus="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/login_text"
+                tools:ignore="Autofill,RtlSymmetry,TouchTargetSizeCheck" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout_password"
@@ -127,15 +130,16 @@
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:paddingTop="7dp"
-                    android:paddingStart="12dp"
-                    android:hint="@string/prompt_password"
-                    android:fontFamily="@font/lufga_light"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/login_text"
                     android:background="@drawable/bg_radius_8dp"
                     android:backgroundTint="@color/login_frame"
-                    android:inputType="textPassword"/>
+                    android:fontFamily="@font/lufga_light"
+                    android:hint="@string/prompt_password"
+                    android:inputType="textPassword"
+                    android:paddingStart="12dp"
+                    android:paddingTop="7dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/login_text"
+                    tools:ignore="Autofill,RtlSymmetry,TouchTargetSizeCheck" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -150,12 +154,13 @@
                     android:id="@+id/forget_password_button"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:text="@string/forgot_password"
-                    android:textColor="@color/forgot_password"
-                    android:textSize="14sp"
                     android:background="@color/transparent"
                     android:fontFamily="@font/lufga_light"
-                    android:textAllCaps="false"/>
+                    android:text="@string/forgot_password"
+                    android:textAllCaps="false"
+                    android:textColor="@color/forgot_password"
+                    android:textSize="14sp"
+                    tools:ignore="TextSizeCheck,TouchTargetSizeCheck" />
 
             </LinearLayout>
 

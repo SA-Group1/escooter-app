@@ -45,6 +45,10 @@
     <string name="dialog_personinfo_edit_profile_confirm_button_text">Confirm</string>
     <string name="dialog_menu_scooter_info_return_button_text">Return</string>
     <string name="dialog_menu_scooter_info_park_button_text">Park</string>
+    <string name="fragment_return_successful_title_text">Thanks for riding</string>
+    <string name="fragment_return_successful_payment_method_text">payment method</string>
+    <string name="fragment_return_successful_payment_method">credit card</string>
+    <string name="fragment_return_successful_payment_total_fee_text">Total fee</string>
     <!-- Strings related to login -->
     <string name="show_password">Show Password</string>
     <string name="hide_password">Hide Password</string>
@@ -56,6 +60,7 @@
     <string name="prompt_email">Email</string>
     <string name="action_log_in">Login</string>
     <string name="action_sign_up">Signup</string>
+    <string name="action_continue">Continue</string>
     <string name="welcome">"Welcome!"</string>
     <string name="prompt_select_option">User Identity</string>
     <string-array name="spinner_options">
