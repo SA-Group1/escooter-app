@@ -33,7 +33,7 @@
 
         <include
             android:id="@+id/personinfobutton"
-            layout="@layout/componet_person_info_button" />
+            layout="@layout/component_person_info_button" />
 
         <LinearLayout
             android:id="@+id/changepagebutton"

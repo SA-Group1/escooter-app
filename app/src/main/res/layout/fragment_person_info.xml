@@ -36,7 +36,7 @@
 
         <include
             android:id="@+id/personinfobutton"
-            layout="@layout/componet_person_info_button" />
+            layout="@layout/component_person_info_button" />
 
         <!-- 第二部分：用户个人信息切换按钮 -->
         <LinearLayout

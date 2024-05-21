@@ -39,7 +39,7 @@
         <!-- 个人信息 -->
         <include
             android:id="@+id/personinfobutton"
-            layout="@layout/componet_person_info_button" />
+            layout="@layout/component_person_info_button" />
 
         <!-- 用户个人信息切换按钮 -->
         <LinearLayout

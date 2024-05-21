@@ -24,12 +24,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/personinfobutton"
-                layout="@layout/componet_person_info_button"/>
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/personinfobutton"
+            layout="@layout/component_person_info_button"/>
 
     </LinearLayout>
+
+    <ViewStub
+        android:id="@+id/view_stub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+    </ViewStub>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

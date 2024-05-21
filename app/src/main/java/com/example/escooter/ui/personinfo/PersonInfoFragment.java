@@ -16,15 +16,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.escooter.R;
-import com.example.escooter.databinding.DialogMenuRentInfoBinding;
 import com.example.escooter.databinding.DialogPersonInfoEditProfileBinding;
 import com.example.escooter.databinding.FragmentPersonInfoBinding;
 import com.example.escooter.network.HttpRequest;
 import com.example.escooter.service.getUserDataService;
 import com.example.escooter.viewmodel.UserViewModel;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import org.json.JSONException;
