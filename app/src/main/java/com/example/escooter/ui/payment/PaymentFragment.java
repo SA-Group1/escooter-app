@@ -1,5 +1,6 @@
 package com.example.escooter.ui.payment;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,12 +15,24 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.escooter.R;
+import com.example.escooter.databinding.DialogPaymentAddCreditCardBinding;
+import com.example.escooter.databinding.DialogPaymentUnbindCreditCardBinding;
+import com.example.escooter.databinding.DialogPersonInfoEditProfileBinding;
 import com.example.escooter.databinding.FragmentPaymentBinding;
+import com.example.escooter.network.HttpRequest;
+import com.example.escooter.service.getUserDataService;
 import com.example.escooter.viewmodel.UserViewModel;
 import com.google.android.material.imageview.ShapeableImageView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Objects;
+
 
 public class PaymentFragment extends Fragment {
+    private String account;
+    private String password;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,6 +50,8 @@ public class PaymentFragment extends Fragment {
         // 观察UserViewModel中的用户数据
         userViewModel.getUserData().observe(getViewLifecycleOwner(), user -> {
             if (user != null) {
+                account = user.getAccount();
+                password = user.getPassword();
                 // 更新TextView的文本为用户信息
                 TextView personNameTextView = binding.personinfobutton.personNameTextView;
                 personNameTextView.setText(user.getUserName());
@@ -44,6 +59,82 @@ public class PaymentFragment extends Fragment {
                 String creditCardNumber = user.getCreditCard().getCreditCardNumber();
                 creditCardTextView.setText(creditCardNumber.substring(creditCardNumber.length() - 4));
             }
+        });
+
+        binding.deleteButton.setOnClickListener(v -> {
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(requireContext());
+            View dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_payment_unbind_credit_card, null, false);
+            dialogBuilder.setView(dialogView);
+            AlertDialog dialog = dialogBuilder.create();
+            dialog.show();
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+            DialogPaymentUnbindCreditCardBinding dialogBinding = DialogPaymentUnbindCreditCardBinding.bind(dialogView);
+
+            dialogBinding.cancelButton.setOnClickListener(b -> {
+                dialog.dismiss();
+            });
+
+            dialogBinding.unbindButton.setOnClickListener(b -> {
+                String apiUrl = "http://36.232.88.50:8080/api/unbindCreditCard";
+                JSONObject PostData = new JSONObject();
+                try {
+                    PostData.put("account", account);
+                    PostData.put("password", password);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                HttpRequest putupdateUserData= new HttpRequest(apiUrl);
+                // 發送 HTTP POST 請求
+                putupdateUserData.httpPost(PostData, result -> {
+                    try {
+                        if (result.getBoolean("status")){
+                            System.out.println(result.getString("message"));
+                            //信用卡消失
+                        }
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                dialog.dismiss();
+            });
+        });
+
+        binding.addPaymentButton.setOnClickListener(v -> {
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(requireContext());
+            View dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_payment_add_credit_card, null, false);
+            dialogBuilder.setView(dialogView);
+            AlertDialog dialog = dialogBuilder.create();
+            dialog.show();
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+            DialogPaymentAddCreditCardBinding dialogBinding = DialogPaymentAddCreditCardBinding.bind(dialogView);
+
+//            dialogBinding.cancelButton.setOnClickListener(b -> {
+//                dialog.dismiss();
+//            });
+//
+//            dialogBinding.unbindButton.setOnClickListener(b -> {
+//                String apiUrl = "http://36.232.88.50:8080/api/unbindCreditCard";
+//                JSONObject PostData = new JSONObject();
+//                try {
+//                    PostData.put("account", account);
+//                    PostData.put("password", password);
+//                } catch (JSONException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                HttpRequest putupdateUserData= new HttpRequest(apiUrl);
+//                // 發送 HTTP POST 請求
+//                putupdateUserData.httpPost(PostData, result -> {
+//                    try {
+//                        if (result.getBoolean("status")){
+//                            System.out.println(result.getString("message"));
+//                            //信用卡消失
+//                        }
+//                    } catch (JSONException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                });
+//                dialog.dismiss();
+//            });
         });
 
         goback_button.setOnClickListener(v -> {

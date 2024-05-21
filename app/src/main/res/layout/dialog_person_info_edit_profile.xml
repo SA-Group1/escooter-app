@@ -126,7 +126,7 @@
             tools:ignore="VisualLintButtonSize" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/unbind_button"
+            android:id="@+id/bind_button"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="37dp"
             android:layout_width="322dp"

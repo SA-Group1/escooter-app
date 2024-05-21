@@ -1,6 +1,8 @@
 package com.example.escooter.ui.menu;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ import androidx.navigation.Navigation;
 
 import com.example.escooter.R;
 import com.example.escooter.data.model.User;
+import com.example.escooter.databinding.DialogMenuRentInfoBinding;
 import com.example.escooter.databinding.FragmentMenuBinding;
 import com.example.escooter.network.HttpRequest;
 import com.example.escooter.viewmodel.UserViewModel;
@@ -52,6 +55,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 public class MenuFragment extends Fragment {
 
@@ -65,8 +69,7 @@ public class MenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMenuBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        // 初始化 UserViewModel
-        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+
         final ConstraintLayout personinfobutton = binding.personinfobutton.getRoot();
         personinfobutton.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
@@ -100,7 +103,6 @@ public class MenuFragment extends Fragment {
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         userViewModel.getUserData().observe(getViewLifecycleOwner(), user -> {
             if (user != null) {
-                Log.d("UserData", "User: " + user.toString());
                 // 更新personNameTextView的文本为用户名
                 TextView personNameTextView = binding.personinfobutton.personNameTextView;;
                 personNameTextView.setText(user.getUserName());
@@ -180,7 +182,6 @@ public class MenuFragment extends Fragment {
     private void setOnMarkerClick() {
         //設定標籤點擊事件
         googleMap.setOnMarkerClickListener(marker -> {
-            //彈窗出現
             //點擊標籤出現引導線
             if (currentPolyline != null) {
                 currentPolyline.remove();
@@ -201,6 +202,7 @@ public class MenuFragment extends Fragment {
                 }
             });
 
+            dialogSet(requireContext());
             return true;
         });
     }
@@ -242,6 +244,15 @@ public class MenuFragment extends Fragment {
     private void runOnUiThread(Runnable action) {
         //切換為ui線程
         new Handler(Looper.getMainLooper()).post(action);
+    }
+    private void dialogSet(Context context) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_menu_rent_info, null, false);
+        dialogBuilder.setView(dialogView);
+        AlertDialog dialog = dialogBuilder.create();
+        dialog.show();
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+        DialogMenuRentInfoBinding dialogBinding = DialogMenuRentInfoBinding.bind(dialogView);
     }
 
     @Override
