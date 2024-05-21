@@ -38,6 +38,8 @@ import java.util.List;
 
 public class RentRecordFragment extends Fragment {
 
+    private String account;
+    private String password;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentRentRecordBinding binding;
@@ -45,12 +47,26 @@ public class RentRecordFragment extends Fragment {
         View root = binding.getRoot();
 
         binding.rentRecordList.setLayoutManager(new LinearLayoutManager(getContext()));
-        RentRecordListAdapter adapter = getRentRecordListAdapter();
-        binding.rentRecordList.setAdapter(adapter);
 
         final ShapeableImageView goback_button = binding.gobackbutton;
         final Button payment_button = binding.paymentButton;
         final Button profile_button = binding.profileButton;
+
+        // 初始化UserViewModel
+        UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+
+        // 观察UserViewModel中的用户数据
+        userViewModel.getUserData().observe(getViewLifecycleOwner(), user -> {
+            if (user != null) {
+                account = user.getAccount();
+                password = user.getPassword();
+                // 更新TextView的文本为用户信息
+                TextView personNameTextView = binding.personinfobutton.personNameTextView;
+                personNameTextView.setText(user.getUserName());
+
+                getRentRecordListAdapter(binding);
+            }
+        });
 
         goback_button.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
@@ -71,41 +87,43 @@ public class RentRecordFragment extends Fragment {
     }
 
     @NonNull
-    private RentRecordListAdapter getRentRecordListAdapter() {
+    private RentRecordListAdapter getRentRecordListAdapter(FragmentRentRecordBinding binding) {
+        System.out.println("----------------");
         ArrayList<RentalRecord> rentRecordList = new ArrayList<>();
 
-        // 初始化UserViewModel
-        UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        // 抓取UserData
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("account", account);
+            postData.put("password", password);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        String apiUrl = "http://36.232.88.50:8080/api/getRentalRecordList";
+        HttpRequest getRentalRecordList= new HttpRequest(apiUrl);
+        // 發送 HTTP POST 請求
+        getRentalRecordList.httpPost(postData, result -> {
+            try {
+                JSONArray rentalRecordsArray = result.getJSONArray("rentalRecords");
+                System.out.println(result.getJSONArray("rentalRecords"));
 
-        // 观察UserViewModel中的用户数据
-        userViewModel.getUserData().observe(getViewLifecycleOwner(), user -> {
-            if (user != null) {
-                // 抓取UserData
-                JSONObject postData = new JSONObject();
-                try {
-                    postData.put("account", user.getUserName());
-                    postData.put("password", user.getPassword());
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
+                for (int i = 0; i < rentalRecordsArray.length(); i++) {
+                    JSONObject recordObject = rentalRecordsArray.getJSONObject(i);
+                    RentalRecord record = RentalRecord.fromJson(recordObject);
+                    rentRecordList.add(record);
                 }
-                String apiUrl = "http://36.232.88.50:8080/api/getRentalRecordList";
-                HttpRequest getRentableEscooterList= new HttpRequest(apiUrl);
-                // 發送 HTTP POST 請求
-                getRentableEscooterList.httpPost(postData, result -> {
 
-                    try {
-                        JSONObject rentalRecordsData = result.getJSONObject("rentalRecords");
-                        RentalRecord record = RentalRecord.fromJson(rentalRecordsData);
-                        rentRecordList.add(record);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                });
-
+                setRentRecordListAdapter(binding, rentRecordList);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
         });
-
-        return new RentRecordListAdapter(rentRecordList);
+        return null;
+    }
+    private void setRentRecordListAdapter(FragmentRentRecordBinding binding, ArrayList<RentalRecord> rentRecordList) {
+        getActivity().runOnUiThread(() -> {
+            RentRecordListAdapter adapter = new RentRecordListAdapter(rentRecordList);
+            binding.rentRecordList.setAdapter(adapter);
+        });
     }
 }

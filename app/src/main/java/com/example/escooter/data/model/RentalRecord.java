@@ -93,12 +93,12 @@ public class RentalRecord {
     // fromJson 方法
     public static RentalRecord fromJson(JSONObject jsonObject) throws JSONException {
         RentalRecord record = new RentalRecord();
-        record.setEscooterModel(jsonObject.getString("escooterModel"));
-        record.setRentRecordId(jsonObject.getString("rentRecordId"));
+        record.setEscooterModel(jsonObject.getString("modelId"));
+        record.setRentRecordId(jsonObject.getString("userId"));
         record.setEscooterId(jsonObject.getString("escooterId"));
-        record.setEscooterRentTime(jsonObject.getString("escooterRentTime"));
-        record.setEscooterReturnTime(jsonObject.getString("escooterReturnTime"));
-        record.setFeePerMin(jsonObject.getDouble("feePerMin"));
+        record.setEscooterRentTime(jsonObject.getString("startTime"));
+        record.setEscooterReturnTime(jsonObject.getString("endTime"));
+        record.setFeePerMin(jsonObject.getDouble("feePerMinutes"));
         record.setDuration(jsonObject.getInt("duration"));
         record.setTotalFee(jsonObject.getInt("totalFee"));
         return record;
