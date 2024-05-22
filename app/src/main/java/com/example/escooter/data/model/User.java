@@ -1,11 +1,7 @@
 package com.example.escooter.data.model;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class User {
 
@@ -18,11 +14,10 @@ public class User {
     private String phoneNumber;
     private CreditCard creditCard;
     private MemberCard memberCard;
-    private String image;
 
     // 構造函數
     public User(int userId, String account, String userName, String password, String email,
-                        String registrationTime,String phoneNumber,CreditCard creditCard,MemberCard memberCard,String image) {
+                        String registrationTime,String phoneNumber,CreditCard creditCard,MemberCard memberCard) {
         this.userId = userId;
         this.account = account;
         this.userName = userName;
@@ -32,7 +27,6 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.creditCard = creditCard;
         this.memberCard = memberCard;
-        this.image = image;
     }
 
     // 從 JSON 創建 LoggedInUser 實例的靜態方法
@@ -54,9 +48,7 @@ public class User {
             memberCard = MemberCard.fromJson(jsonObject.getJSONObject("memberCard"));
         }
 
-        String image = jsonObject.getString("image");
-
-        return new User(userId, account, userName, password, email, registrationTime,phoneNumber,creditCard, memberCard, image);
+        return new User(userId, account, userName, password, email, registrationTime,phoneNumber,creditCard, memberCard);
     }
 
     // Getter 方法
@@ -94,10 +86,6 @@ public class User {
 
     public MemberCard getMemberCard() {
         return memberCard;
-    }
-
-    public String getImage() {
-        return image;
     }
 
 }

@@ -9,8 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,21 +19,14 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.FragmentLoginBinding;
 
 import com.example.escooter.R;
-import com.example.escooter.network.HttpRequest;
 import com.example.escooter.service.getUserDataService;
-import com.example.escooter.viewmodel.UserViewModel;
 import com.google.android.material.textfield.TextInputLayout;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class LoginFragment extends Fragment {
 

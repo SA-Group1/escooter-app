@@ -1,9 +1,8 @@
 package com.example.escooter.ui.personinfo;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,98 +15,43 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.escooter.R;
+import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.DialogPersonInfoEditProfileBinding;
 import com.example.escooter.databinding.FragmentPersonInfoBinding;
 import com.example.escooter.network.HttpRequest;
 import com.example.escooter.service.getUserDataService;
-import com.example.escooter.viewmodel.UserViewModel;
+import com.example.escooter.service.putUpdataUserDataService;
+import com.example.escooter.ui.viewmodel.UserViewModel;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Iterator;
 import java.util.Objects;
 
 public class PersonInfoFragment extends Fragment {
 
-    private UserViewModel userViewModel;
     private String account;
     private String password;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentPersonInfoBinding binding;
-        binding = FragmentPersonInfoBinding.inflate(inflater, container, false);
+        FragmentPersonInfoBinding binding = FragmentPersonInfoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        setListeners(binding);
+        setUserViewModel(binding);
+
+        return root;
+    }
+
+    private void setListeners(FragmentPersonInfoBinding binding) {
         final ShapeableImageView goback_button = binding.gobackbutton;
         final Button payment_button = binding.paymentButton;
         final Button rent_record_button = binding.rentRecordButton;
 
-        // 初始化UserViewModel
-        UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-
-        // 观察UserViewModel中的用户数据
-        userViewModel.getUserData().observe(getViewLifecycleOwner(), user -> {
-            if (user != null) {
-                account = user.getAccount();
-                password = user.getPassword();
-                // 更新TextView的文本为用户信息
-                TextView personNameTextView = binding.personinfobutton.personNameTextView;
-                personNameTextView.setText(user.getUserName());
-                TextView NameTextView = root.findViewById(R.id.user_name);
-                NameTextView.setText(user.getUserName());
-                TextView phoneTextView = root.findViewById(R.id.user_phone);
-                phoneTextView.setText(user.getPhoneNumber());
-                TextView emailTextView = root.findViewById(R.id.user_email);
-                emailTextView.setText(user.getEmail());
-                TextView identityTextView = root.findViewById(R.id.user_identity);
-                identityTextView.setText("Student");
-            }
-        });
-
-        binding.editprofilebutton.setOnClickListener(v -> {
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(requireContext());
-            View dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_person_info_edit_profile, null, false);
-            dialogBuilder.setView(dialogView);
-            AlertDialog dialog = dialogBuilder.create();
-            dialog.show();
-            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
-            DialogPersonInfoEditProfileBinding dialogBinding = DialogPersonInfoEditProfileBinding.bind(dialogView);
-
-            dialogBinding.cancelButton.setOnClickListener(b -> {
-                dialog.dismiss();
-            });
-
-            dialogBinding.bindButton.setOnClickListener(b -> {
-                String apiUrl = "http://36.232.88.50:8080/api/updateUserData";
-                JSONObject putData = new JSONObject();
-                try {
-                    putData.put("account", account);
-                    putData.put("password", password);
-                    putData.put("userName", dialogBinding.userName.getText().toString());
-                    putData.put("email", dialogBinding.userEmail.getText().toString());
-                    putData.put("phoneNumber", dialogBinding.userPhoneNumber.getText().toString());
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-                HttpRequest putupdateUserData= new HttpRequest(apiUrl);
-                // 發送 HTTP POST 請求
-                putupdateUserData.httpPut(putData, result -> {
-                    try {
-                        if (result.getBoolean("status")){
-                            System.out.println(result.getString("message"));
-                        }
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-                new getUserDataService(requireContext(), account, password);
-                dialog.dismiss();
-            });
-        });
+        binding.editprofilebutton.setOnClickListener(v -> showEditProfileDialog());
 
         goback_button.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
@@ -123,8 +67,53 @@ public class PersonInfoFragment extends Fragment {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigate(R.id.action_personinfoFragment_to_rentRecordFragment);
         });
+    }
 
-        return root;
+    private void showEditProfileDialog() {
+        AlertDialog dialog = createEditProfileDialog();
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
+    }
+
+    private AlertDialog createEditProfileDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(requireContext());
+        View dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_person_info_edit_profile, null, false);
+        dialogBuilder.setView(dialogView);
+        AlertDialog dialog = dialogBuilder.create();
+
+        DialogPersonInfoEditProfileBinding dialogBinding = DialogPersonInfoEditProfileBinding.bind(dialogView);
+        dialogBinding.cancelButton.setOnClickListener(b -> dialog.dismiss());
+        dialogBinding.bindButton.setOnClickListener(b -> {
+            new putUpdataUserDataService(account, password, dialog, dialogBinding);
+            new getUserDataService(requireContext(), account, password);
+            dialog.dismiss();
+        });
+
+        return dialog;
+    }
+
+    private void setUserViewModel(FragmentPersonInfoBinding binding) {
+        UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        userViewModel.getUserData().observe(getViewLifecycleOwner(), user -> {
+            if (user != null) {
+                account = user.getAccount();
+                password = user.getPassword();
+                updateUserInfo(binding, user);
+            }
+        });
+    }
+
+    private void updateUserInfo(FragmentPersonInfoBinding binding, User user) {
+        TextView personNameTextView = binding.personinfobutton.personNameTextView;
+        personNameTextView.setText(user.getUserName());
+        TextView NameTextView = requireActivity().findViewById(R.id.user_name);
+        NameTextView.setText(user.getUserName());
+        TextView phoneTextView = requireActivity().findViewById(R.id.user_phone);
+        phoneTextView.setText(user.getPhoneNumber());
+        TextView emailTextView = requireActivity().findViewById(R.id.user_email);
+        emailTextView.setText(user.getEmail());
+        TextView identityTextView = requireActivity().findViewById(R.id.user_identity);
+        identityTextView.setText("Student");
     }
 }
 

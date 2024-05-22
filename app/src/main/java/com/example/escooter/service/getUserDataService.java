@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.escooter.data.model.User;
 import com.example.escooter.network.HttpRequest;
-import com.example.escooter.viewmodel.UserViewModel;
+import com.example.escooter.ui.viewmodel.UserViewModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;

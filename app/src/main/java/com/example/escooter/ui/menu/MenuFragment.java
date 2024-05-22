@@ -24,9 +24,10 @@ import androidx.navigation.Navigation;
 
 import com.example.escooter.R;
 import com.example.escooter.databinding.ComponentMenuRentInfoBinding;
+import com.example.escooter.databinding.ComponentMenuScooterInfoBinding;
 import com.example.escooter.databinding.FragmentMenuBinding;
 import com.example.escooter.network.HttpRequest;
-import com.example.escooter.viewmodel.UserViewModel;
+import com.example.escooter.ui.viewmodel.UserViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -39,16 +40,18 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Iterator;
+import java.util.Objects;
 
 public class MenuFragment extends Fragment {
 
@@ -194,9 +197,65 @@ public class MenuFragment extends Fragment {
                     currentPolyline = googleMap.addPolyline(Polyline);
                 }
             });
-
-            dialogSet(requireContext());
+            //點擊出現彈窗
+            dialogSet(requireContext(),marker);
             return true;
+        });
+    }
+
+    private void dialogSet(Context context, Marker marker) {
+        ViewStub stub = binding.viewStub;
+        stub.setLayoutResource(R.layout.component_menu_rent_info);
+        View view = stub.inflate();
+        ComponentMenuRentInfoBinding componentBinding = ComponentMenuRentInfoBinding.bind(view);
+
+        componentBinding.rentButton.setOnClickListener(v ->{
+            if (stub.getLayoutResource() != R.layout.component_menu_scooter_info) {
+                stub.setLayoutResource(R.layout.component_menu_scooter_info);
+                View newInflatedView = stub.inflate();
+                ComponentMenuScooterInfoBinding componentBinding1 = ComponentMenuScooterInfoBinding.bind(newInflatedView);
+
+                // 设置新视图中的组件内容
+                componentBinding1.scooterId.setText("132131351");
+            }
+        });
+
+        String escooterId = marker.getTitle();
+        System.out.println(escooterId);
+        String apiUrl = "http://36.232.88.50:8080/api/getRentableEscooterList";
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("longitude", "120.534454");
+            postData.put("latitude", "23.689305");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        HttpRequest getRentableEscooterList= new HttpRequest(apiUrl);
+        // 發送 HTTP POST 請求
+        getRentableEscooterList.httpPost(postData, result -> {
+            try {
+                //json檔案資料處理
+                JSONArray escooters = result.getJSONArray("escooters");
+                for (int i = 0; i < escooters.length(); i++) {
+                    JSONObject escooter = escooters.getJSONObject(i);
+                    if (Objects.equals(escooterId, escooter.getString("escooterId"))) {
+                        requireActivity().runOnUiThread(() -> {
+                            try {
+                                    componentBinding.scooterId.setText(escooter.getString("escooterId"));
+                                    componentBinding.scooterModel.setText(escooter.getString("modelId"));
+                                    componentBinding.batteryTimeText.setText(String.valueOf(escooter.getDouble("batteryLevel")));
+                                    componentBinding.distanceText.setText("1231");
+                                    componentBinding.rentFee.setText(String.valueOf(escooter.getDouble("feePerMinutes")));
+                                    componentBinding.maxSpeedText.setText("25");
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                    }
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
     private void setRentableEscooter(){
@@ -213,11 +272,9 @@ public class MenuFragment extends Fragment {
         getRentableEscooterList.httpPost(postData, result -> {
             try {
                 //json檔案資料處理
-                JSONObject escooters = result.getJSONObject("escooters");
-                Iterator<String> keys = escooters.keys();
-                while (keys.hasNext()){
-                    String key = keys.next();
-                    JSONObject escooter = escooters.getJSONObject(key);
+                JSONArray escooters = result.getJSONArray("escooters");
+                for (int i = 0; i < escooters.length(); i++) {
+                    JSONObject escooter = escooters.getJSONObject(i);
                     String escooterId = escooter.getString("escooterId");
                     JSONObject gps = escooter.getJSONObject("gps");
                     double latitude = gps.getDouble("latitude");
@@ -226,7 +283,7 @@ public class MenuFragment extends Fragment {
                     //切換為ui線程，才能使用google map的更改
                     runOnUiThread(() -> {
                         LatLng Escooter = new LatLng(latitude, longitude);
-                        googleMap.addMarker(new MarkerOptions().position(Escooter).title("E-scooter"+escooterId).icon(BitmapDescriptorFactory.fromResource(R.drawable.escooter)));
+                        googleMap.addMarker(new MarkerOptions().position(Escooter).title(escooterId).icon(BitmapDescriptorFactory.fromResource(R.drawable.escooter)));
                     });
                 }
             } catch (JSONException e) {
@@ -237,14 +294,6 @@ public class MenuFragment extends Fragment {
     private void runOnUiThread(Runnable action) {
         //切換為ui線程
         new Handler(Looper.getMainLooper()).post(action);
-    }
-    private void dialogSet(Context context) {
-        ViewStub stub = binding.viewStub;
-        stub.setLayoutResource(R.layout.component_menu_rent_info);
-        View view = stub.inflate();
-        ComponentMenuRentInfoBinding componentBinding = ComponentMenuRentInfoBinding.bind(view);
-
-        componentBinding.rentButton.setText("你媽死了");
     }
 
     @Override

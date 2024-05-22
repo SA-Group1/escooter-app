@@ -1,4 +1,4 @@
-package com.example.escooter.viewmodel;
+package com.example.escooter.ui.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
