@@ -6,256 +6,252 @@
 
     <RelativeLayout
         android:id="@+id/rent_record"
-        android:layout_width="wrap_content"
+        android:layout_width="345dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:background="@drawable/bg_radius_20dp"
         android:backgroundTint="@color/rent_record_button_background"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <TextView
             android:id="@+id/escooter_model"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
             android:layout_marginStart="26dp"
+            android:layout_marginTop="17dp"
+            android:fontFamily="@font/lufga_regular"
             android:text="@string/scooter_model"
-            android:textSize="18sp"
             android:textColor="@color/scooter_model"
-            android:fontFamily="@font/lufga_regular"/>
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/escooter_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="26dp"
-            android:text="@string/scooter_id"
-            android:textSize="12sp"
-            android:textColor="@color/scooter_id_text"
             android:layout_below="@id/escooter_model"
-            android:fontFamily="@font/lufga_regular"/>
+            android:layout_marginStart="26dp"
+            android:fontFamily="@font/lufga_regular"
+            android:text="@string/scooter_id"
+            android:textColor="@color/scooter_id_text"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/rent_record_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="27dp"
             android:layout_marginTop="17dp"
-            android:layout_marginStart="143dp"
+            android:layout_alignParentEnd="true"
+            android:fontFamily="@font/lufga_regular"
             android:text="@string/rent_record_number"
-            android:textSize="12sp"
             android:textColor="@color/scooter_id_text"
-            android:layout_toEndOf="@id/escooter_model"
-            android:fontFamily="@font/lufga_regular"/>
+            android:textSize="12sp" />
 
         <ImageView
             android:id="@+id/divider"
             android:layout_width="345dp"
             android:layout_height="1dp"
-            android:background="@color/divider"
-            android:layout_marginTop="13dp"
-            android:layout_below="@id/escooter_id"/>
+            android:layout_below="@id/escooter_id"
+            android:layout_marginTop="12dp"
+            android:background="@color/divider" />
 
         <ImageView
             android:id="@+id/clock1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginStart="28dp"
             android:layout_below="@id/divider"
-            android:src="@drawable/ic_clock"/>
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/ic_clock" />
 
         <TextView
             android:id="@+id/rent_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="21dp"
-            android:layout_marginStart="11dp"
-            android:text="Rent"
-            android:textSize="12sp"
-            android:textColor="@color/scooter_id_text"
-            android:layout_toEndOf="@id/clock1"
             android:layout_below="@id/divider"
-            android:fontFamily="@font/lufga_regular"/>
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="21dp"
+            android:layout_toEndOf="@id/clock1"
+            android:fontFamily="@font/lufga_regular"
+            android:text="Rent"
+            android:textColor="@color/scooter_id_text"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/escooter_rent_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/rent_record_time"
-            android:textSize="14sp"
-            android:textColor="@color/rent_record_time"
-            android:layout_toEndOf="@id/dash_line"
             android:layout_below="@id/rent_text"
-            android:fontFamily="@font/lufga_regular"/>
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/dash_line"
+            android:fontFamily="@font/lufga_regular"
+            android:text="@string/rent_record_time"
+            android:textColor="@color/rent_record_time"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/fee_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_marginStart="30dp"
-            android:text="@string/fee_text"
-            android:textSize="12sp"
-            android:textColor="@color/rent_record_time"
-            android:layout_toEndOf="@id/escooter_rent_time"
             android:layout_below="@id/divider"
-            android:fontFamily="@font/lufga_regular"/>
+            android:layout_marginEnd="54dp"
+            android:layout_marginTop="17dp"
+            android:layout_alignStart="@id/rent_time_text"
+            android:fontFamily="@font/lufga_regular"
+            android:text="@string/fee_text"
+            android:textColor="@color/rent_record_time"
+            android:textSize="12sp" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/fee_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:orientation="horizontal"
-            android:layout_alignEnd="@id/duration_unit"
-            android:layout_below="@id/divider">
+            android:layout_marginEnd="3dp"
+            android:layout_marginTop="17dp"
+            android:fontFamily="@font/lufga_regular"
+            android:text="@string/fee_image"
+            android:textColor="@color/rent_record_time"
+            android:textSize="12sp"
+            android:layout_below="@id/divider"
+            android:layout_toStartOf="@id/feePerMin"/>
 
-            <TextView
-                android:id="@+id/fee_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fee_image"
-                android:textSize="12sp"
-                android:textColor="@color/rent_record_time"
-                android:fontFamily="@font/lufga_regular"/>
-
-            <TextView
-                android:id="@+id/feePerMin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:text="@string/fee"
-                android:textSize="12sp"
-                android:textColor="@color/rent_record_time"
-                android:layout_toEndOf="@id/fee_image"
-                android:layout_below="@id/divider"
-                android:fontFamily="@font/lufga_regular"/>
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/feePerMin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="27dp"
+            android:fontFamily="@font/lufga_regular"
+            android:text="@string/fee"
+            android:textColor="@color/rent_record_time"
+            android:textSize="12sp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/divider"/>
 
         <TextView
             android:id="@+id/rent_time_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:text="@string/rent_time_text"
-            android:textSize="12sp"
-            android:textColor="@color/rent_record_time"
-            android:layout_toEndOf="@id/escooter_rent_time"
             android:layout_below="@id/fee_text"
-            android:fontFamily="@font/lufga_regular"/>
+            android:layout_toStartOf="@id/duration"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/lufga_regular"
+            android:text="@string/rent_time_text"
+            android:textColor="@color/rent_record_time"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:text="@string/rent_time"
-            android:textSize="12sp"
-            android:textColor="@color/rent_record_time"
-            android:layout_alignEnd="@id/duration_unit"
             android:layout_below="@id/fee_text"
-            android:fontFamily="@font/lufga_regular"/>
+            android:layout_toStartOf="@id/duration_unit"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="3dp"
+            android:fontFamily="@font/lufga_regular"
+            android:text="@string/rent_time"
+            android:textColor="@color/rent_record_time"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/duration_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="49dp"
-            android:text="@string/rent_time_unit"
-            android:textSize="12sp"
-            android:textColor="@color/rent_record_time"
-            android:layout_toEndOf="@id/rent_time_text"
             android:layout_below="@id/fee_text"
-            android:fontFamily="@font/lufga_regular"/>
-        
+            android:layout_marginEnd="27dp"
+            android:layout_marginTop="3dp"
+            android:layout_alignParentEnd="true"
+            android:fontFamily="@font/lufga_regular"
+            android:text="@string/rent_time_unit"
+            android:textColor="@color/rent_record_time"
+            android:textSize="12sp" />
+
         <View
             android:id="@+id/dash_line"
             android:layout_width="1dp"
             android:layout_height="30dp"
-            android:layout_marginTop="2dp"
+            android:layout_below="@id/clock1"
             android:layout_marginStart="33dp"
-            android:background="@drawable/ic_dash_line"
-            android:layout_below="@id/clock1"/>
+            android:layout_marginTop="2dp"
+            android:background="@drawable/ic_dash_line" />
 
         <ImageView
             android:id="@+id/clock2"
             android:layout_width="11dp"
             android:layout_height="11dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginStart="28dp"
             android:layout_below="@id/dash_line"
-            android:src="@drawable/ic_clock"/>
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/ic_clock" />
 
         <TextView
             android:id="@+id/return_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="11dp"
-            android:text="Return"
-            android:textSize="12sp"
-            android:textColor="@color/scooter_id_text"
-            android:layout_toEndOf="@id/clock2"
             android:layout_below="@id/rent_text"
-            android:fontFamily="@font/lufga_regular"/>
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="30dp"
+            android:layout_toEndOf="@id/clock2"
+            android:fontFamily="@font/lufga_regular"
+            android:text="Return"
+            android:textColor="@color/scooter_id_text"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/escooter_return_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/return_text"
             android:layout_marginStart="50dp"
             android:layout_marginBottom="27dp"
+            android:fontFamily="@font/lufga_regular"
             android:text="@string/return_record_time"
-            android:textSize="14sp"
             android:textColor="@color/return_record_time"
-            android:layout_below="@id/return_text"
-            android:fontFamily="@font/lufga_regular"/>
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/total_fee_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
-            android:layout_marginStart="30dp"
-            android:text="@string/total_fee_text"
-            android:textSize="12sp"
-            android:textColor="@color/rent_record_time"
-            android:layout_toEndOf="@id/escooter_rent_time"
             android:layout_below="@id/rent_time_text"
-            android:fontFamily="@font/lufga_regular"/>
+            android:layout_marginTop="30dp"
+            android:layout_alignStart="@id/rent_time_text"
+            android:fontFamily="@font/lufga_regular"
+            android:text="@string/total_fee_text"
+            android:textColor="@color/rent_record_time"
+            android:textSize="12sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
-            android:orientation="horizontal"
+            android:layout_below="@id/duration_unit"
             android:layout_alignEnd="@id/duration_unit"
-            android:layout_below="@id/duration_unit">
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/total_fee_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/lufga_regular"
                 android:text="@string/total_fee_image"
-                android:textSize="12sp"
                 android:textColor="@color/total_fee"
-                android:fontFamily="@font/lufga_regular"/>
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/total_fee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
+                android:fontFamily="@font/lufga_regular"
                 android:text="@string/total_fee"
-                android:textSize="12sp"
                 android:textColor="@color/total_fee"
-                android:layout_toEndOf="@id/fee_image"
-                android:layout_below="@id/divider"
-                android:fontFamily="@font/lufga_regular"/>
+                android:textSize="12sp" />
         </LinearLayout>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
