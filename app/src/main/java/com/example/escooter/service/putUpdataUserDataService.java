@@ -10,7 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class putUpdataUserDataService {
-    String baseUrl = "http://36.232.88.50:8080";
+    String baseUrl = "http://36.232.110.240:8080";
     String userDataUrl = baseUrl + "/api/updateUserData";
     private Context context;
     public putUpdataUserDataService(String account, String password, AlertDialog dialog, DialogPersonInfoEditProfileBinding dialogBinding){

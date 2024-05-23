@@ -129,12 +129,12 @@ public class PaymentFragment extends Fragment {
                 username = user.getUserName();
                 account = user.getAccount();
                 password = user.getPassword();
-                updateUserInfo(binding,user);
+                updateTextViewInfo(binding,user);
             }
         });
     }
 
-    private void updateUserInfo(FragmentPaymentBinding binding, User user) {
+    private void updateTextViewInfo(FragmentPaymentBinding binding, User user) {
         TextView personNameTextView = binding.personinfobutton.personNameTextView;
         personNameTextView.setText(user.getUserName());
         //判斷使用者是否曾輸入信用卡

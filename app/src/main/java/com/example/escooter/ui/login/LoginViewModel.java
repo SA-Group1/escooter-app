@@ -48,7 +48,7 @@ public class LoginViewModel extends ViewModel {
     }
     public void login(String username, String password) {
         // 定義登入 API 的 URL
-        String apiUrl = "http://36.232.88.50:8080/api/login";
+        String apiUrl = "http://36.232.110.240:8080/api/login";
         JSONObject postData = new JSONObject();
         try {
             // 準備 POST 請求的資料

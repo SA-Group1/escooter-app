@@ -1,6 +1,5 @@
 package com.example.escooter.ui.personinfo;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -18,14 +18,10 @@ import com.example.escooter.R;
 import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.DialogPersonInfoEditProfileBinding;
 import com.example.escooter.databinding.FragmentPersonInfoBinding;
-import com.example.escooter.network.HttpRequest;
 import com.example.escooter.service.getUserDataService;
 import com.example.escooter.service.putUpdataUserDataService;
 import com.example.escooter.ui.viewmodel.UserViewModel;
 import com.google.android.material.imageview.ShapeableImageView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Objects;
 
@@ -35,7 +31,7 @@ public class PersonInfoFragment extends Fragment {
     private String password;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         FragmentPersonInfoBinding binding = FragmentPersonInfoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -98,12 +94,12 @@ public class PersonInfoFragment extends Fragment {
             if (user != null) {
                 account = user.getAccount();
                 password = user.getPassword();
-                updateUserInfo(binding, user);
+                updateTextViewInfo(binding, user);
             }
         });
     }
 
-    private void updateUserInfo(FragmentPersonInfoBinding binding, User user) {
+    private void updateTextViewInfo(FragmentPersonInfoBinding binding, User user) {
         TextView personNameTextView = binding.personinfobutton.personNameTextView;
         personNameTextView.setText(user.getUserName());
         TextView NameTextView = requireActivity().findViewById(R.id.user_name);

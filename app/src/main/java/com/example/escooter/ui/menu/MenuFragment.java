@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,13 +58,13 @@ import java.util.Objects;
 public class MenuFragment extends Fragment {
 
     private FragmentMenuBinding binding;
-    private UserViewModel userViewModel;
     private GoogleMap googleMap;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationCallback locationCallback;
     private Polyline currentPolyline;
+    private ViewStub stub;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMenuBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -94,19 +96,21 @@ public class MenuFragment extends Fragment {
             }
         };
         startLocationUpdates();
-
-        // 观察UserViewModel中的用户数据
-        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-        userViewModel.getUserData().observe(getViewLifecycleOwner(), user -> {
-            if (user != null) {
-                // 更新personNameTextView的文本为用户名
-                TextView personNameTextView = binding.personinfobutton.personNameTextView;;
-                personNameTextView.setText(user.getUserName());
-            }
-        });
+        setUserViewModel(binding);
 
         return root;
     }
+
+    private void setUserViewModel(FragmentMenuBinding binding) {
+        UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        userViewModel.getUserData().observe(getViewLifecycleOwner(), user -> {
+            if (user != null) {
+                TextView personNameTextView = binding.personinfobutton.personNameTextView;
+                personNameTextView.setText(user.getUserName());
+            }
+        });
+    }
+
     private void startLocationUpdates() {
         LocationRequest locationRequest = new LocationRequest.Builder(1000)
                 .setMinUpdateIntervalMillis(500)
@@ -204,25 +208,28 @@ public class MenuFragment extends Fragment {
     }
 
     private void dialogSet(Context context, Marker marker) {
-        ViewStub stub = binding.viewStub;
+        stub = binding.viewStub;
         stub.setLayoutResource(R.layout.component_menu_rent_info);
         View view = stub.inflate();
-        ComponentMenuRentInfoBinding componentBinding = ComponentMenuRentInfoBinding.bind(view);
+        ComponentMenuRentInfoBinding rentInfoBinding = ComponentMenuRentInfoBinding.bind(view);
 
-        componentBinding.rentButton.setOnClickListener(v ->{
-            if (stub.getLayoutResource() != R.layout.component_menu_scooter_info) {
-                stub.setLayoutResource(R.layout.component_menu_scooter_info);
-                View newInflatedView = stub.inflate();
-                ComponentMenuScooterInfoBinding componentBinding1 = ComponentMenuScooterInfoBinding.bind(newInflatedView);
 
-                // 设置新视图中的组件内容
-                componentBinding1.scooterId.setText("132131351");
+        rentInfoBinding.rentButton.setOnClickListener(v ->{
+            if (view != null) {
+                ViewGroup parent = (ViewGroup) view.getParent();
+                if (parent != null) {
+                    parent.removeView(view);
+                }
             }
+            stub = new ViewStub(context);
+            stub.setLayoutResource(R.layout.component_menu_scooter_info);
+            binding.getRoot().addView(stub);
+            stub.setId(View.generateViewId());
         });
 
         String escooterId = marker.getTitle();
         System.out.println(escooterId);
-        String apiUrl = "http://36.232.88.50:8080/api/getRentableEscooterList";
+        String apiUrl = "http://36.232.110.240:8080/api/getRentableEscooterList";
         JSONObject postData = new JSONObject();
         try {
             postData.put("longitude", "120.534454");
@@ -241,12 +248,12 @@ public class MenuFragment extends Fragment {
                     if (Objects.equals(escooterId, escooter.getString("escooterId"))) {
                         requireActivity().runOnUiThread(() -> {
                             try {
-                                    componentBinding.scooterId.setText(escooter.getString("escooterId"));
-                                    componentBinding.scooterModel.setText(escooter.getString("modelId"));
-                                    componentBinding.batteryTimeText.setText(String.valueOf(escooter.getDouble("batteryLevel")));
-                                    componentBinding.distanceText.setText("1231");
-                                    componentBinding.rentFee.setText(String.valueOf(escooter.getDouble("feePerMinutes")));
-                                    componentBinding.maxSpeedText.setText("25");
+                                rentInfoBinding.scooterId.setText(escooter.getString("escooterId"));
+                                rentInfoBinding.scooterModel.setText(escooter.getString("modelId"));
+                                rentInfoBinding.batteryTimeText.setText(String.valueOf(escooter.getDouble("batteryLevel")));
+                                rentInfoBinding.distanceText.setText("1231");
+                                rentInfoBinding.rentFee.setText(String.valueOf(escooter.getDouble("feePerMinutes")));
+                                rentInfoBinding.maxSpeedText.setText("25");
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
@@ -259,7 +266,7 @@ public class MenuFragment extends Fragment {
         });
     }
     private void setRentableEscooter(){
-        String apiUrl = "http://36.232.88.50:8080/api/getRentableEscooterList";
+        String apiUrl = "http://36.232.110.240:8080/api/getRentableEscooterList";
         JSONObject postData = new JSONObject();
         try {
             postData.put("longitude", "120.534454");

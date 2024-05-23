@@ -1,6 +1,5 @@
 package com.example.escooter.ui.rentrecord;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,13 +19,9 @@ import com.example.escooter.R;
 import com.example.escooter.adapter.RentRecordListAdapter;
 import com.example.escooter.data.model.RentalRecord;
 import com.example.escooter.data.model.User;
-import com.example.escooter.databinding.DialogPersonInfoEditProfileBinding;
-import com.example.escooter.databinding.FragmentPaymentBinding;
-import com.example.escooter.databinding.FragmentPersonInfoBinding;
 import com.example.escooter.databinding.FragmentRentRecordBinding;
 import com.example.escooter.network.HttpRequest;
-import com.example.escooter.service.getUserDataService;
-import com.example.escooter.service.putUpdataUserDataService;
+
 import com.example.escooter.ui.viewmodel.UserViewModel;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -35,7 +30,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class RentRecordFragment extends Fragment {
 
@@ -56,8 +50,7 @@ public class RentRecordFragment extends Fragment {
         binding.rentRecordList.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    @NonNull
-    private RentRecordListAdapter getRentRecordListAdapter(FragmentRentRecordBinding binding) {
+    private void getRentRecordListAdapter(FragmentRentRecordBinding binding) {
         ArrayList<RentalRecord> rentRecordList = new ArrayList<>();
 
         // 抓取UserData
@@ -68,7 +61,7 @@ public class RentRecordFragment extends Fragment {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        String apiUrl = "http://36.232.88.50:8080/api/getRentalRecordList";
+        String apiUrl = "http://36.232.110.240:8080/api/getRentalRecordList";
         HttpRequest getRentalRecordList= new HttpRequest(apiUrl);
         // 發送 HTTP POST 請求
         getRentalRecordList.httpPost(postData, result -> {
@@ -87,10 +80,9 @@ public class RentRecordFragment extends Fragment {
                 throw new RuntimeException(e);
             }
         });
-        return null;
     }
     private void setRentRecordListAdapter(FragmentRentRecordBinding binding, ArrayList<RentalRecord> rentRecordList) {
-        getActivity().runOnUiThread(() -> {
+        requireActivity().runOnUiThread(() -> {
             RentRecordListAdapter adapter = new RentRecordListAdapter(rentRecordList);
             binding.rentRecordList.setAdapter(adapter);
         });
@@ -123,13 +115,13 @@ public class RentRecordFragment extends Fragment {
             if (user != null) {
                 account = user.getAccount();
                 password = user.getPassword();
-                updateUserInfo(binding, user);
+                updateTextViewInfo(binding, user);
                 getRentRecordListAdapter(binding);
             }
         });
     }
 
-    private void updateUserInfo(FragmentRentRecordBinding binding, User user) {
+    private void updateTextViewInfo(FragmentRentRecordBinding binding, User user) {
         TextView personNameTextView = binding.personinfobutton.personNameTextView;
         personNameTextView.setText(user.getUserName());
     }

@@ -31,7 +31,7 @@ public class RentRecordListAdapter extends RecyclerView.Adapter<RentRecordListAd
         public void bind(RentalRecord rentRecord) {
             binding.escooterModel.setText(rentRecord.getEscooterModel());
             binding.rentRecordId.setText(rentRecord.getRentRecordId());
-            binding.escooterId.setText(rentRecord.getEscooterId());
+            binding.escooterId.setText("#" + rentRecord.getEscooterId());
             binding.escooterRentTime.setText(rentRecord.getEscooterRentTime());
             binding.escooterReturnTime.setText(rentRecord.getEscooterReturnTime());
             binding.feePerMin.setText(String.valueOf(rentRecord.getFeePerMin()));

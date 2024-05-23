@@ -14,7 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class getUserDataService {
-    String baseUrl = "http://36.232.88.50:8080";
+    String baseUrl = "http://36.232.110.240:8080";
     String userDataUrl = baseUrl + "/api/getUserData";
     private Context context;
 
