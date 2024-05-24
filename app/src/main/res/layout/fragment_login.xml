@@ -101,7 +101,7 @@
                 tools:ignore="TextSizeCheck" />
 
             <EditText
-                android:id="@+id/username"
+                android:id="@+id/account"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@drawable/bg_radius_8dp"
@@ -187,7 +187,7 @@
                 android:textColor="@color/login_button_text"
                 android:textSize="20sp"
                 android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/login_button_background"
+                android:backgroundTint="@color/button_color_selector_gold"
                 android:fontFamily="@font/lufga_bold"
                 android:layout_marginBottom="16dp"
                 android:textAllCaps="false" />

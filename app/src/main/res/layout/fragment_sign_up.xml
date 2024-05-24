@@ -201,7 +201,7 @@
             android:textColor="@color/sign_up_button_text"
             android:textSize="20sp"
             android:background="@drawable/bg_radius_8dp"
-            android:backgroundTint="@color/sign_up_button_background"
+            android:backgroundTint="@color/primary_gold"
             android:fontFamily="@font/lufga_bold"
             android:textAllCaps="false"
             android:layout_below="@id/user_identity"/>

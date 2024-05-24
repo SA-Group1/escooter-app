@@ -10,20 +10,17 @@ import androidx.navigation.Navigation;
 
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.escooter.databinding.FragmentLoginBinding;
-
 import com.example.escooter.R;
 import com.example.escooter.service.getUserDataService;
-import com.google.android.material.textfield.TextInputLayout;
+import com.example.escooter.utils.SimpleTextWatcher;
 
 public class LoginFragment extends Fragment {
 
@@ -32,111 +29,142 @@ public class LoginFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentLoginBinding.inflate(inflater, container, false);
-
-        final Button signupButton = binding.signUpButton;
-
-        binding.username.setText("acc001");
-        binding.password.setText("pwd001");
-
-        signupButton.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-            navController.navigate(R.id.action_loginFragment_to_signUpFragment);
-        });
-
         return binding.getRoot();
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
+        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
 
-        final EditText usernameEditText = binding.username;
-        final EditText passwordEditText = binding.password;
-        final TextInputLayout passwordTextInputLayout = binding.textInputLayoutPassword;
-        final Button loginButton = binding.loginButton;
+        setupUI();
+        setupObservers();
+        setupListeners();
+    }
 
-        loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), loginFormState -> {
-            if (loginFormState == null) {
-                return;
-            }
-            loginButton.setEnabled(loginFormState.isDataValid());
-            if (loginFormState.getUsernameError() != null) {
-                usernameEditText.setError(getString(loginFormState.getUsernameError()));
-            }
-            if (loginFormState.getPasswordError() != null) {
-                passwordTextInputLayout.setError(getString(loginFormState.getPasswordError()));
-            }
-        });
+    private void setupUI() {
+        binding.account.setText("acc001");
+        binding.password.setText("pwd001");
 
-        loginViewModel.getLoginResult().observe(getViewLifecycleOwner(), loginResult -> {
-            if (loginResult == null) {
-                return;
-            }
-            if (loginResult.getError() != null) {
-                showLoginFailed(loginResult.getError());
-            }
-            if (loginResult.getSuccess() != null) {
-                updateUiWithUser(loginResult.getSuccess(),passwordEditText.getText().toString());
-            }
-        });
+        // Put testing data into view model.
+        String account = binding.account.getText().toString();
+        String password = binding.password.getText().toString();
+        loginViewModel.loginDataChanged(account,password);
+    }
 
-        TextWatcher afterTextChangedListener = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // ignore
-            }
+    private void setupObservers() {
+        loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), this::updateLoginFormState);
+        loginViewModel.getLoginResult().observe(getViewLifecycleOwner(), this::handleLoginResult);
+    }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // ignore
-            }
-
+    private void setupListeners() {
+        binding.account.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                String account = binding.account.getText().toString();
+                String password = binding.password.getText().toString();
+
+                loginViewModel.loginDataChanged(account, password);
             }
-        };
-        usernameEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.setOnEditorActionListener((v, actionId, event) -> {
+        });
+
+        binding.password.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                String account = binding.account.getText().toString();
+                String password = binding.password.getText().toString();
+
+                loginViewModel.loginDataChanged(account, password);
+            }
+        });
+
+        binding.password.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                String account = binding.account.getText().toString();
+                String password = binding.password.getText().toString();
+
+                loginViewModel.login(account, password);
             }
             return false;
         });
 
-        loginButton.setOnClickListener(v -> loginViewModel.login(usernameEditText.getText().toString(),
-                passwordEditText.getText().toString()));
+
+        binding.signUpButton.setOnClickListener(this::onSignupButtonClicked);
+        binding.loginButton.setOnClickListener(this::onLoginButtonClicked);
     }
 
-    private void updateUiWithUser(LoggedInUserView model,String password) {
-        new getUserDataService(requireContext(), model.getUserName(), password);
+    private void onSignupButtonClicked(View view) {
+        navigateToSignupFragment();
+    }
 
-        String welcome = getString(R.string.welcome) + model.getUserName();
-        // TODO : initiate successful logged in experience
-        if (getContext() != null && getContext().getApplicationContext() != null) {
-            Toast.makeText(getContext().getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
-            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-            navController.navigate(R.id.action_loginFragment_to_navigation_menuFragment);
+    private void onLoginButtonClicked(View view) {
+        String account = binding.account.getText().toString();
+        String password = binding.password.getText().toString();
+
+        loginViewModel.login(account,password);
+    }
+
+    private void updateLoginFormState(LoginFormState loginFormState) {
+        if (loginFormState == null) {
+            return;
+        }
+
+        setupLoginButtonEnabled(loginFormState.isDataValid());
+
+        if (loginFormState.getUsernameError() != null) {
+            binding.account.setError(getString(loginFormState.getUsernameError()));
+        }
+        if (loginFormState.getPasswordError() != null) {
+            binding.textInputLayoutPassword.setError(getString(loginFormState.getPasswordError()));
         }
     }
 
-    private void showLoginFailed(@StringRes Integer errorString) {
+    private void setupLoginButtonEnabled(boolean isEnabled){
+        Button loginButton = binding.loginButton;
+        loginButton.setEnabled(isEnabled);
+    }
+
+    private void handleLoginResult(LoginResult loginResult) {
+        if (loginResult == null) {
+            return;
+        }
+
+        if (loginResult.getError() != null) {
+            showLoginFailed(loginResult.getError());
+        }
+
+        if (loginResult.getSuccess() != null) {
+            updateUiWithUser(loginResult.getSuccess());
+        }
+    }
+
+    private void updateUiWithUser(LoggedInUserView model) {
+
+        new getUserDataService(requireContext(), model.getUserName(), binding.password.getText().toString());
+        String welcome = getString(R.string.welcome) + model.getUserName();
+        showToast(welcome);
+        navigateToMenuFragment();
+    }
+
+    private void navigateToMenuFragment() {
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+        navController.navigate(R.id.action_loginFragment_to_navigation_menuFragment);
+    }
+
+    private void navigateToSignupFragment() {
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+        navController.navigate(R.id.action_loginFragment_to_signUpFragment);
+    }
+
+    private void showLoginFailed(Exception errorString) {
+        showToast(errorString.toString());
+    }
+
+    private void showToast(String message) {
         if (getContext() != null && getContext().getApplicationContext() != null) {
-            Toast.makeText(
-                    getContext().getApplicationContext(),
-                    errorString,
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext().getApplicationContext(), message, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -146,3 +174,5 @@ public class LoginFragment extends Fragment {
         binding = null;
     }
 }
+
+

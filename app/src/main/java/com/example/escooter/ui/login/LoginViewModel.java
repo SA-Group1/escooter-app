@@ -4,77 +4,38 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Patterns;
 
-import com.example.escooter.data.LoginRepository;
-import com.example.escooter.data.Result;
-import com.example.escooter.data.model.CreditCard;
-import com.example.escooter.data.model.LoggedInUser;
 import com.example.escooter.R;
-import com.example.escooter.data.model.MemberCard;
-import com.example.escooter.network.HttpRequest;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Iterator;
+import com.example.escooter.callback.LoginCallback;
+import com.example.escooter.service.LoginService;
 
 public class LoginViewModel extends ViewModel {
 
-    private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
-    private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
-    private LoginRepository loginRepository;
-
-    LoginViewModel(LoginRepository loginRepository) {
-        this.loginRepository = loginRepository;
-    }
+    private final LoginService loginService = new LoginService();
+    private final MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
+    private final MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
 
     LiveData<LoginFormState> getLoginFormState() {
         return loginFormState;
     }
-
     LiveData<LoginResult> getLoginResult() {
         return loginResult;
     }
-    private Context context;
-    public LoginViewModel(Context context) {
-        this.context = context.getApplicationContext();
-    }
     public void login(String username, String password) {
-        // 定義登入 API 的 URL
-        String apiUrl = "http://36.232.110.240:8080/api/login";
-        JSONObject postData = new JSONObject();
-        try {
-            // 準備 POST 請求的資料
-            postData.put("account", username);
-            postData.put("password", password);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
 
-        HttpRequest login = new HttpRequest(apiUrl);
+        loginService.login(username, password, new LoginCallback() {
 
-        // 發送 HTTP POST 請求
-        login.httpPost(postData, result -> {
-            try {
-                // 處理登入回應的 JSON 資料
-                if (result.getBoolean("status")) {
-
-                    LoggedInUser data = new LoggedInUser(username,password);
-                    loginResult.postValue(new LoginResult(new LoggedInUserView(data.getAccount())));
-
-                } else {
-                    // 登入失敗
-                    loginResult.postValue(new LoginResult(R.string.login_failed));
+            @Override
+            public void onSuccess(boolean isLogin) {
+                if(isLogin){
+                    loginResult.postValue(new LoginResult(new LoggedInUserView(username)));
                 }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                loginResult.postValue(new LoginResult(e));
             }
         });
     }

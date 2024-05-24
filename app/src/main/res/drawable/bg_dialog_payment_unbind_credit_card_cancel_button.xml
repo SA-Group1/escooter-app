@@ -3,7 +3,7 @@
 
     <item>
         <shape>
-            <solid android:color="@color/payment_button_background"/>
+            <solid android:color="@color/primary_gold"/>
             <corners android:radius="10dp"/>
         </shape>
     </item>

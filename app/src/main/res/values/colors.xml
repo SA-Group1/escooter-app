@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="primary_gold">#FCECD5</color>
+    <color name="secondary_gold">#7F776C</color>
     <color name="home_button_background">#F6F6F6</color>
     <color name="nearest_button_background">#1AB7FC</color>
     <color name="nearest_button_text">#FFFFFF</color>
@@ -11,14 +13,12 @@
     <color name="forgot_password">#00ABA5</color>
     <color name="home_text">#FFFFFF</color>
     <color name="login_frame">#3F3F45</color>
-    <color name="login_button_background">#FCECD5</color>
     <color name="login_button_text">#253241</color>
     <color name="signup_button_background">#00000000</color>
     <color name="signup_button_text">#FFFFFF</color>
     <color name="menu_background">#2F3125</color>
     <color name="chosen_button_text">#253241</color>
     <color name="profile_button_background">#ECF3FF</color>
-    <color name="payment_button_background">#FCECD5</color>
     <color name="nonchosen_button_background">#3F3F45</color>
     <color name="rent_record_button_background">#FFFFFF</color>
     <color name="nonchosen_button_text">#C6C6C6</color>
@@ -35,11 +35,9 @@
     <color name="credit_card_background_start">#BA9035</color>
     <color name="credit_card_background_center">#E2CB7D</color>
     <color name="credit_card_background_end">#BA9035</color>
-    <color name="member_card_background">#FCECD5</color>
     <color name="member_card_text">#253241</color>
     <color name="sign_up_button_text">#253241</color>
     <color name="scooter_model">#253241</color>
-    <color name="sign_up_button_background">#FCECD5</color>
     <color name="scooter_id_text">#CACACA</color>
     <color name="rent_record_time">#253241</color>
     <color name="return_record_time">#253241</color>
@@ -59,7 +57,6 @@
     <color name="dialog_personinfo_edit_profile_confirm_button_text">#253241</color>
     <color name="dialog_person_info_edit_profile_text">#C6C6C6</color>
     <color name="dialog_menu_scooter_info_park_button_text">#253241</color>
-    <color name="dialog_payment_add_credit_card_confirm_button_background">#FCECD5</color>
     <color name="fragment_return_successful_payment_method">#C6C6C6</color>
     <color name="total_fee">#D08343</color>
     <color name="purple_200">#FFBB86FC</color>
