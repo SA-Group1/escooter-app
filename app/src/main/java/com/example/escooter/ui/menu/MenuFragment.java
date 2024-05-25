@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,7 +29,9 @@ import com.example.escooter.R;
 import com.example.escooter.databinding.ComponentMenuRentInfoBinding;
 import com.example.escooter.databinding.ComponentMenuScooterInfoBinding;
 import com.example.escooter.databinding.FragmentMenuBinding;
+import com.example.escooter.databinding.FragmentPaymentBinding;
 import com.example.escooter.network.HttpRequest;
+import com.example.escooter.service.getRentableEscooterListService;
 import com.example.escooter.ui.viewmodel.UserViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -48,6 +51,7 @@ import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,7 +66,11 @@ public class MenuFragment extends Fragment {
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationCallback locationCallback;
     private Polyline currentPolyline;
-    private ViewStub stub;
+    private View view = null;
+    private String account;
+    private String password;
+//    private String ownLongitude;
+//    private String ownLatitude;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMenuBinding.inflate(inflater, container, false);
@@ -89,7 +97,7 @@ public class MenuFragment extends Fragment {
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 for (Location location : locationResult.getLocations()) {
                     LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                    if (googleMap != null){
+                    if (googleMap != null) {
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
                     }
                 }
@@ -105,6 +113,8 @@ public class MenuFragment extends Fragment {
         UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         userViewModel.getUserData().observe(getViewLifecycleOwner(), user -> {
             if (user != null) {
+                account = user.getAccount();
+                password = user.getPassword();
                 TextView personNameTextView = binding.personinfobutton.personNameTextView;
                 personNameTextView.setText(user.getUserName());
             }
@@ -131,10 +141,13 @@ public class MenuFragment extends Fragment {
             googleMap = map;
             // 開啟我的位置功能
             updateLocation();
+            // 設定自身位置
+//            setOwnLocation();
             // 設定多邊形
 //            setPolygon();
             // 設定點選事件
             setOnMarkerClick();
+
             // 新增車輛位置
             setRentableEscooter();
         }
@@ -202,30 +215,91 @@ public class MenuFragment extends Fragment {
                 }
             });
             //點擊出現彈窗
-            dialogSet(requireContext(),marker);
+            dialogSet(requireContext(), marker);
             return true;
         });
     }
 
     private void dialogSet(Context context, Marker marker) {
-        stub = binding.viewStub;
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null) {
+                parent.removeView(view);
+            }
+        }
+        ViewStub stub = binding.viewStub;
         stub.setLayoutResource(R.layout.component_menu_rent_info);
-        View view = stub.inflate();
+        view = stub.inflate();
         ComponentMenuRentInfoBinding rentInfoBinding = ComponentMenuRentInfoBinding.bind(view);
 
 
-        rentInfoBinding.rentButton.setOnClickListener(v ->{
+        rentInfoBinding.rentButton.setOnClickListener(v -> {
             if (view != null) {
                 ViewGroup parent = (ViewGroup) view.getParent();
                 if (parent != null) {
                     parent.removeView(view);
                 }
             }
-            stub = new ViewStub(context);
-            stub.setLayoutResource(R.layout.component_menu_scooter_info);
-            binding.getRoot().addView(stub);
-            stub.setId(View.generateViewId());
+            ViewStub newstub = new ViewStub(context);
+            binding.getRoot().addView(newstub);
+
+            newstub.setLayoutParams(stub.getLayoutParams());
+            newstub.setVisibility(stub.getVisibility());
+            newstub.setInflatedId(stub.getInflatedId());
+            newstub.setLayoutResource(R.layout.component_menu_scooter_info);
+
+            view = newstub.inflate();
+            ComponentMenuScooterInfoBinding scooterInfoBinding = ComponentMenuScooterInfoBinding.bind(view);
+
+            String escooterId = marker.getTitle();
+            String apiUrl = "http://36.232.110.240:8080/api/rentEscooter";
+            JSONObject postData = new JSONObject();
+            try {
+                JSONObject userObject = new JSONObject();
+                userObject.put("account", account);
+                userObject.put("password", password);
+
+                JSONObject escooterObject = new JSONObject();
+                escooterObject.put("escooterId", escooterId);
+
+                postData.put("user", userObject);
+                postData.put("escooter", escooterObject);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+
+            HttpRequest getRentableEscooterList = new HttpRequest(apiUrl);
+            // 發送 HTTP POST 請求
+            getRentableEscooterList.httpPost(postData, result -> {
+                try {
+                    //json檔案資料處理
+                    JSONObject escooter = result.getJSONObject("escooter");
+                    requireActivity().runOnUiThread(() -> {
+                        try {
+                            scooterInfoBinding.scooterId.setText(escooter.getString("escooterId"));
+                            scooterInfoBinding.scooterModel.setText(escooter.getString("modelId"));
+                            scooterInfoBinding.batteryTimeText.setText(String.valueOf(escooter.getDouble("batteryLevel")));
+                            //日期
+                            scooterInfoBinding.feePerMin.setText(String.valueOf(escooter.getDouble("feePerMinutes")));
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            //setListeners()
+            scooterInfoBinding.parkButton.setOnClickListener(b ->{
+                setParking();
+            });
+            scooterInfoBinding.returnButton.setOnClickListener(b ->{
+                //api傳送(service)
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+                navController.navigate(R.id.action_navigation_menu_to_returnSuccessFragment);
+            });
         });
+
 
         String escooterId = marker.getTitle();
         System.out.println(escooterId);
@@ -237,7 +311,7 @@ public class MenuFragment extends Fragment {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        HttpRequest getRentableEscooterList= new HttpRequest(apiUrl);
+        HttpRequest getRentableEscooterList = new HttpRequest(apiUrl);
         // 發送 HTTP POST 請求
         getRentableEscooterList.httpPost(postData, result -> {
             try {
@@ -265,43 +339,38 @@ public class MenuFragment extends Fragment {
             }
         });
     }
-    private void setRentableEscooter(){
-        String apiUrl = "http://36.232.110.240:8080/api/getRentableEscooterList";
-        JSONObject postData = new JSONObject();
-        try {
-            postData.put("longitude", "120.534454");
-            postData.put("latitude", "23.689305");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        HttpRequest getRentableEscooterList= new HttpRequest(apiUrl);
-        // 發送 HTTP POST 請求
-        getRentableEscooterList.httpPost(postData, result -> {
-            try {
-                //json檔案資料處理
-                JSONArray escooters = result.getJSONArray("escooters");
-                for (int i = 0; i < escooters.length(); i++) {
-                    JSONObject escooter = escooters.getJSONObject(i);
-                    String escooterId = escooter.getString("escooterId");
-                    JSONObject gps = escooter.getJSONObject("gps");
-                    double latitude = gps.getDouble("latitude");
-                    double longitude = gps.getDouble("longitude");
 
-                    //切換為ui線程，才能使用google map的更改
-                    runOnUiThread(() -> {
-                        LatLng Escooter = new LatLng(latitude, longitude);
-                        googleMap.addMarker(new MarkerOptions().position(Escooter).title(escooterId).icon(BitmapDescriptorFactory.fromResource(R.drawable.escooter)));
-                    });
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+    private void setParking() {
+    }
+
+    private void setListeners(FragmentPaymentBinding binding) {
+
+    }
+
+    private void setRentableEscooter() {
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
+            if (location != null) {
+                String ownLongitude = String.valueOf(location.getLongitude());
+                String ownLatitude = String.valueOf(location.getLatitude());
+                new getRentableEscooterListService(requireContext(), googleMap, ownLongitude, ownLatitude);
             }
         });
     }
-    private void runOnUiThread(Runnable action) {
-        //切換為ui線程
-        new Handler(Looper.getMainLooper()).post(action);
-    }
+
+//    private void setOwnLocation() {
+//        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            return;
+//        }
+//        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
+//            if (location != null) {
+//                ownLongitude = String.valueOf(location.getLongitude());
+//                ownLatitude = String.valueOf(location.getLatitude());
+//            }
+//        });
+//    }
 
     @Override
     public void onDestroyView() {

@@ -10,7 +10,7 @@
         android:name="com.example.escooter.ui.menu.MenuFragment"
         tools:layout="@layout/fragment_menu" >
         <action
-            android:id="@+id/action_navigation_menu_to_mapsFragment"
+            android:id="@+id/action_navigation_menu_to_returnSuccessFragment"
             app:destination="@id/returnSuccessfulFragment" />
         <action
             android:id="@+id/action_navigation_menu_to_personinfoFragment"
@@ -21,7 +21,11 @@
         android:id="@+id/returnSuccessfulFragment"
         android:name="com.example.escooter.ui.return_successful.ReturnSuccessfulFragment"
         android:label="fragment_maps"
-        tools:layout="@layout/fragment_return_successful" />
+        tools:layout="@layout/fragment_return_successful" >
+        <action
+        android:id="@+id/action_returnSuccessFragment_to_navigation_menu"
+        app:destination="@id/navigation_menuFragment" />
+    </fragment>
     <fragment
         android:id="@+id/personinfoFragment"
         android:name="com.example.escooter.ui.personinfo.PersonInfoFragment"
@@ -88,4 +92,5 @@
             android:id="@+id/action_signUpFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+
 </navigation>

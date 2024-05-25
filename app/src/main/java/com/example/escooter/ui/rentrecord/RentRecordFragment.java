@@ -93,6 +93,7 @@ public class RentRecordFragment extends Fragment {
         final Button payment_button = binding.paymentButton;
         final Button profile_button = binding.profileButton;
 
+
         goback_button.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigate(R.id.action_rentRecordFragment_to_navigation_menuFragment);

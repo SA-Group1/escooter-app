@@ -73,7 +73,7 @@ public class PaymentFragment extends Fragment {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigate(R.id.action_paymentFragment_to_rentRecordFragment);
         });
-        }
+    }
 
     private void showUnbindCreditCardDialog(FragmentPaymentBinding binding) {
         AlertDialog dialog = createUnbindCreditCardDialog(binding);
@@ -92,7 +92,6 @@ public class PaymentFragment extends Fragment {
         dialogBinding.unbindButton.setOnClickListener(v -> {
             new postUnbindCreditCardService(account, password);
             new getUserDataService(requireContext(), account, password);
-            binding.creditcardnfo.setVisibility(View.GONE);
             dialog.dismiss();
         });
 
@@ -115,7 +114,6 @@ public class PaymentFragment extends Fragment {
         dialogBinding.confirmButton.setOnClickListener(b -> {
             new postBindCreditCardService(account, password, username,dialogBinding);
             new getUserDataService(requireContext(), account, password);
-            binding.creditcardnfo.setVisibility(View.VISIBLE);
             dialog.dismiss();
         });
 
@@ -142,11 +140,13 @@ public class PaymentFragment extends Fragment {
         if (!Objects.equals(creditCardNumber, "null")){
             System.out.println(creditCardNumber);
             binding.creditcardnfo.setVisibility(View.VISIBLE);
+            binding.addPaymentButton.setVisibility(View.GONE);
             TextView creditCardTextView = requireActivity().findViewById(R.id.creditcard_id);
             creditCardTextView.setText(creditCardNumber);
         }else {
             System.out.println(creditCardNumber);
             binding.creditcardnfo.setVisibility(View.GONE);
+            binding.addPaymentButton.setVisibility(View.VISIBLE);
         }
     }
 
