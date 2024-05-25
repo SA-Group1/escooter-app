@@ -45,7 +45,7 @@
             android:paddingStart="11dp"
             android:paddingEnd="11dp">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/profileButton"
                 android:layout_width="91dp"
                 android:layout_height="35dp"
@@ -63,7 +63,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/paymentButton"
                 android:layout_width="91dp"
                 android:layout_height="35dp"
@@ -81,7 +81,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/rentRecordButton"
                 android:layout_width="91dp"
                 android:layout_height="35dp"

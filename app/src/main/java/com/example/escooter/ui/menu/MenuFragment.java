@@ -11,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +24,6 @@ import androidx.navigation.Navigation;
 
 import com.example.escooter.R;
 import com.example.escooter.databinding.ComponentMenuRentInfoBinding;
-import com.example.escooter.databinding.ComponentMenuScooterInfoBinding;
 import com.example.escooter.databinding.FragmentMenuBinding;
 import com.example.escooter.network.HttpRequest;
 import com.example.escooter.ui.viewmodel.UserViewModel;
@@ -290,7 +287,7 @@ public class MenuFragment extends Fragment {
                     //切換為ui線程，才能使用google map的更改
                     runOnUiThread(() -> {
                         LatLng Escooter = new LatLng(latitude, longitude);
-                        googleMap.addMarker(new MarkerOptions().position(Escooter).title(escooterId).icon(BitmapDescriptorFactory.fromResource(R.drawable.escooter)));
+                        googleMap.addMarker(new MarkerOptions().position(Escooter).title(escooterId).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_escooter)));
                     });
                 }
             } catch (JSONException e) {

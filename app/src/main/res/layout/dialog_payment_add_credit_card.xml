@@ -12,7 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/bg_dialog_personinfo_edit_profile">
+        android:background="@drawable/bg_border_radius_20dp_primary_gold">
 
         <TextView
             android:id="@+id/person_info_edit_title"
@@ -118,7 +118,7 @@
             android:text="@string/dialog_person_info_edit_profile_cancel_text"
             android:textColor="@color/primary_white"
             android:textSize="20sp"
-            android:background="@drawable/bg_dialog_payment_add_credit_card_cancel_button"
+            android:background="@drawable/bg_border_radius_10dp_primary_gold"
             android:fontFamily="@font/lufga_bold"
             android:textAllCaps="false"
             android:layout_below="@id/person_info_edit"
@@ -131,11 +131,12 @@
             android:layout_marginBottom="37dp"
             android:layout_width="322dp"
             android:layout_height="61dp"
+            android:enabled="false"
             android:text="@string/dialog_person_info_edit_profile_confirm_button_text"
             android:textColor="@color/primary_charcoal"
             android:textSize="20sp"
             android:background="@drawable/bg_radius_8dp"
-            android:backgroundTint="@color/primary_gold"
+            android:backgroundTint="@color/button_color_selector_gold"
             android:fontFamily="@font/lufga_bold"
             android:textAllCaps="false"
             android:layout_below="@id/cancel_button"

@@ -49,12 +49,12 @@
             android:paddingStart="11dp"
             android:paddingEnd="11dp">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/profileButton"
                 android:layout_width="91dp"
                 android:layout_height="35dp"
                 android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/secondary_light_blue"
+                android:backgroundTint="@color/primary_light_blue"
                 android:fontFamily="@font/lufga_bold"
                 android:text="@string/profile_button_text"
                 android:textAllCaps="false"
@@ -67,7 +67,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/paymentButton"
                 android:layout_width="91dp"
                 android:layout_height="35dp"
@@ -85,7 +85,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/rentRecordButton"
                 android:layout_width="91dp"
                 android:layout_height="35dp"
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="36dp"
                 android:background="@drawable/bg_radius_20dp"
-                android:backgroundTint="@color/secondary_light_blue"
+                android:backgroundTint="@color/primary_light_blue"
                 android:orientation="vertical">
 
                 <!-- 档案部分标题 -->
