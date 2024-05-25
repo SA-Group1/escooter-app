@@ -3,9 +3,9 @@
     android:id="@+id/text2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/black"
+    android:backgroundTint="@color/secondary_black_opaque"
     android:fontFamily="@font/lufga_light"
     android:textSize="18sp"
-    android:textColor="@color/black"
+    android:textColor="@color/secondary_black_opaque"
     android:padding="16dp"
     android:gravity="center_vertical" />

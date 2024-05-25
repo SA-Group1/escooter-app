@@ -1,69 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Primary Colors -->
     <color name="primary_gold">#FCECD5</color>
+    <color name="primary_medium_gray">#C6C6C6</color>
+    <color name="primary_charcoal">#253241</color>
+    <color name="primary_transparent">#00000000</color>
+    <color name="primary_white">#FFFFFFFF</color>
+
+    <!-- Secondary Colors -->
     <color name="secondary_gold">#7F776C</color>
-    <color name="home_button_background">#F6F6F6</color>
-    <color name="nearest_button_background">#1AB7FC</color>
-    <color name="nearest_button_text">#FFFFFF</color>
-    <color name="person_image_button_background">#FFFFFF</color>"
-    <color name="image_button_background">#FFFFFF</color>
-    <color name="person_other_info_text">#C6C6C6</color>
-    <color name="home_button_text">#000000</color>
-    <color name="person_name_text">#FFFFFF</color>
-    <color name="forgot_password">#00ABA5</color>
-    <color name="home_text">#FFFFFF</color>
-    <color name="login_frame">#3F3F45</color>
-    <color name="login_button_text">#253241</color>
-    <color name="signup_button_background">#00000000</color>
-    <color name="signup_button_text">#FFFFFF</color>
-    <color name="menu_background">#2F3125</color>
-    <color name="chosen_button_text">#253241</color>
-    <color name="profile_button_background">#ECF3FF</color>
-    <color name="nonchosen_button_background">#3F3F45</color>
-    <color name="rent_record_button_background">#FFFFFF</color>
-    <color name="nonchosen_button_text">#C6C6C6</color>
-    <color name="login_text">#C6C6C6</color>
-    <color name="transparent">#00000000</color>
-    <color name="translucent">#80363636</color>
-    <color name="divider">#C6C6C6</color>
-    <color name="profile_main_title_text">#253241</color>
-    <color name="profile_title_text">#3F3F45</color>
-    <color name="profile_log_out_text">#D08343</color>
-    <color name="profile_content_text">#253241</color>
-    <color name="person_info_backround_start">#2f3135</color>
-    <color name="person_info_backround_end">#18181D</color>
-    <color name="credit_card_background_start">#BA9035</color>
-    <color name="credit_card_background_center">#E2CB7D</color>
-    <color name="credit_card_background_end">#BA9035</color>
-    <color name="member_card_text">#253241</color>
-    <color name="sign_up_button_text">#253241</color>
-    <color name="scooter_model">#253241</color>
-    <color name="scooter_id_text">#CACACA</color>
-    <color name="rent_record_time">#253241</color>
-    <color name="return_record_time">#253241</color>
-    <color name="rent_info_text">#3F3F45</color>
-    <color name="dialog_menu_rent_info_button_text">#FFFFFF</color>
-    <color name="dialog_menu_rent_info_button_background">#3F3F45</color>
-    <color name="dialog_menu_rent_info_return_button_text">#FFFFFF</color>
-    <color name="dialog_menu_rent_info_return_button_background">#3F3F45</color>
-    <color name="dialog_menu_rent_info_park_button_text">#253241</color>
-    <color name="dialog_menu_rent_info_park_button_background_border">#3F3F45</color>
-    <color name="dialog_menu_rent_info_park_button_background">#CACACA</color>
-    <color name="dialog_payment_unbind_credit_card_background">#212126</color>
-    <color name="dialog_personinfo_edit_profile_background">#212126</color>
-    <color name="dialog_payment_unbind_credit_card_unbind_button_background">#FF6767</color>
-    <color name="dialog_payment_unbind_credit_card_unbind_button_text">#253241</color>
-    <color name="dialog_personinfo_edit_profile_confirm_button_background">#ECF3FF</color>
-    <color name="dialog_personinfo_edit_profile_confirm_button_text">#253241</color>
-    <color name="dialog_person_info_edit_profile_text">#C6C6C6</color>
-    <color name="dialog_menu_scooter_info_park_button_text">#253241</color>
-    <color name="fragment_return_successful_payment_method">#C6C6C6</color>
-    <color name="total_fee">#D08343</color>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="secondary_dark_gray">#3F3F45</color>
+    <color name="secondary_light_blue">#ECF3FF</color>
+    <color name="secondary_dark_blue_gray">#2F3135</color>
+    <color name="secondary_dark_navy">#18181D</color>
+    <color name="secondary_silver">#CACACA</color>
+    <color name="secondary_deep_gray">#212126</color>
+    <color name="secondary_burnt_orange">#D08343</color>
+    <color name="secondary_black_opaque">#FF000000</color>
+
+    <!-- Accent Colors -->
+    <color name="accent_teal">#00ABA5</color>
+    <color name="accent_translucent_gray">#80363636</color>
+    <color name="accent_gold">#BA9035</color>
+    <color name="accent_light_gold">#E2CB7D</color>
+    <color name="accent_red">#FF6767</color>
+    <color name="accent_light_purple">#FFBB86FC</color>
+    <color name="accent_medium_purple">#FF6200EE</color>
+    <color name="accent_dark_purple">#FF3700B3</color>
+    <color name="accent_light_teal">#FF03DAC5</color>
+    <color name="accent_dark_teal">#FF018786</color>
+
 </resources>

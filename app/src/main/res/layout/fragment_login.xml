@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textColor="@color/white"
+            android:textColor="@color/primary_white"
             android:textSize="40sp"
             android:fontFamily="@font/lufga_bold"
             android:layout_marginTop="9dp"
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_description1"
-            android:textColor="@color/white"
+            android:textColor="@color/primary_white"
             android:textSize="30sp"
             android:fontFamily="@font/lufga_bold"
             android:layout_marginTop="49dp"
@@ -56,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_description2"
-            android:textColor="@color/login_text"
+            android:textColor="@color/primary_medium_gray"
             android:textSize="12sp"
             android:fontFamily="@font/lufga_light"
 
@@ -69,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_description3"
-            android:textColor="@color/login_text"
+            android:textColor="@color/primary_medium_gray"
             android:textSize="12sp"
             android:fontFamily="@font/lufga_light"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +96,7 @@
                 android:layout_marginStart="9dp"
                 android:fontFamily="@font/lufga_light"
                 android:text="@string/account_login"
-                android:textColor="@color/login_text"
+                android:textColor="@color/primary_medium_gray"
                 android:textSize="12sp"
                 tools:ignore="TextSizeCheck" />
 
@@ -105,7 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/login_frame"
+                android:backgroundTint="@color/secondary_dark_gray"
                 android:fontFamily="@font/lufga_light"
                 android:hint="@string/prompt_account"
                 android:inputType="textEmailAddress"
@@ -113,8 +113,8 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="7dp"
                 android:selectAllOnFocus="true"
-                android:textColor="@color/white"
-                android:textColorHint="@color/login_text"
+                android:textColor="@color/primary_white"
+                android:textColorHint="@color/primary_medium_gray"
                 tools:ignore="Autofill,RtlSymmetry,TouchTargetSizeCheck" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -124,21 +124,21 @@
                 android:layout_marginTop="8dp"
                 app:hintEnabled="false"
                 app:endIconMode="password_toggle"
-                app:endIconTint="@color/login_text">
+                app:endIconTint="@color/primary_medium_gray">
 
                 <EditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:background="@drawable/bg_radius_8dp"
-                    android:backgroundTint="@color/login_frame"
+                    android:backgroundTint="@color/secondary_dark_gray"
                     android:fontFamily="@font/lufga_light"
                     android:hint="@string/prompt_password"
                     android:inputType="textPassword"
                     android:paddingStart="12dp"
                     android:paddingTop="7dp"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/login_text"
+                    android:textColor="@color/primary_white"
+                    android:textColorHint="@color/primary_medium_gray"
                     tools:ignore="Autofill,RtlSymmetry,TouchTargetSizeCheck" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -154,11 +154,11 @@
                     android:id="@+id/forget_password_button"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:background="@color/transparent"
+                    android:background="@color/primary_transparent"
                     android:fontFamily="@font/lufga_light"
                     android:text="@string/forgot_password"
                     android:textAllCaps="false"
-                    android:textColor="@color/forgot_password"
+                    android:textColor="@color/accent_teal"
                     android:textSize="14sp"
                     tools:ignore="TextSizeCheck,TouchTargetSizeCheck" />
 
@@ -184,7 +184,7 @@
                 android:layout_marginTop="23dp"
                 android:enabled="false"
                 android:text="@string/action_log_in"
-                android:textColor="@color/login_button_text"
+                android:textColor="@color/primary_charcoal"
                 android:textSize="20sp"
                 android:background="@drawable/bg_radius_8dp"
                 android:backgroundTint="@color/button_color_selector_gold"
@@ -197,7 +197,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="61dp"
                 android:text="@string/action_sign_up"
-                android:textColor="@color/signup_button_text"
+                android:textColor="@color/primary_white"
                 android:textSize="20sp"
                 android:background="@drawable/bg_login_fragment_sign_up_button"
                 android:fontFamily="@font/lufga_bold"

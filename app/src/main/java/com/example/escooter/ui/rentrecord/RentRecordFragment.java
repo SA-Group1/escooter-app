@@ -91,21 +91,21 @@ public class RentRecordFragment extends Fragment {
     private void setListeners(FragmentRentRecordBinding binding) {
         final ShapeableImageView goback_button = binding.gobackbutton;
         final Button payment_button = binding.paymentButton;
-        final Button rent_record_button = binding.rentRecordButton;
+        final Button profile_button = binding.profileButton;
 
         goback_button.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-            navController.navigate(R.id.action_personinfoFragment_to_navigation_menu);
+            navController.navigate(R.id.action_rentRecordFragment_to_navigation_menuFragment);
         });
 
         payment_button.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-            navController.navigate(R.id.action_personinfoFragment_to_paymentFragment);
+            navController.navigate(R.id.action_rentRecordFragment_to_paymentFragment);
         });
 
-        rent_record_button.setOnClickListener(v -> {
+        profile_button.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-            navController.navigate(R.id.action_personinfoFragment_to_rentRecordFragment);
+            navController.navigate(R.id.action_rentRecordFragment_to_personinfoFragment);
         });
     }
 

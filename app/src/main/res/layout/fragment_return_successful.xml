@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textColor="@color/white"
+            android:textColor="@color/primary_white"
             android:textSize="40sp"
             android:fontFamily="@font/lufga_bold"
             android:layout_marginTop="9dp"
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fragment_return_successful_title_text"
-            android:textColor="@color/white"
+            android:textColor="@color/primary_white"
             android:textSize="30sp"
             android:fontFamily="@font/lufga_regular"
             android:layout_marginTop="40dp"
@@ -75,7 +75,7 @@
                 android:layout_marginStart="11dp"
                 android:text="Rent"
                 android:textSize="12sp"
-                android:textColor="@color/scooter_id_text"
+                android:textColor="@color/secondary_silver"
                 android:fontFamily="@font/lufga_regular"
                 app:layout_constraintStart_toEndOf="@id/clock1"
                 app:layout_constraintTop_toTopOf="@id/clock1" />
@@ -87,7 +87,7 @@
                 android:layout_marginStart="16dp"
                 android:text="@string/rent_record_time"
                 android:textSize="14sp"
-                android:textColor="@color/white"
+                android:textColor="@color/primary_white"
                 android:fontFamily="@font/lufga_regular"
                 app:layout_constraintStart_toEndOf="@id/dash_line"
                 app:layout_constraintTop_toBottomOf="@id/rent_text" />
@@ -100,7 +100,7 @@
                 android:layout_marginTop="43dp"
                 android:text="@string/fee_text"
                 android:textSize="12sp"
-                android:textColor="@color/white"
+                android:textColor="@color/primary_white"
                 android:fontFamily="@font/lufga_regular"
                 app:layout_constraintStart_toEndOf="@id/escooter_rent_time"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -121,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/fee_image"
                     android:textSize="12sp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/primary_white"
                     android:fontFamily="@font/lufga_regular" />
 
                 <TextView
@@ -131,7 +131,7 @@
                     android:layout_marginStart="3dp"
                     android:text="@string/fee"
                     android:textSize="12sp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/primary_white"
                     android:fontFamily="@font/lufga_regular" />
             </LinearLayout>
 
@@ -142,7 +142,7 @@
                 android:layout_marginStart="30dp"
                 android:text="@string/rent_time_text"
                 android:textSize="12sp"
-                android:textColor="@color/white"
+                android:textColor="@color/primary_white"
                 android:fontFamily="@font/lufga_regular"
                 app:layout_constraintStart_toEndOf="@id/escooter_rent_time"
                 app:layout_constraintTop_toBottomOf="@id/fee_text" />
@@ -154,7 +154,7 @@
                 android:layout_marginEnd="24dp"
                 android:text="@string/rent_time"
                 android:textSize="12sp"
-                android:textColor="@color/white"
+                android:textColor="@color/primary_white"
                 android:fontFamily="@font/lufga_regular"
                 app:layout_constraintEnd_toEndOf="@id/duration_unit"
                 app:layout_constraintTop_toBottomOf="@id/fee_text" />
@@ -166,7 +166,7 @@
                 android:layout_marginStart="49dp"
                 android:text="@string/rent_time_unit"
                 android:textSize="12sp"
-                android:textColor="@color/white"
+                android:textColor="@color/primary_white"
                 android:fontFamily="@font/lufga_regular"
                 app:layout_constraintEnd_toEndOf="@id/fee_layout"
                 app:layout_constraintTop_toBottomOf="@id/fee_text" />
@@ -198,7 +198,7 @@
                 android:layout_marginStart="11dp"
                 android:text="Return"
                 android:textSize="12sp"
-                android:textColor="@color/scooter_id_text"
+                android:textColor="@color/secondary_silver"
                 android:fontFamily="@font/lufga_regular"
                 app:layout_constraintStart_toEndOf="@id/clock2"
                 app:layout_constraintTop_toBottomOf="@id/rent_text" />
@@ -210,7 +210,7 @@
                 android:layout_marginStart="16dp"
                 android:text="@string/rent_record_time"
                 android:textSize="14sp"
-                android:textColor="@color/white"
+                android:textColor="@color/primary_white"
                 android:fontFamily="@font/lufga_regular"
                 app:layout_constraintStart_toEndOf="@id/dash_line"
                 app:layout_constraintTop_toBottomOf="@id/return_text" />
@@ -224,7 +224,7 @@
             android:layout_marginTop="40dp"
             android:text="@string/fragment_return_successful_payment_method_text"
             android:textSize="20sp"
-            android:textColor="@color/white"
+            android:textColor="@color/primary_white"
             android:fontFamily="@font/lufga_regular"
             app:layout_constraintStart_toStartOf="@id/rent_record_layout"
             app:layout_constraintTop_toBottomOf="@id/rent_record_layout"/>
@@ -234,7 +234,7 @@
             android:layout_height="wrap_content"
             android:text="@string/fragment_return_successful_payment_method"
             android:textSize="15sp"
-            android:textColor="@color/fragment_return_successful_payment_method"
+            android:textColor="@color/primary_medium_gray"
             android:fontFamily="@font/lufga_regular"
             app:layout_constraintStart_toStartOf="@id/payment_method_text"
             app:layout_constraintTop_toBottomOf="@id/payment_method_text"/>
@@ -246,7 +246,7 @@
             android:layout_marginTop="35dp"
             android:text="@string/fragment_return_successful_payment_total_fee_text"
             android:textSize="20sp"
-            android:textColor="@color/white"
+            android:textColor="@color/primary_white"
             android:fontFamily="@font/lufga_regular"
             app:layout_constraintStart_toStartOf="@id/payment_method"
             app:layout_constraintTop_toBottomOf="@id/payment_method"/>
@@ -265,7 +265,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/total_fee_image"
                 android:textSize="30sp"
-                android:textColor="@color/total_fee"
+                android:textColor="@color/secondary_burnt_orange"
                 android:fontFamily="@font/lufga_regular"/>
 
             <TextView
@@ -275,7 +275,7 @@
                 android:layout_marginStart="3dp"
                 android:text="@string/total_fee"
                 android:textSize="30sp"
-                android:textColor="@color/total_fee"
+                android:textColor="@color/secondary_burnt_orange"
                 android:fontFamily="@font/lufga_regular"/>
         </LinearLayout>
 
@@ -285,7 +285,7 @@
             android:layout_height="61dp"
             android:layout_marginTop="40dp"
             android:text="@string/action_continue"
-            android:textColor="@color/sign_up_button_text"
+            android:textColor="@color/primary_charcoal"
             android:textSize="20sp"
             android:background="@drawable/bg_radius_8dp"
             android:backgroundTint="@color/primary_gold"

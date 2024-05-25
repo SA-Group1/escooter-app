@@ -5,5 +5,5 @@
     android:layout_height="35dp"
     android:fontFamily="@font/lufga_light"
     android:textSize="14dp"
-    android:textColor="@color/login_text"
+    android:textColor="@color/primary_medium_gray"
     android:gravity="center_vertical" />

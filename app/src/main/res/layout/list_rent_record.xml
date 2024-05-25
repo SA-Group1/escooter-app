@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:background="@drawable/bg_radius_20dp"
-        android:backgroundTint="@color/rent_record_button_background"
+        android:backgroundTint="@color/primary_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
             android:layout_marginTop="17dp"
             android:fontFamily="@font/lufga_regular"
             android:text="@string/scooter_model"
-            android:textColor="@color/scooter_model"
+            android:textColor="@color/primary_charcoal"
             android:textSize="18sp" />
 
         <TextView
@@ -36,7 +36,7 @@
             android:layout_marginStart="26dp"
             android:fontFamily="@font/lufga_regular"
             android:text="@string/scooter_id"
-            android:textColor="@color/scooter_id_text"
+            android:textColor="@color/secondary_silver"
             android:textSize="12sp" />
 
         <TextView
@@ -48,7 +48,7 @@
             android:layout_alignParentEnd="true"
             android:fontFamily="@font/lufga_regular"
             android:text="@string/rent_record_number"
-            android:textColor="@color/scooter_id_text"
+            android:textColor="@color/secondary_silver"
             android:textSize="12sp" />
 
         <ImageView
@@ -57,7 +57,7 @@
             android:layout_height="1dp"
             android:layout_below="@id/escooter_id"
             android:layout_marginTop="12dp"
-            android:background="@color/divider" />
+            android:background="@color/primary_medium_gray" />
 
         <ImageView
             android:id="@+id/clock1"
@@ -78,7 +78,7 @@
             android:layout_toEndOf="@id/clock1"
             android:fontFamily="@font/lufga_regular"
             android:text="Rent"
-            android:textColor="@color/scooter_id_text"
+            android:textColor="@color/secondary_silver"
             android:textSize="12sp" />
 
         <TextView
@@ -90,7 +90,7 @@
             android:layout_toEndOf="@id/dash_line"
             android:fontFamily="@font/lufga_regular"
             android:text="@string/rent_record_time"
-            android:textColor="@color/rent_record_time"
+            android:textColor="@color/primary_charcoal"
             android:textSize="14sp" />
 
         <TextView
@@ -103,7 +103,7 @@
             android:layout_alignStart="@id/rent_time_text"
             android:fontFamily="@font/lufga_regular"
             android:text="@string/fee_text"
-            android:textColor="@color/rent_record_time"
+            android:textColor="@color/primary_charcoal"
             android:textSize="12sp" />
 
         <TextView
@@ -114,7 +114,7 @@
             android:layout_marginTop="17dp"
             android:fontFamily="@font/lufga_regular"
             android:text="@string/fee_image"
-            android:textColor="@color/rent_record_time"
+            android:textColor="@color/primary_charcoal"
             android:textSize="12sp"
             android:layout_below="@id/divider"
             android:layout_toStartOf="@id/feePerMin"/>
@@ -127,7 +127,7 @@
             android:layout_marginEnd="27dp"
             android:fontFamily="@font/lufga_regular"
             android:text="@string/fee"
-            android:textColor="@color/rent_record_time"
+            android:textColor="@color/primary_charcoal"
             android:textSize="12sp"
             android:layout_alignParentEnd="true"
             android:layout_below="@id/divider"/>
@@ -142,7 +142,7 @@
             android:layout_marginTop="3dp"
             android:fontFamily="@font/lufga_regular"
             android:text="@string/rent_time_text"
-            android:textColor="@color/rent_record_time"
+            android:textColor="@color/primary_charcoal"
             android:textSize="12sp" />
 
         <TextView
@@ -155,7 +155,7 @@
             android:layout_marginEnd="3dp"
             android:fontFamily="@font/lufga_regular"
             android:text="@string/rent_time"
-            android:textColor="@color/rent_record_time"
+            android:textColor="@color/primary_charcoal"
             android:textSize="12sp" />
 
         <TextView
@@ -168,7 +168,7 @@
             android:layout_alignParentEnd="true"
             android:fontFamily="@font/lufga_regular"
             android:text="@string/rent_time_unit"
-            android:textColor="@color/rent_record_time"
+            android:textColor="@color/primary_charcoal"
             android:textSize="12sp" />
 
         <View
@@ -199,7 +199,7 @@
             android:layout_toEndOf="@id/clock2"
             android:fontFamily="@font/lufga_regular"
             android:text="Return"
-            android:textColor="@color/scooter_id_text"
+            android:textColor="@color/secondary_silver"
             android:textSize="12sp" />
 
         <TextView
@@ -211,7 +211,7 @@
             android:layout_marginBottom="27dp"
             android:fontFamily="@font/lufga_regular"
             android:text="@string/return_record_time"
-            android:textColor="@color/return_record_time"
+            android:textColor="@color/primary_charcoal"
             android:textSize="14sp" />
 
         <TextView
@@ -223,7 +223,7 @@
             android:layout_alignStart="@id/rent_time_text"
             android:fontFamily="@font/lufga_regular"
             android:text="@string/total_fee_text"
-            android:textColor="@color/rent_record_time"
+            android:textColor="@color/primary_charcoal"
             android:textSize="12sp" />
 
         <LinearLayout
@@ -240,7 +240,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lufga_regular"
                 android:text="@string/total_fee_image"
-                android:textColor="@color/total_fee"
+                android:textColor="@color/secondary_burnt_orange"
                 android:textSize="12sp" />
 
             <TextView
@@ -250,7 +250,7 @@
                 android:layout_marginStart="3dp"
                 android:fontFamily="@font/lufga_regular"
                 android:text="@string/total_fee"
-                android:textColor="@color/total_fee"
+                android:textColor="@color/secondary_burnt_orange"
                 android:textSize="12sp" />
         </LinearLayout>
     </RelativeLayout>

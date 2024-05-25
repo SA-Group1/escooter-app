@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/bg_radius_20dp"
-            android:backgroundTint="@color/translucent"
+            android:backgroundTint="@color/accent_translucent_gray"
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingStart="16dp"
@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lufga_medium"
                     android:text="@string/person_name"
-                    android:textColor="@color/person_name_text"
+                    android:textColor="@color/primary_white"
                     android:textSize="20sp"
                     tools:ignore="TextContrastCheck" />
 
@@ -50,8 +50,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lufga_regular"
-                    android:text="@string/persono_info"
-                    android:textColor="@color/person_other_info_text"
+                    android:text="@string/person_info"
+                    android:textColor="@color/primary_medium_gray"
                     android:textSize="12sp"
                     tools:ignore="TextContrastCheck" />
 
@@ -67,7 +67,7 @@
                 android:background="@drawable/bg_radius_20dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/personimage"
-                app:shapeAppearanceOverlay="@style/roundimageview" />
+                app:shapeAppearanceOverlay="@style/round_image_view" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

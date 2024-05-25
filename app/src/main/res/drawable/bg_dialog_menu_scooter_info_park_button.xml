@@ -3,7 +3,7 @@
 
     <item>
         <shape>
-            <solid android:color="@color/dialog_menu_rent_info_park_button_background_border"/>
+            <solid android:color="@color/secondary_dark_gray"/>
             <corners android:radius="20dp"/>
         </shape>
     </item>
@@ -13,7 +13,7 @@
         android:right="3dp"
         android:top="3dp">
         <shape>
-            <solid android:color="@color/white"/>
+            <solid android:color="@color/primary_white"/>
             <corners android:radius="20dp"/>
         </shape>
     </item>

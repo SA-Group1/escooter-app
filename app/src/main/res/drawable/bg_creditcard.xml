@@ -4,9 +4,9 @@
 
     <gradient
         android:angle="225"
-        android:startColor="@color/credit_card_background_start"
-        android:centerColor="@color/credit_card_background_center"
-        android:endColor="@color/credit_card_background_end" />"
+        android:startColor="@color/accent_gold"
+        android:centerColor="@color/accent_light_gold"
+        android:endColor="@color/accent_gold" />"
         <corners android:radius="23dp"/>
 
 </shape>

@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:textColor="@color/white"
+        android:textColor="@color/primary_white"
         android:textSize="40sp"
         android:fontFamily="@font/lufga_bold"
         android:layout_marginTop="9dp"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/lufga_bold"
             android:text="@string/app_description4"
-            android:textColor="@color/login_text"
+            android:textColor="@color/primary_medium_gray"
             android:textSize="20sp"/>
         <TextView
             android:id="@+id/login_text_app_description_1"
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/lufga_bold"
             android:text="@string/app_description5"
-            android:textColor="@color/login_text"
+            android:textColor="@color/primary_medium_gray"
             android:textSize="20sp"
             android:layout_centerInParent="true"
             android:layout_below="@id/login_text_welcome" />
@@ -83,13 +83,13 @@
             android:paddingStart="12dp"
             android:paddingBottom="8dp"
             android:fontFamily="@font/lufga_light"
-            android:textColor="@color/white"
-            android:textColorHint="@color/login_text"
+            android:textColor="@color/primary_white"
+            android:textColorHint="@color/primary_medium_gray"
             android:textSize="14sp"
             android:hint="@string/prompt_account"
             android:inputType="textEmailAddress"
             android:background="@drawable/bg_radius_8dp"
-            android:backgroundTint="@color/login_frame"
+            android:backgroundTint="@color/secondary_dark_gray"
             android:selectAllOnFocus="true" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -99,7 +99,7 @@
             android:layout_marginTop="8dp"
             app:hintEnabled="false"
             app:endIconMode="password_toggle"
-            app:endIconTint="@color/login_text"
+            app:endIconTint="@color/primary_medium_gray"
             android:layout_below="@id/user_account">
 
             <EditText
@@ -112,10 +112,10 @@
                 android:hint="@string/prompt_password"
                 android:fontFamily="@font/lufga_light"
                 android:textSize="14sp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/login_text"
+                android:textColor="@color/primary_white"
+                android:textColorHint="@color/primary_medium_gray"
                 android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/login_frame"
+                android:backgroundTint="@color/secondary_dark_gray"
                 android:inputType="textPassword"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -129,13 +129,13 @@
             android:paddingBottom="8dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/lufga_light"
-            android:textColor="@color/white"
+            android:textColor="@color/primary_white"
             android:textSize="14dp"
-            android:textColorHint="@color/login_text"
+            android:textColorHint="@color/primary_medium_gray"
             android:hint="@string/prompt_user_name"
             android:inputType="textCapSentences"
             android:background="@drawable/bg_radius_8dp"
-            android:backgroundTint="@color/login_frame"
+            android:backgroundTint="@color/secondary_dark_gray"
             android:selectAllOnFocus="true"
             android:layout_below="@id/user_password_column"
             android:autofillHints="username"/>
@@ -149,13 +149,13 @@
             android:paddingBottom="8dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/lufga_light"
-            android:textColor="@color/white"
-            android:textColorHint="@color/login_text"
+            android:textColor="@color/primary_white"
+            android:textColorHint="@color/primary_medium_gray"
             android:textSize="14sp"
             android:hint="@string/prompt_email"
             android:inputType="textEmailAddress"
             android:background="@drawable/bg_radius_8dp"
-            android:backgroundTint="@color/login_frame"
+            android:backgroundTint="@color/secondary_dark_gray"
             android:selectAllOnFocus="true"
             android:layout_below="@id/user_name"/>
 
@@ -168,13 +168,13 @@
             android:paddingBottom="8dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/lufga_light"
-            android:textColor="@color/white"
-            android:textColorHint="@color/login_text"
+            android:textColor="@color/primary_white"
+            android:textColorHint="@color/primary_medium_gray"
             android:textSize="14dp"
             android:hint="@string/prompt_phone_number"
             android:inputType="phone"
             android:background="@drawable/bg_radius_8dp"
-            android:backgroundTint="@color/login_frame"
+            android:backgroundTint="@color/secondary_dark_gray"
             android:selectAllOnFocus="true"
             android:layout_below="@id/user_email"/>
 
@@ -189,7 +189,7 @@
             android:paddingBottom="8dp"
             android:prompt="@string/prompt_select_option"
             android:background="@drawable/bg_radius_8dp"
-            android:backgroundTint="@color/login_frame"
+            android:backgroundTint="@color/secondary_dark_gray"
             android:layout_below="@id/user_phone_number"/>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -198,7 +198,7 @@
             android:layout_height="61dp"
             android:layout_marginBottom="29dp"
             android:text="@string/action_sign_up"
-            android:textColor="@color/sign_up_button_text"
+            android:textColor="@color/primary_charcoal"
             android:textSize="20sp"
             android:background="@drawable/bg_radius_8dp"
             android:backgroundTint="@color/primary_gold"

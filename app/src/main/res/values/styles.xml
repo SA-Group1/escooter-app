@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="roundimageview" parent="">
+    <style name="round_image_view" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>
-        <item name="color">@color/transparent</item>
+        <item name="color">@color/primary_transparent</item>
     </style>
     <style name="CustomScrollBar" parent="">
         <item name="android:scrollbarThumbVertical">@drawable/person_info_scroll_bar</item>

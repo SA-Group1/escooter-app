@@ -57,11 +57,11 @@
                 android:layout_width="91dp"
                 android:layout_height="35dp"
                 android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/nonchosen_button_background"
+                android:backgroundTint="@color/secondary_dark_gray"
                 android:fontFamily="@font/lufga_bold"
                 android:text="@string/profile_button_text"
                 android:textAllCaps="false"
-                android:textColor="@color/nonchosen_button_text"
+                android:textColor="@color/primary_medium_gray"
                 android:textSize="12sp"
                 tools:ignore="HardcodedText,TouchTargetSizeCheck" />
 
@@ -79,7 +79,7 @@
                 android:fontFamily="@font/lufga_bold"
                 android:text="@string/payment_button_text"
                 android:textAllCaps="false"
-                android:textColor="@color/chosen_button_text"
+                android:textColor="@color/primary_charcoal"
                 android:textSize="12sp"
                 tools:ignore="HardcodedText" />
 
@@ -93,11 +93,11 @@
                 android:layout_width="91dp"
                 android:layout_height="35dp"
                 android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/nonchosen_button_background"
+                android:backgroundTint="@color/secondary_dark_gray"
                 android:fontFamily="@font/lufga_bold"
                 android:text="@string/rent_record_button_text"
                 android:textAllCaps="false"
-                android:textColor="@color/nonchosen_button_text"
+                android:textColor="@color/primary_medium_gray"
                 android:textSize="12sp"
                 tools:ignore="HardcodedText" />
         </LinearLayout>
@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="120dp"
             android:text="Credit Card"
-            android:textColor="@color/login_text"
+            android:textColor="@color/primary_medium_gray"
             android:textSize="12sp"
             android:fontFamily="@font/lufga_light"/>
 
@@ -161,14 +161,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:textColor="@color/primary_white"
                         android:text=". . . ."
                         android:fontFamily="@font/lufga_medium"
                         android:textSize="24sp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:textColor="@color/primary_white"
                         android:layout_marginStart="16dp"
                         android:text=". . . ."
                         android:fontFamily="@font/lufga_medium"
@@ -176,7 +176,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:textColor="@color/primary_white"
                         android:layout_marginStart="16dp"
                         android:text=". . . ."
                         android:fontFamily="@font/lufga_medium"
@@ -185,7 +185,7 @@
                         android:id="@+id/creditcard_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:textColor="@color/primary_white"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="5dp"
                         android:text="0123"
@@ -202,7 +202,7 @@
                         android:id="@+id/valid_thru"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:textColor="@color/primary_white"
                         android:text="VALID THRU"
                         android:fontFamily="@font/lufga_medium"
                         android:textSize="12sp" />
@@ -213,7 +213,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/valid_thru"
                         android:layout_marginStart="23dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/primary_white"
                         android:text="CVV"
                         android:fontFamily="@font/lufga_medium"
                         android:textSize="12sp" />
@@ -224,7 +224,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/valid_thru"
                         android:letterSpacing="0.19"
-                        android:textColor="@color/white"
+                        android:textColor="@color/primary_white"
                         android:text="09/24"
                         android:fontFamily="@font/lufga_medium"
                         android:textSize="12sp" />
@@ -235,7 +235,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/valid_thru_date"
                         android:layout_marginStart="47dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/primary_white"
                         android:text=". . ."
                         android:fontFamily="@font/lufga_medium"
                         android:textSize="24sp" />
@@ -270,7 +270,7 @@
                 android:layout_marginTop="21dp"
                 android:layout_marginStart="37dp"
                 android:text="@string/add_card_text"
-                android:textColor="@color/black"
+                android:textColor="@color/secondary_black_opaque"
                 android:textSize="14sp"
                 android:fontFamily="@font/lufga_regular"
                 android:layout_toEndOf="@id/add_button"/>
@@ -287,7 +287,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Member Card"
-                android:textColor="@color/login_text"
+                android:textColor="@color/primary_medium_gray"
                 android:textSize="12sp"
                 android:fontFamily="@font/lufga_light"
                 android:layout_marginStart="18dp"/>
@@ -310,7 +310,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/member_card_text"
+                        android:textColor="@color/primary_charcoal"
                         android:text="Expiration date"
                         android:fontFamily="@font/lufga_light"
                         android:textSize="14sp" />
@@ -324,7 +324,7 @@
                         android:id="@+id/member_card_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/member_card_text"
+                        android:textColor="@color/primary_charcoal"
                         android:layout_marginEnd="29dp"
                         android:text="2024/5/16"
                         android:fontFamily="@font/lufga_light"
