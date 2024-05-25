@@ -239,7 +239,7 @@
             android:text="@string/dialog_menu_scooter_info_park_button_text"
             android:textColor="@color/primary_charcoal"
             android:textSize="18sp"
-            android:background="@drawable/bg_dialog_menu_scooter_info_park_button"
+            android:background="@drawable/bg_border_radius_20dp_dark_gray"
             android:fontFamily="@font/lufga_bold"
             android:textAllCaps="false"
             android:layout_below="@id/total_fee_layout" />

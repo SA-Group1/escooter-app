@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ import com.example.escooter.R;
 import com.example.escooter.data.model.LoggedInUser;
 import com.example.escooter.databinding.FragmentSignUpBinding;
 import com.example.escooter.network.HttpRequest;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,6 +42,7 @@ public class SignUpFragment extends Fragment {
         // 使用View Binding初始化布局
         binding = FragmentSignUpBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        final ShapeableImageView goback_button = binding.gobackbutton;
         spinnerOptions = getResources().getStringArray(R.array.spinner_options);  // 加载一次，复用
         final AppCompatButton signUpButton = binding.signUpButton;
 
@@ -90,6 +93,12 @@ public class SignUpFragment extends Fragment {
                 Toast.makeText(getContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
             }
         });
+
+        goback_button.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+            navController.navigate(R.id.action_signUpFragment_to_loginFragment);
+        });
+
 
         // 设置Spinner和事件监听器
         setUpSpinner();
