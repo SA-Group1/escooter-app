@@ -22,8 +22,6 @@ import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.DialogPaymentAddCreditCardBinding;
 import com.example.escooter.databinding.DialogPaymentUnbindCreditCardBinding;
 import com.example.escooter.databinding.FragmentPaymentBinding;
-import com.example.escooter.service.postBindCreditCardService;
-import com.example.escooter.service.postUnbindCreditCardService;
 import com.example.escooter.ui.user.UserResult;
 import com.example.escooter.ui.user.UserViewModel;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -128,7 +126,6 @@ public class PaymentFragment extends Fragment {
         DialogPaymentUnbindCreditCardBinding dialogBinding = DialogPaymentUnbindCreditCardBinding.bind(dialogView);
         dialogBinding.cancelButton.setOnClickListener(v -> dialog.dismiss());
         dialogBinding.unbindButton.setOnClickListener(v -> {
-            new postUnbindCreditCardService(account, password);
 
             dialog.dismiss();
         });
