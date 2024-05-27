@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
-import com.example.escooter.R;
 import com.example.escooter.callback.LoginCallback;
 import com.example.escooter.service.LoginService;
 

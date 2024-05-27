@@ -1,22 +1,8 @@
 package com.example.escooter.data.model;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class CreditCard {
     private String cardNumber;
     private String expirationDate;
-
-    public CreditCard(String cardNumber, String expirationDate) {
-        this.cardNumber = cardNumber;
-        this.expirationDate = expirationDate;
-    }
-
-    public static CreditCard fromJson(JSONObject jsonObject) throws JSONException {
-        String cardNumber = jsonObject.getString("cardNumber");
-        String expirationDate = jsonObject.getString("expirationDate");
-        return new CreditCard(cardNumber, expirationDate);
-    }
 
     // Getter 和 Setter 方法
     public String getCreditCardNumber() {
@@ -27,4 +13,11 @@ public class CreditCard {
         return expirationDate;
     }
 
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
+    }
 }

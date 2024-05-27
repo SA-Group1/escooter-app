@@ -45,7 +45,7 @@ public class getRentableEscooterListService {
                     //切換為ui線程，才能使用google map的更改
                     ((Activity) context).runOnUiThread(() -> {
                         LatLng Escooter = new LatLng(latitude, longitude);
-                        googleMap.addMarker(new MarkerOptions().position(Escooter).title(escooterId).icon(BitmapDescriptorFactory.fromResource(R.drawable.escooter)));
+                        googleMap.addMarker(new MarkerOptions().position(Escooter).title(escooterId).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_escooter)));
                     });
                 }
             } catch (JSONException e) {

@@ -3,7 +3,6 @@ package com.example.escooter.ui.login;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -19,12 +18,14 @@ import android.widget.Toast;
 
 import com.example.escooter.databinding.FragmentLoginBinding;
 import com.example.escooter.R;
-import com.example.escooter.service.getUserDataService;
+import com.example.escooter.ui.user.UserViewModel;
+import com.example.escooter.ui.user.UserViewModelFactory;
 import com.example.escooter.utils.SimpleTextWatcher;
 
 public class LoginFragment extends Fragment {
 
     private LoginViewModel loginViewModel;
+    private UserViewModel userViewModel;
     private FragmentLoginBinding binding;
 
     @Nullable
@@ -38,6 +39,7 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
         setupUI();
         setupObservers();
@@ -141,8 +143,10 @@ public class LoginFragment extends Fragment {
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
+        String account = binding.account.getText().toString();
+        String password = binding.password.getText().toString();
+        userViewModel.setUserCredential(account,password);
 
-        new getUserDataService(requireContext(), model.getUserName(), binding.password.getText().toString());
         String welcome = getString(R.string.welcome) + model.getUserName();
         showToast(welcome);
         navigateToMenuFragment();

@@ -5,16 +5,17 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -23,13 +24,21 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.escooter.R;
+import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.ComponentMenuRentInfoBinding;
 import com.example.escooter.databinding.ComponentMenuScooterInfoBinding;
+import com.example.escooter.databinding.FragmentLoginBinding;
 import com.example.escooter.databinding.FragmentMenuBinding;
 import com.example.escooter.databinding.FragmentPaymentBinding;
 import com.example.escooter.network.HttpRequest;
 import com.example.escooter.service.getRentableEscooterListService;
-import com.example.escooter.ui.viewmodel.UserViewModel;
+import com.example.escooter.ui.login.LoginResult;
+import com.example.escooter.ui.login.LoginViewModel;
+import com.example.escooter.ui.login.LoginViewModelFactory;
+import com.example.escooter.ui.user.UserResult;
+import com.example.escooter.ui.user.UserViewModel;
+import com.example.escooter.ui.user.UserViewModelFactory;
+import com.example.escooter.utils.SimpleTextWatcher;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -39,16 +48,13 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.material.imageview.ShapeableImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,28 +69,34 @@ public class MenuFragment extends Fragment {
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationCallback locationCallback;
     private Polyline currentPolyline;
+    private UserViewModel userViewModel;
     private View view = null;
     private String account;
     private String password;
 //    private String ownLongitude;
 //    private String ownLatitude;
 
+    @Nullable
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMenuBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        return binding.getRoot();
+    }
 
-        final ConstraintLayout personinfobutton = binding.personinfobutton.getRoot();
-        personinfobutton.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-            navController.navigate(R.id.action_navigation_menu_to_personinfoFragment);
-        });
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
-        // 獲取 SupportMapFragment 的實例
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        // 異步加載地圖
-        assert mapFragment != null;
-        mapFragment.getMapAsync(callback);
+        setupMapFragment();
+        setupObservers();
+        setupListeners();
+        setupFusedLocation();
+        startLocationUpdates();
+        userViewModel.getUserData();
+    }
 
+    private void setupFusedLocation() {
         // 初始化 FusedLocationProviderClient
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity());
 
@@ -100,21 +112,51 @@ public class MenuFragment extends Fragment {
                 }
             }
         };
-        startLocationUpdates();
-        setUserViewModel(binding);
-
-        return root;
     }
 
-    private void setUserViewModel(FragmentMenuBinding binding) {
-        UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-        userViewModel.getUserData().observe(getViewLifecycleOwner(), user -> {
-            if (user != null) {
-                account = user.getAccount();
-                password = user.getPassword();
-                TextView personNameTextView = binding.personinfobutton.personNameTextView;
-                personNameTextView.setText(user.getUserName());
-            }
+    private void setupMapFragment() {
+        // 獲取 SupportMapFragment 的實例
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        // 異步加載地圖
+        assert mapFragment != null;
+        mapFragment.getMapAsync(callback);
+    }
+
+    private void setupObservers() {
+        userViewModel.getUserResult().observe(getViewLifecycleOwner(), this::handleUserResult);
+
+    }
+    private void handleUserResult(UserResult userResult) {
+
+        if (userResult == null) {
+            return;
+        }
+        if (userResult.getError() != null) {
+            showFailed(userResult.getError());
+        }
+        if (userResult.getUser() != null) {
+            User user = userResult.getUser();
+            account = user.getAccount();
+            password = user.getPassword();
+            TextView personNameTextView = binding.personinfobutton.personNameTextView;
+            personNameTextView.setText(user.getUserName());
+        }
+    }
+
+    private void showFailed(Exception errorString) {
+        showToast(errorString.toString());
+    }
+    private void showToast(String message) {
+        if (getContext() != null && getContext().getApplicationContext() != null) {
+            Toast.makeText(getContext().getApplicationContext(), message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void setupListeners() {
+        final ConstraintLayout personinfobutton = binding.personinfobutton.getRoot();
+        personinfobutton.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+            navController.navigate(R.id.action_navigation_menu_to_personinfoFragment);
         });
     }
 

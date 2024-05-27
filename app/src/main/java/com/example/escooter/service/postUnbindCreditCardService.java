@@ -1,14 +1,6 @@
 package com.example.escooter.service;
 
-import android.app.Activity;
-import android.content.Context;
-
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
-
-import com.example.escooter.data.model.User;
 import com.example.escooter.network.HttpRequest;
-import com.example.escooter.ui.viewmodel.UserViewModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;

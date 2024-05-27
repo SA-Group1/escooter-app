@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -14,40 +15,77 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.escooter.R;
 import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.DialogPaymentAddCreditCardBinding;
 import com.example.escooter.databinding.DialogPaymentUnbindCreditCardBinding;
 import com.example.escooter.databinding.FragmentPaymentBinding;
-import com.example.escooter.service.getUserDataService;
 import com.example.escooter.service.postBindCreditCardService;
 import com.example.escooter.service.postUnbindCreditCardService;
-import com.example.escooter.ui.viewmodel.UserViewModel;
+import com.example.escooter.ui.user.UserResult;
+import com.example.escooter.ui.user.UserViewModel;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.Objects;
 
 
 public class PaymentFragment extends Fragment {
+    private FragmentPaymentBinding binding;
+    private UserViewModel userViewModel;
     private String account;
     private String password;
-    private String username;
 
+    @Nullable
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentPaymentBinding binding = FragmentPaymentBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        binding = FragmentPaymentBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
         initializeViews(binding);
         setListeners(binding);
-        setUserViewModel(binding);
-
-        return root;
+        setupObservers();
+        userViewModel.getUserData();
     }
 
     private void initializeViews(FragmentPaymentBinding binding) {
         binding.creditcardnfo.setVisibility(View.GONE);
+    }
+
+    private void setupObservers() {
+        userViewModel.getUserResult().observe(getViewLifecycleOwner(), this::handleUserResult);
+    }
+    private void handleUserResult(UserResult userResult) {
+
+        if (userResult == null) {
+            return;
+        }
+        if (userResult.getError() != null) {
+            showFailed(userResult.getError());
+        }
+        if (userResult.getUser() != null) {
+            User user = userResult.getUser();
+            account = user.getAccount();
+            password = user.getPassword();
+            updateTextViewInfo(binding,user);
+        }
+    }
+    private void showFailed(Exception errorString) {
+        showToast(errorString.toString());
+    }
+    private void showToast(String message) {
+        if (getContext() != null && getContext().getApplicationContext() != null) {
+            Toast.makeText(getContext().getApplicationContext(), message, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void setListeners(FragmentPaymentBinding binding) {
@@ -91,7 +129,7 @@ public class PaymentFragment extends Fragment {
         dialogBinding.cancelButton.setOnClickListener(v -> dialog.dismiss());
         dialogBinding.unbindButton.setOnClickListener(v -> {
             new postUnbindCreditCardService(account, password);
-            new getUserDataService(requireContext(), account, password);
+
             dialog.dismiss();
         });
 
@@ -112,24 +150,12 @@ public class PaymentFragment extends Fragment {
         DialogPaymentAddCreditCardBinding dialogBinding = DialogPaymentAddCreditCardBinding.bind(dialogView);
         dialogBinding.cancelButton.setOnClickListener(b -> dialog.dismiss());
         dialogBinding.confirmButton.setOnClickListener(b -> {
-            new postBindCreditCardService(account, password, username,dialogBinding);
-            new getUserDataService(requireContext(), account, password);
+//            new postBindCreditCardService(account, password, username,dialogBinding);
+//            new getUserDataService(requireContext(), account, password);
             dialog.dismiss();
         });
 
         return dialog;
-    }
-
-    private void setUserViewModel(FragmentPaymentBinding binding) {
-        UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-        userViewModel.getUserData().observe(getViewLifecycleOwner(), user -> {
-            if (user != null) {
-                username = user.getUserName();
-                account = user.getAccount();
-                password = user.getPassword();
-                updateTextViewInfo(binding,user);
-            }
-        });
     }
 
     private void updateTextViewInfo(FragmentPaymentBinding binding, User user) {

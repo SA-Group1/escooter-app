@@ -8,6 +8,7 @@
     <style name="Theme.AppCompat.Light.NoActionBar" parent="Base.Theme.AppCompat.Light.NoActionBar" />
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowBackground">@drawable/bg_main</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>

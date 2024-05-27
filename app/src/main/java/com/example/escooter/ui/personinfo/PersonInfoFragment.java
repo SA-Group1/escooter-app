@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -17,29 +19,61 @@ import androidx.navigation.Navigation;
 import com.example.escooter.R;
 import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.DialogPersonInfoEditProfileBinding;
+import com.example.escooter.databinding.FragmentPaymentBinding;
 import com.example.escooter.databinding.FragmentPersonInfoBinding;
-import com.example.escooter.service.getUserDataService;
 import com.example.escooter.service.putUpdataUserDataService;
-import com.example.escooter.ui.viewmodel.UserViewModel;
+import com.example.escooter.ui.user.UserResult;
+import com.example.escooter.ui.user.UserViewModel;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.Objects;
 
 public class PersonInfoFragment extends Fragment {
-
+    private FragmentPersonInfoBinding binding;
+    private UserViewModel userViewModel;
     private String account;
     private String password;
 
+    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentPersonInfoBinding binding = FragmentPersonInfoBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        binding = FragmentPersonInfoBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
         setListeners(binding);
-        setUserViewModel(binding);
+        setupObservers();
+        userViewModel.getUserData();
+    }
 
-        return root;
+    private void setupObservers() {
+        userViewModel.getUserResult().observe(getViewLifecycleOwner(), this::handleUserResult);
+    }
+    private void handleUserResult(UserResult userResult) {
+
+        if (userResult == null) {
+            return;
+        }
+        if (userResult.getError() != null) {
+            showFailed(userResult.getError());
+        }
+        if (userResult.getUser() != null) {
+            User user = userResult.getUser();
+            updateTextViewInfo(binding, user);
+        }
+    }
+    private void showFailed(Exception errorString) {
+        showToast(errorString.toString());
+    }
+    private void showToast(String message) {
+        if (getContext() != null && getContext().getApplicationContext() != null) {
+            Toast.makeText(getContext().getApplicationContext(), message, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void setListeners(FragmentPersonInfoBinding binding) {
@@ -81,22 +115,11 @@ public class PersonInfoFragment extends Fragment {
         dialogBinding.cancelButton.setOnClickListener(b -> dialog.dismiss());
         dialogBinding.bindButton.setOnClickListener(b -> {
             new putUpdataUserDataService(account, password, dialog, dialogBinding);
-            new getUserDataService(requireContext(), account, password);
+//            new getUserDataService(requireContext(), account, password);
             dialog.dismiss();
         });
 
         return dialog;
-    }
-
-    private void setUserViewModel(FragmentPersonInfoBinding binding) {
-        UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-        userViewModel.getUserData().observe(getViewLifecycleOwner(), user -> {
-            if (user != null) {
-                account = user.getAccount();
-                password = user.getPassword();
-                updateTextViewInfo(binding, user);
-            }
-        });
     }
 
     private void updateTextViewInfo(FragmentPersonInfoBinding binding, User user) {
