@@ -19,9 +19,7 @@ import androidx.navigation.Navigation;
 import com.example.escooter.R;
 import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.DialogPersonInfoEditProfileBinding;
-import com.example.escooter.databinding.FragmentPaymentBinding;
 import com.example.escooter.databinding.FragmentPersonInfoBinding;
-import com.example.escooter.service.putUpdataUserDataService;
 import com.example.escooter.ui.user.UserResult;
 import com.example.escooter.ui.user.UserViewModel;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -114,7 +112,12 @@ public class PersonInfoFragment extends Fragment {
         DialogPersonInfoEditProfileBinding dialogBinding = DialogPersonInfoEditProfileBinding.bind(dialogView);
         dialogBinding.cancelButton.setOnClickListener(b -> dialog.dismiss());
         dialogBinding.bindButton.setOnClickListener(b -> {
-            new putUpdataUserDataService(account, password, dialog, dialogBinding);
+            String username = dialogBinding.userName.getText().toString();
+            String email = dialogBinding.userEmail.getText().toString();
+            String phoneNumber = dialogBinding.userPhoneNumber.getText().toString();
+            userViewModel.updataUserCredential(username,email,phoneNumber);
+            userViewModel.updataUserData();
+
 //            new getUserDataService(requireContext(), account, password);
             dialog.dismiss();
         });

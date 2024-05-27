@@ -2,6 +2,7 @@ package com.example.escooter.repository;
 
 import com.example.escooter.BuildConfig;
 import com.example.escooter.callback.HttpResultCallback;
+import com.example.escooter.callback.UpdataUserCallback;
 import com.example.escooter.callback.UserCallback;
 import com.example.escooter.data.model.CreditCard;
 import com.example.escooter.data.model.MemberCard;
@@ -52,6 +53,38 @@ public class UserRepository {
                     user.setMemberCard(memberCard);
 
                     callback.onSuccess(user);
+                } catch (JSONException e) {
+                    callback.onFailure(e);
+                }
+            }
+            @Override
+            public void onError(Exception e) {
+                System.out.println(e.toString());
+                callback.onFailure(e);
+            }
+        });
+    }
+
+    public void updataUserData(String account, String password, String username, String email, String phoneNumber, UpdataUserCallback callback) {
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("account", account);
+            body.put("password", password);
+            body.put("userName", username);
+            body.put("email", email);
+            body.put("phoneNumber", phoneNumber);
+        } catch (
+                JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        HttpRequest.httpRequest(BuildConfig.BASE_URL + "/updateUserData", "PUT", body, new HttpResultCallback<JSONObject>() {
+            @Override
+            public void onResult(JSONObject result) {
+                try {
+                    boolean isUpdataUserData = result.getBoolean("status");
+                    callback.onSuccess(isUpdataUserData);
                 } catch (JSONException e) {
                     callback.onFailure(e);
                 }
