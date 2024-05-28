@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.escooter.callback.ParkCallback;
 import com.example.escooter.callback.RentalCallback;
 import com.example.escooter.callback.UpdataUserCallback;
 import com.example.escooter.callback.UserCallback;
@@ -21,11 +22,18 @@ import java.util.List;
 public class RentViewModel extends ViewModel {
     private final RentalService RentalService = new RentalService();
     private final MutableLiveData<RentResult> rentResult = new MutableLiveData<>();
+    private final MutableLiveData<ParkResult> ParkResult = new MutableLiveData<>();
     private final MutableLiveData<String> ownLongitude = new MutableLiveData<>();
     private final MutableLiveData<String> ownLatitude = new MutableLiveData<>();
+    private final MutableLiveData<String> account = new MutableLiveData<>();
+    private final MutableLiveData<String> password = new MutableLiveData<>();
+    private final MutableLiveData<String> escooterId = new MutableLiveData<>();
 
     public LiveData<RentResult> getRentResult() {
         return rentResult;
+    }
+    public LiveData<ParkResult> getParkResult() {
+        return ParkResult;
     }
     public LiveData<String> getOwnLongitude() {
         return ownLongitude;
@@ -49,9 +57,48 @@ public class RentViewModel extends ViewModel {
         });
     }
 
+    public void rentEscooter() {
+        RentalService.rentEscooter(account.getValue(), password.getValue(), escooterId.getValue(), new RentalCallback() {
+
+            @Override
+            public void onSuccess(List<Escooter> escooterList) {
+                rentResult.postValue(new RentResult(escooterList));
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                rentResult.postValue(new RentResult(e));
+            }
+        });
+    }
+
+    public void updateEscooterParkStatus() {
+        RentalService.updateEscooterParkStatus(account.getValue(), password.getValue(), new ParkCallback() {
+
+            @Override
+            public void onSuccess(boolean isPark) {
+                ParkResult.postValue(new ParkResult(isPark));
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                rentResult.postValue(new RentResult(e));
+            }
+        });
+    }
+
     public void setUserlocation(String ownLongitude,String ownLatitude) {
         this.ownLongitude.setValue(ownLongitude);
         this.ownLatitude.setValue(ownLatitude);
+    }
+
+    public void setUserCredential(String account,String password) {
+        this.account.setValue(account);
+        this.password.setValue(password);
+    }
+
+    public void setEscooterId(String escooterId) {
+        this.escooterId.setValue(escooterId);
     }
 
 }
