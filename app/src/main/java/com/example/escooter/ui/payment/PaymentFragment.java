@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +19,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.escooter.R;
+import com.example.escooter.data.model.CreditCard;
 import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.DialogPaymentAddCreditCardBinding;
 import com.example.escooter.databinding.DialogPaymentUnbindCreditCardBinding;
+import com.example.escooter.databinding.DialogPersonInfoEditProfileBinding;
 import com.example.escooter.databinding.FragmentPaymentBinding;
 import com.example.escooter.ui.user.UserResult;
 import com.example.escooter.ui.user.UserViewModel;
+import com.example.escooter.utils.SimpleTextWatcher;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.Objects;
@@ -32,8 +36,7 @@ import java.util.Objects;
 public class PaymentFragment extends Fragment {
     private FragmentPaymentBinding binding;
     private UserViewModel userViewModel;
-    private String account;
-    private String password;
+    private CreditCardViewModel creditCardViewModel;
 
     @Nullable
     @Override
@@ -48,10 +51,12 @@ public class PaymentFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        creditCardViewModel = new ViewModelProvider(this).get(CreditCardViewModel.class);
 
         initializeViews(binding);
         setListeners(binding);
         setupObservers();
+
         userViewModel.getUserData();
     }
 
@@ -61,7 +66,24 @@ public class PaymentFragment extends Fragment {
 
     private void setupObservers() {
         userViewModel.getUserResult().observe(getViewLifecycleOwner(), this::handleUserResult);
+        creditCardViewModel.getCreditCardResult().observe(getViewLifecycleOwner(), this::handleCreditCardResult);
     }
+
+    private void handleCreditCardResult(CreditCardResult creditCardResult) {
+
+        if (creditCardResult == null) {
+            return;
+        }
+        if (creditCardResult.getError() != null) {
+            showFailed(creditCardResult.getError());
+        }
+        if (creditCardResult.getCreditCard() != null) {
+            User user = userViewModel.getUserResult().getValue().getUser();
+            user.setCreditCard(creditCardResult.getCreditCard());
+            updateTextViewInfo(binding,user);
+        }
+    }
+
     private void handleUserResult(UserResult userResult) {
 
         if (userResult == null) {
@@ -72,8 +94,10 @@ public class PaymentFragment extends Fragment {
         }
         if (userResult.getUser() != null) {
             User user = userResult.getUser();
-            account = user.getAccount();
-            password = user.getPassword();
+            String account = user.getAccount();
+            String password = user.getPassword();
+            String username = user.getUserName();
+            creditCardViewModel.setUserCredential(account,password,username);
             updateTextViewInfo(binding,user);
         }
     }
@@ -126,7 +150,7 @@ public class PaymentFragment extends Fragment {
         DialogPaymentUnbindCreditCardBinding dialogBinding = DialogPaymentUnbindCreditCardBinding.bind(dialogView);
         dialogBinding.cancelButton.setOnClickListener(v -> dialog.dismiss());
         dialogBinding.unbindButton.setOnClickListener(v -> {
-
+            creditCardViewModel.unbindCreditCard();
             dialog.dismiss();
         });
 
@@ -145,14 +169,71 @@ public class PaymentFragment extends Fragment {
         AlertDialog dialog = dialogBuilder.create();
 
         DialogPaymentAddCreditCardBinding dialogBinding = DialogPaymentAddCreditCardBinding.bind(dialogView);
-        dialogBinding.cancelButton.setOnClickListener(b -> dialog.dismiss());
-        dialogBinding.confirmButton.setOnClickListener(b -> {
-//            new postBindCreditCardService(account, password, username,dialogBinding);
-//            new getUserDataService(requireContext(), account, password);
-            dialog.dismiss();
-        });
+
+        setDialogListeners(dialogBinding,dialog);
+        setupDialogObservers(dialogBinding);
 
         return dialog;
+    }
+
+    private void setDialogListeners(DialogPaymentAddCreditCardBinding dialogBinding, AlertDialog dialog) {
+
+        dialogBinding.userCardNumber.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                String CardNumber = dialogBinding.userCardNumber.getText().toString();
+                String VaildThru = dialogBinding.userVaildThru.getText().toString();
+                String Cvv = dialogBinding.userCvv.getText().toString();
+
+                creditCardViewModel.updataDataChanged(CardNumber, VaildThru, Cvv);
+            }
+        });
+        dialogBinding.userVaildThru.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                String CardNumber = dialogBinding.userCardNumber.getText().toString();
+                String VaildThru = dialogBinding.userVaildThru.getText().toString();
+                String Cvv = dialogBinding.userCvv.getText().toString();
+
+                creditCardViewModel.updataDataChanged(CardNumber, VaildThru, Cvv);
+            }
+        });
+        dialogBinding.userCvv.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                String CardNumber = dialogBinding.userCardNumber.getText().toString();
+                String VaildThru = dialogBinding.userVaildThru.getText().toString();
+                String Cvv = dialogBinding.userCvv.getText().toString();
+
+                creditCardViewModel.updataDataChanged(CardNumber, VaildThru, Cvv);
+            }
+        });
+
+        dialogBinding.cancelButton.setOnClickListener(b -> dialog.dismiss());
+        dialogBinding.confirmButton.setOnClickListener(b -> {
+
+            creditCardViewModel.bindCreditCard();
+            dialog.dismiss();
+        });
+    }
+    private void setupDialogObservers(DialogPaymentAddCreditCardBinding dialogBinding) {
+        creditCardViewModel.getCreditCardFormState().observe(getViewLifecycleOwner(), CreditCardFormState -> {
+            if (CreditCardFormState == null) {
+                return;
+            }
+
+            dialogBinding.confirmButton.setEnabled(CreditCardFormState.isDataValid());
+
+            if (CreditCardFormState.getCardNumberError() != null) {
+                dialogBinding.userCardNumber.setError(getString(CreditCardFormState.getCardNumberError()));
+            }
+            if (CreditCardFormState.getVaildThruErrorr() != null) {
+                dialogBinding.userVaildThru.setError(getString(CreditCardFormState.getVaildThruErrorr()));
+            }
+            if (CreditCardFormState.getCvvError() != null) {
+                dialogBinding.userCvv.setError(getString(CreditCardFormState.getCvvError()));
+            }
+        });
     }
 
     private void updateTextViewInfo(FragmentPaymentBinding binding, User user) {
@@ -161,13 +242,11 @@ public class PaymentFragment extends Fragment {
         //判斷使用者是否曾輸入信用卡
         String creditCardNumber = user.getCreditCard().getCreditCardNumber();
         if (!Objects.equals(creditCardNumber, "null")){
-            System.out.println(creditCardNumber);
             binding.creditcardnfo.setVisibility(View.VISIBLE);
             binding.addPaymentButton.setVisibility(View.GONE);
             TextView creditCardTextView = requireActivity().findViewById(R.id.creditcard_id);
             creditCardTextView.setText(creditCardNumber);
         }else {
-            System.out.println(creditCardNumber);
             binding.creditcardnfo.setVisibility(View.GONE);
             binding.addPaymentButton.setVisibility(View.VISIBLE);
         }

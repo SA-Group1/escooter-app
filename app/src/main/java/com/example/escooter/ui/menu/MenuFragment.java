@@ -124,7 +124,6 @@ public class MenuFragment extends Fragment {
 
     private void setupObservers() {
         userViewModel.getUserResult().observe(getViewLifecycleOwner(), this::handleUserResult);
-
     }
     private void handleUserResult(UserResult userResult) {
 

@@ -14,6 +14,7 @@ import com.example.escooter.ui.login.LoginFormState;
 
 public class UserViewModel extends ViewModel {
     private final UserService UserService = new UserService();
+    private final MutableLiveData<UserFormState> userFormState = new MutableLiveData<>();
     private final MutableLiveData<UserResult> userResult = new MutableLiveData<>();
     private final MutableLiveData<String> account = new MutableLiveData<>();
     private final MutableLiveData<String> password = new MutableLiveData<>();
@@ -30,6 +31,9 @@ public class UserViewModel extends ViewModel {
     public LiveData<String> getPassword() {
         return password;
     }
+    public LiveData<UserFormState> getUserFormState() {
+        return userFormState;
+    }
 
     public void getUserData() {
         if (account.getValue() == null || password.getValue() == null){
@@ -39,6 +43,7 @@ public class UserViewModel extends ViewModel {
 
             @Override
             public void onSuccess(User user) {
+                user.setPassword(password.getValue());
                 userResult.postValue(new UserResult(user));
             }
 
@@ -74,34 +79,37 @@ public class UserViewModel extends ViewModel {
         this.account.setValue(account);
         this.password.setValue(password);
     }
-    public void updataUserCredential(String username,String email,String phoneNumber) {
-        this.username.setValue(username);
-        this.email.setValue(email);
-        this.phoneNumber.setValue(phoneNumber);
+
+    public void updataDataChanged(String username, String email, String phoneNumber) {
+        if (isUserNameValid(username) && isEmailValid(email) && isPhoneNumberValid(phoneNumber)) {
+            this.username.setValue(username);
+            this.email.setValue(email);
+            this.phoneNumber.setValue(phoneNumber);
+            userFormState.setValue(new UserFormState(true));
+        } else {
+            userFormState.setValue(new UserFormState(false));
+        }
     }
-//    public void loginDataChanged(String username, String password) {
-//        if (isUserNameValid(username) && isPasswordValid(password)) {
-//            loginFormState.setValue(new LoginFormState(true));
-//        } else {
-//            loginFormState.setValue(new LoginFormState(false));
-//        }
-//    }
-//
-//    // A placeholder username validation check
-//    private boolean isUserNameValid(String username) {
-//        if (username == null) {
-//            return false;
-//        }
-//        if (username.contains("@")) {
-//            return Patterns.EMAIL_ADDRESS.matcher(username).matches();
-//        } else {
-//            return !username.trim().isEmpty();
-//        }
-//    }
-//
-//    // A placeholder password validation check
-//    private boolean isPasswordValid(String password) {
-//        return password != null && password.trim().length() > 5;
-//    }
+
+    // A placeholder username validation check
+    private boolean isUserNameValid(String username) {
+        if (username == null) {
+            return false;
+        }
+        if (username.contains("@")) {
+            return Patterns.EMAIL_ADDRESS.matcher(username).matches();
+        } else {
+            return !username.trim().isEmpty();
+        }
+    }
+
+    // A placeholder password validation check
+    private boolean isEmailValid(String email) {
+        return email != null && email.trim().length() > 5;
+    }
+
+    private boolean isPhoneNumberValid(String phoneNumber) {
+        return phoneNumber != null && phoneNumber.trim().length() > 5;
+    }
 
 }

@@ -29,13 +29,12 @@ public class UserRepository {
             @Override
             public void onResult(JSONObject result) {
                 try {
-                    System.out.println(result);
-                    JSONObject userResult = result.getJSONObject("user");
+
+                    JSONObject userResult = result.getJSONObject("data");
+                    System.out.println(userResult);
                     User user = new User();
                     user.setUserId(userResult.getInt("userId"));
-                    System.out.println(userResult.getInt("userId"));
                     user.setAccount(userResult.getString("account"));
-                    user.setPassword(userResult.getString("password"));
                     user.setUserName(userResult.getString("userName"));
                     user.setEmail(userResult.getString("email"));
                     user.setRegistrationTime(userResult.getString("registrationTime"));
