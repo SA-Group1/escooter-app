@@ -1,22 +1,24 @@
 package com.example.escooter.service;
 
-import com.example.escooter.callback.UserCallback;
-import com.example.escooter.data.model.User;
+import com.example.escooter.callback.RentalCallback;
+import com.example.escooter.data.model.Escooter;
 import com.example.escooter.repository.RentalRepository;
 
-public class RentalService {
-//    public void getRentableEscooterList(String account, String password, UserCallback callback) {
-//        RentalRepository.getRentableEscooterList(account, password, new UserCallback() {
-//            @Override
-//            public void onSuccess(User user) {
-//                callback.onSuccess(user);
-//            }
-//
-//            @Override
-//            public void onFailure(Exception e) {
-//                callback.onFailure(e);
-//            }
-//        });
-//    }
+import java.util.List;
 
+public class RentalService {
+    private final RentalRepository rentalRepository = new RentalRepository();
+    public void getRentableEscooterList(String ownLongitude, String ownfLatitude, RentalCallback callback) {
+        rentalRepository.getRentableEscooterList(ownLongitude, ownfLatitude, new RentalCallback() {
+            @Override
+            public void onSuccess(List<Escooter> escooterList) {
+                callback.onSuccess(escooterList);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                callback.onFailure(e);
+            }
+        });
+    }
 }

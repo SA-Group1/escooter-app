@@ -1,52 +1,54 @@
 package com.example.escooter.repository;
 
-import android.app.Activity;
 
 import com.example.escooter.BuildConfig;
-import com.example.escooter.R;
 import com.example.escooter.callback.HttpResultCallback;
+import com.example.escooter.callback.RentalCallback;
 import com.example.escooter.callback.UserCallback;
+import com.example.escooter.data.model.Escooter;
 import com.example.escooter.network.HttpRequest;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RentalRepository {
-    public void getRentableEscooterList(String account, String password, UserCallback callback) {
+    public void getRentableEscooterList(String ownLongitude, String ownfLatitude, RentalCallback callback) {
 
         JSONObject body = new JSONObject();
         try {
-            body.put("account", account);
-            body.put("password", password);
+            body.put("longitude", ownLongitude);
+            body.put("latitude", ownfLatitude);
         } catch (JSONException e) {
-            callback.onFailure(e);
-            return;
+            throw new RuntimeException(e);
         }
 
         HttpRequest.httpRequest(BuildConfig.BASE_URL + "/getRentableEscooterList", "POST", body, new HttpResultCallback<JSONObject>() {
             @Override
             public void onResult(JSONObject result) {
                 try {
-                    JSONArray escooters = result.getJSONArray("data");
-                    for (int i = 0; i < escooters.length(); i++) {
-                        JSONObject escooter = escooters.getJSONObject(i);
-                        String escooterId = escooter.getString("escooterId");
-                        JSONObject gps = escooter.getJSONObject("gps");
+                    JSONArray escootersArray = result.getJSONArray("data");
+                    List<Escooter> escooterList = new ArrayList<>();
+
+                    for (int i = 0; i < escootersArray.length(); i++) {
+                        JSONObject escooterJson = escootersArray.getJSONObject(i);
+                        String escooterId = escooterJson.getString("escooterId");
+                        String modelId = escooterJson.getString("modelId");
+                        String status = escooterJson.getString("status");
+                        int batteryLevel = escooterJson.getInt("batteryLevel");
+                        double feePerMinutes = escooterJson.getDouble("feePerMinutes");
+                        JSONObject gps = escooterJson.getJSONObject("gps");
                         double latitude = gps.getDouble("latitude");
                         double longitude = gps.getDouble("longitude");
 
-                        //切換為ui線程，才能使用google map的更改
-//                        ((Activity) context).runOnUiThread(() -> {
-//                            LatLng Escooter = new LatLng(latitude, longitude);
-//                            googleMap.addMarker(new MarkerOptions().position(Escooter).title(escooterId).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_escooter)));
-//                        });
+                        Escooter escooter = new Escooter(escooterId, modelId, status, batteryLevel, feePerMinutes, longitude, latitude);
+                        escooterList.add(escooter);
                     }
 
-//                    callback.onSuccess();
+                    callback.onSuccess(escooterList);
                 } catch (JSONException e) {
                     callback.onFailure(e);
                 }

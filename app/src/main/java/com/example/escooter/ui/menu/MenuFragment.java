@@ -5,12 +5,10 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
-import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,21 +22,15 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.escooter.R;
+import com.example.escooter.data.model.Escooter;
 import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.ComponentMenuRentInfoBinding;
 import com.example.escooter.databinding.ComponentMenuScooterInfoBinding;
-import com.example.escooter.databinding.FragmentLoginBinding;
 import com.example.escooter.databinding.FragmentMenuBinding;
 import com.example.escooter.databinding.FragmentPaymentBinding;
 import com.example.escooter.network.HttpRequest;
-import com.example.escooter.service.getRentableEscooterListService;
-import com.example.escooter.ui.login.LoginResult;
-import com.example.escooter.ui.login.LoginViewModel;
-import com.example.escooter.ui.login.LoginViewModelFactory;
 import com.example.escooter.ui.user.UserResult;
 import com.example.escooter.ui.user.UserViewModel;
-import com.example.escooter.ui.user.UserViewModelFactory;
-import com.example.escooter.utils.SimpleTextWatcher;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -48,9 +40,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
@@ -60,6 +54,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
 import java.util.Objects;
 
 public class MenuFragment extends Fragment {
@@ -70,6 +65,7 @@ public class MenuFragment extends Fragment {
     private LocationCallback locationCallback;
     private Polyline currentPolyline;
     private UserViewModel userViewModel;
+    private RentViewModel rentViewModel;
     private View view = null;
     private String account;
     private String password;
@@ -87,13 +83,15 @@ public class MenuFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        rentViewModel = new ViewModelProvider(this).get(RentViewModel.class);
 
+        setupFusedLocation();
+        startLocationUpdates();
         setupMapFragment();
         setupObservers();
         setupListeners();
-        setupFusedLocation();
-        startLocationUpdates();
         userViewModel.getUserData();
+
     }
 
     private void setupFusedLocation() {
@@ -105,6 +103,11 @@ public class MenuFragment extends Fragment {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 for (Location location : locationResult.getLocations()) {
+                    String ownLatitude = String.valueOf(location.getLatitude());
+                    String ownLongitude = String.valueOf(location.getLongitude());
+
+                    rentViewModel.setUserlocation(ownLongitude,ownLatitude);
+                    setRentableEscooter();
                     LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                     if (googleMap != null) {
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
@@ -124,7 +127,32 @@ public class MenuFragment extends Fragment {
 
     private void setupObservers() {
         userViewModel.getUserResult().observe(getViewLifecycleOwner(), this::handleUserResult);
+        rentViewModel.getRentResult().observe(getViewLifecycleOwner(), this::handleRentResult);
     }
+
+    private void handleRentResult(RentResult rentResult) {
+        if (rentResult == null) {
+            return;
+        }
+        if (rentResult.getError() != null) {
+            showFailed(rentResult.getError());
+        }
+        if (rentResult.getEscooterList() != null) {
+            List<Escooter> escooterList = rentResult.getEscooterList();
+            for (Escooter escooter : escooterList) {
+                double latitude = escooter.getLatitude();
+                double longitude = escooter.getLongitude();
+                String escooterId = escooter.getEscooterId();
+
+                LatLng escooterLocation = new LatLng(latitude, longitude);
+                googleMap.addMarker(new MarkerOptions()
+                        .position(escooterLocation)
+                        .title(escooterId)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_escooter)));
+            }
+        }
+    }
+
     private void handleUserResult(UserResult userResult) {
 
         if (userResult == null) {
@@ -179,15 +207,13 @@ public class MenuFragment extends Fragment {
             googleMap = map;
             // 開啟我的位置功能
             updateLocation();
-            // 設定自身位置
-//            setOwnLocation();
             // 設定多邊形
 //            setPolygon();
             // 設定點選事件
             setOnMarkerClick();
 
             // 新增車輛位置
-            setRentableEscooter();
+
         }
     };
 
@@ -386,29 +412,8 @@ public class MenuFragment extends Fragment {
     }
 
     private void setRentableEscooter() {
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
-            if (location != null) {
-                String ownLongitude = String.valueOf(location.getLongitude());
-                String ownLatitude = String.valueOf(location.getLatitude());
-                new getRentableEscooterListService(requireContext(), googleMap, ownLongitude, ownLatitude);
-            }
-        });
+        rentViewModel.getRentableEscooterList();
     }
-
-//    private void setOwnLocation() {
-//        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            return;
-//        }
-//        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
-//            if (location != null) {
-//                ownLongitude = String.valueOf(location.getLongitude());
-//                ownLatitude = String.valueOf(location.getLatitude());
-//            }
-//        });
-//    }
 
     @Override
     public void onDestroyView() {
