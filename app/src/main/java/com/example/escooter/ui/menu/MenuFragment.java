@@ -5,12 +5,10 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
-
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,21 +22,15 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.escooter.R;
+import com.example.escooter.data.model.Escooter;
 import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.ComponentMenuRentInfoBinding;
 import com.example.escooter.databinding.ComponentMenuScooterInfoBinding;
-import com.example.escooter.databinding.FragmentLoginBinding;
 import com.example.escooter.databinding.FragmentMenuBinding;
 import com.example.escooter.databinding.FragmentPaymentBinding;
 import com.example.escooter.network.HttpRequest;
-import com.example.escooter.service.getRentableEscooterListService;
-import com.example.escooter.ui.login.LoginResult;
-import com.example.escooter.ui.login.LoginViewModel;
-import com.example.escooter.ui.login.LoginViewModelFactory;
 import com.example.escooter.ui.user.UserResult;
 import com.example.escooter.ui.user.UserViewModel;
-import com.example.escooter.ui.user.UserViewModelFactory;
-import com.example.escooter.utils.SimpleTextWatcher;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -48,9 +40,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
@@ -60,6 +54,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
 import java.util.Objects;
 
 public class MenuFragment extends Fragment {
@@ -70,11 +65,9 @@ public class MenuFragment extends Fragment {
     private LocationCallback locationCallback;
     private Polyline currentPolyline;
     private UserViewModel userViewModel;
+    private RentViewModel rentViewModel;
+    private List<Escooter> escooterList;
     private View view = null;
-    private String account;
-    private String password;
-//    private String ownLongitude;
-//    private String ownLatitude;
 
     @Nullable
     @Override
@@ -100,12 +93,15 @@ public class MenuFragment extends Fragment {
             navController.navigate(R.id.action_navigation_menu_to_personinfoFragment);
         });
 
+        rentViewModel = new ViewModelProvider(this).get(RentViewModel.class);
+
+        setupFusedLocation();
+        startLocationUpdates();
         setupMapFragment();
         setupObservers();
         setupListeners();
-        setupFusedLocation();
-        startLocationUpdates();
         userViewModel.getUserData();
+
     }
 
     private void setupFusedLocation() {
@@ -117,6 +113,11 @@ public class MenuFragment extends Fragment {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 for (Location location : locationResult.getLocations()) {
+                    String ownLatitude = String.valueOf(location.getLatitude());
+                    String ownLongitude = String.valueOf(location.getLongitude());
+
+                    rentViewModel.setUserlocation(ownLongitude,ownLatitude);
+                    setRentableEscooter();
                     LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                     if (googleMap != null) {
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
@@ -136,8 +137,45 @@ public class MenuFragment extends Fragment {
 
     private void setupObservers() {
         userViewModel.getUserResult().observe(getViewLifecycleOwner(), this::handleUserResult);
-
+        rentViewModel.getRentResult().observe(getViewLifecycleOwner(), this::handleRentResult);
+        rentViewModel.getParkResult().observe(getViewLifecycleOwner(), this::handleParkResult);
     }
+
+    private void handleParkResult(ParkResult parkResult) {
+        if (parkResult == null) {
+            return;
+        }
+        if (parkResult.getError() != null) {
+            showFailed(parkResult.getError());
+        }
+        if (parkResult.getEscooterList()) {
+            //改變按鈕顏色寫這邊
+        }
+    }
+
+    private void handleRentResult(RentResult rentResult) {
+        if (rentResult == null) {
+            return;
+        }
+        if (rentResult.getError() != null) {
+            showFailed(rentResult.getError());
+        }
+        if (rentResult.getEscooterList() != null) {
+            escooterList = rentResult.getEscooterList();
+            for (Escooter escooter : escooterList) {
+                double latitude = escooter.getLatitude();
+                double longitude = escooter.getLongitude();
+                String escooterId = escooter.getEscooterId();
+
+                LatLng escooterLocation = new LatLng(latitude, longitude);
+                googleMap.addMarker(new MarkerOptions()
+                        .position(escooterLocation)
+                        .title(escooterId)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_escooter)));
+            }
+        }
+    }
+
     private void handleUserResult(UserResult userResult) {
 
         if (userResult == null) {
@@ -148,8 +186,7 @@ public class MenuFragment extends Fragment {
         }
         if (userResult.getUser() != null) {
             User user = userResult.getUser();
-            account = user.getAccount();
-            password = user.getPassword();
+            rentViewModel.setUserCredential(user.getAccount(),user.getPassword());
             TextView personNameTextView = binding.personinfobutton.personNameTextView;
             personNameTextView.setText(user.getUserName());
         }
@@ -192,15 +229,11 @@ public class MenuFragment extends Fragment {
             googleMap = map;
             // 開啟我的位置功能
             updateLocation();
-            // 設定自身位置
-//            setOwnLocation();
             // 設定多邊形
 //            setPolygon();
             // 設定點選事件
             setOnMarkerClick();
 
-            // 新增車輛位置
-            setRentableEscooter();
         }
     };
 
@@ -272,75 +305,17 @@ public class MenuFragment extends Fragment {
     }
 
     private void dialogSet(Context context, Marker marker) {
-        if (view != null) {
-            ViewGroup parent = (ViewGroup) view.getParent();
-            if (parent != null) {
-                parent.removeView(view);
-            }
-        }
-        ViewStub stub = binding.viewStub;
-        stub.setLayoutResource(R.layout.component_menu_rent_info);
-        view = stub.inflate();
+        String markerEscooterId = marker.getTitle();
+
+        ViewStub stub = inflateViewStub(context, R.layout.component_menu_rent_info);
         ComponentMenuRentInfoBinding rentInfoBinding = ComponentMenuRentInfoBinding.bind(view);
+        markerEscooterInfo(rentInfoBinding, markerEscooterId);
 
-
-        rentInfoBinding.rentButton.setOnClickListener(v -> {
-            if (view != null) {
-                ViewGroup parent = (ViewGroup) view.getParent();
-                if (parent != null) {
-                    parent.removeView(view);
-                }
-            }
-            ViewStub newstub = new ViewStub(context);
-            binding.getRoot().addView(newstub);
-
-            newstub.setLayoutParams(stub.getLayoutParams());
-            newstub.setVisibility(stub.getVisibility());
-            newstub.setInflatedId(stub.getInflatedId());
-            newstub.setLayoutResource(R.layout.component_menu_scooter_info);
-
-            view = newstub.inflate();
+        rentInfoBinding.rentButton.setOnClickListener(v ->{
+            inflateNewViewStub(context, stub, R.layout.component_menu_scooter_info);
             ComponentMenuScooterInfoBinding scooterInfoBinding = ComponentMenuScooterInfoBinding.bind(view);
+            rentEscooterInfo(scooterInfoBinding, markerEscooterId);
 
-            String escooterId = marker.getTitle();
-            String apiUrl = "http://36.232.110.240:8080/api/rentEscooter";
-            JSONObject postData = new JSONObject();
-            try {
-                JSONObject userObject = new JSONObject();
-                userObject.put("account", account);
-                userObject.put("password", password);
-
-                JSONObject escooterObject = new JSONObject();
-                escooterObject.put("escooterId", escooterId);
-
-                postData.put("user", userObject);
-                postData.put("escooter", escooterObject);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-
-            HttpRequest getRentableEscooterList = new HttpRequest(apiUrl);
-            // 發送 HTTP POST 請求
-            getRentableEscooterList.httpPost(postData, result -> {
-                try {
-                    //json檔案資料處理
-                    JSONObject escooter = result.getJSONObject("escooter");
-                    requireActivity().runOnUiThread(() -> {
-                        try {
-                            scooterInfoBinding.scooterId.setText(escooter.getString("escooterId"));
-                            scooterInfoBinding.scooterModel.setText(escooter.getString("modelId"));
-                            scooterInfoBinding.batteryTimeText.setText(String.valueOf(escooter.getDouble("batteryLevel")));
-                            //日期
-                            scooterInfoBinding.feePerMin.setText(String.valueOf(escooter.getDouble("feePerMinutes")));
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-            //setListeners()
             scooterInfoBinding.parkButton.setOnClickListener(b ->{
                 setParking();
             });
@@ -350,47 +325,67 @@ public class MenuFragment extends Fragment {
                 navController.navigate(R.id.action_navigation_menu_to_returnSuccessFragment);
             });
         });
-
-
-        String escooterId = marker.getTitle();
-        System.out.println(escooterId);
-        String apiUrl = "http://36.232.110.240:8080/api/getRentableEscooterList";
-        JSONObject postData = new JSONObject();
-        try {
-            postData.put("longitude", "120.534454");
-            postData.put("latitude", "23.689305");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        HttpRequest getRentableEscooterList = new HttpRequest(apiUrl);
-        // 發送 HTTP POST 請求
-        getRentableEscooterList.httpPost(postData, result -> {
-            try {
-                //json檔案資料處理
-                JSONArray escooters = result.getJSONArray("escooters");
-                for (int i = 0; i < escooters.length(); i++) {
-                    JSONObject escooter = escooters.getJSONObject(i);
-                    if (Objects.equals(escooterId, escooter.getString("escooterId"))) {
-                        requireActivity().runOnUiThread(() -> {
-                            try {
-                                rentInfoBinding.scooterId.setText(escooter.getString("escooterId"));
-                                rentInfoBinding.scooterModel.setText(escooter.getString("modelId"));
-                                rentInfoBinding.batteryTimeText.setText(String.valueOf(escooter.getDouble("batteryLevel")));
-                                rentInfoBinding.distanceText.setText("1231");
-                                rentInfoBinding.rentFee.setText(String.valueOf(escooter.getDouble("feePerMinutes")));
-                                rentInfoBinding.maxSpeedText.setText("25");
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
-                        });
-                    }
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        });
     }
-    
+
+    private void rentEscooterInfo(ComponentMenuScooterInfoBinding binding,String markerEscooterId) {
+        rentViewModel.rentEscooter();
+        for (Escooter escooter : escooterList) {
+
+            binding.scooterId.setText(markerEscooterId);
+            binding.scooterModel.setText(escooter.getModelId());
+            binding.batteryTimeText.setText(String.valueOf(escooter.getBatteryLevel()));
+            //日期
+            binding.feePerMin.setText(String.valueOf(escooter.getFeePerMinutes()));
+        }
+    }
+
+    private ViewStub inflateViewStub(Context context, int layoutResource) {
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null) {
+                parent.removeView(view);
+            }
+        }
+        ViewStub stub = binding.viewStub;
+        stub.setLayoutResource(layoutResource);
+        view = stub.inflate();
+        return stub;
+    }
+
+    private void inflateNewViewStub(Context context,ViewStub stub, int layoutResource) {
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null) {
+                parent.removeView(view);
+            }
+        }
+        ViewStub newstub = new ViewStub(context);
+        binding.getRoot().addView(newstub);
+
+        newstub.setLayoutParams(stub.getLayoutParams());
+        newstub.setVisibility(stub.getVisibility());
+        newstub.setInflatedId(stub.getInflatedId());
+        newstub.setLayoutResource(layoutResource);
+
+        view = newstub.inflate();
+    }
+
+
+    private void markerEscooterInfo(ComponentMenuRentInfoBinding binding, String markerEscooterId) {
+        for (Escooter escooter : escooterList) {
+            if (Objects.equals(markerEscooterId, escooter.getEscooterId())){
+                rentViewModel.setEscooterId(escooter.getEscooterId());
+                binding.scooterId.setText(escooter.getEscooterId());
+                binding.scooterModel.setText(escooter.getModelId());
+                binding.batteryTimeText.setText(String.valueOf(escooter.getBatteryLevel()));
+                binding.distanceText.setText("1231");
+                binding.rentFee.setText(String.valueOf(escooter.getFeePerMinutes()));
+                binding.maxSpeedText.setText("25");
+            }
+        }
+    }
+
+
     private void setParking() {
     }
 
@@ -399,29 +394,8 @@ public class MenuFragment extends Fragment {
     }
 
     private void setRentableEscooter() {
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
-            if (location != null) {
-                String ownLongitude = String.valueOf(location.getLongitude());
-                String ownLatitude = String.valueOf(location.getLatitude());
-                new getRentableEscooterListService(requireContext(), googleMap, ownLongitude, ownLatitude);
-            }
-        });
+        rentViewModel.getRentableEscooterList();
     }
-
-//    private void setOwnLocation() {
-//        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            return;
-//        }
-//        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
-//            if (location != null) {
-//                ownLongitude = String.valueOf(location.getLongitude());
-//                ownLatitude = String.valueOf(location.getLatitude());
-//            }
-//        });
-//    }
 
     @Override
     public void onDestroyView() {

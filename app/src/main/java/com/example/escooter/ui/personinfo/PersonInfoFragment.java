@@ -2,6 +2,7 @@ package com.example.escooter.ui.personinfo;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,10 @@ import com.example.escooter.R;
 import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.DialogPersonInfoEditProfileBinding;
 import com.example.escooter.databinding.FragmentPersonInfoBinding;
+import com.example.escooter.ui.user.UserFormState;
 import com.example.escooter.ui.user.UserResult;
 import com.example.escooter.ui.user.UserViewModel;
+import com.example.escooter.utils.SimpleTextWatcher;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.Objects;
@@ -110,19 +113,72 @@ public class PersonInfoFragment extends Fragment {
         AlertDialog dialog = dialogBuilder.create();
 
         DialogPersonInfoEditProfileBinding dialogBinding = DialogPersonInfoEditProfileBinding.bind(dialogView);
-        dialogBinding.cancelButton.setOnClickListener(b -> dialog.dismiss());
-        dialogBinding.bindButton.setOnClickListener(b -> {
-            String username = dialogBinding.userName.getText().toString();
-            String email = dialogBinding.userEmail.getText().toString();
-            String phoneNumber = dialogBinding.userPhoneNumber.getText().toString();
-            userViewModel.updataUserCredential(username,email,phoneNumber);
-            userViewModel.updataUserData();
 
-//            new getUserDataService(requireContext(), account, password);
-            dialog.dismiss();
-        });
+        setDialogListeners(dialogBinding,dialog);
+        setupDialogObservers(dialogBinding);
 
         return dialog;
+    }
+
+
+
+    private void setDialogListeners(DialogPersonInfoEditProfileBinding dialogBinding, AlertDialog dialog) {
+
+        dialogBinding.userName.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                String username = dialogBinding.userName.getText().toString();
+                String email = dialogBinding.userEmail.getText().toString();
+                String phoneNumber = dialogBinding.userPhoneNumber.getText().toString();
+
+                userViewModel.updataDataChanged(username, email, phoneNumber);
+            }
+        });
+        dialogBinding.userEmail.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                String username = dialogBinding.userName.getText().toString();
+                String email = dialogBinding.userEmail.getText().toString();
+                String phoneNumber = dialogBinding.userPhoneNumber.getText().toString();
+
+                userViewModel.updataDataChanged(username, email, phoneNumber);
+            }
+        });
+        dialogBinding.userPhoneNumber.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                String username = dialogBinding.userName.getText().toString();
+                String email = dialogBinding.userEmail.getText().toString();
+                String phoneNumber = dialogBinding.userPhoneNumber.getText().toString();
+
+                userViewModel.updataDataChanged(username, email, phoneNumber);
+            }
+        });
+
+        dialogBinding.cancelButton.setOnClickListener(b -> dialog.dismiss());
+        dialogBinding.bindButton.setOnClickListener(b -> {
+            userViewModel.updataUserData();
+            dialog.dismiss();
+        });
+    }
+    private void setupDialogObservers(DialogPersonInfoEditProfileBinding dialogBinding) {
+        userViewModel.getUserFormState().observe(getViewLifecycleOwner(), userFormState -> {
+            if (userFormState == null) {
+                return;
+            }
+
+            dialogBinding.bindButton.setEnabled(userFormState.isDataValid());
+
+            if (userFormState.getUsernameError() != null) {
+                dialogBinding.userName.setError(getString(userFormState.getUsernameError()));
+            }
+            if (userFormState.getEmailError() != null) {
+                dialogBinding.userEmail.setError(getString(userFormState.getEmailError()));
+            }
+            if (userFormState.getPhoneNumberError() != null) {
+                dialogBinding.userPhoneNumber.setError(getString(userFormState.getPhoneNumberError()));
+            }
+        });
     }
 
     private void updateTextViewInfo(FragmentPersonInfoBinding binding, User user) {

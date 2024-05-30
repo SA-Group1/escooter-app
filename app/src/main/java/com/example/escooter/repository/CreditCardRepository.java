@@ -18,21 +18,12 @@ public class CreditCardRepository {
 
         JSONObject body = new JSONObject();
         try {
-            JSONObject userJson = new JSONObject();
-            userJson.put("account", account);
-            userJson.put("password", password);
-
-            JSONObject creditCardJson = new JSONObject();
-            creditCardJson.put("cardNumber", CardNumber);
-            creditCardJson.put("expirationDate", VaildThru);
-            creditCardJson.put("cardHolderName", username);
-            creditCardJson.put("cvv", Cvv);
-//            dialogBinding.userCardNumber.getText().toString()
-//            dialogBinding.userVaildThru.getText().toString()
-//            username
-//            dialogBinding.userCvv.getText().toString()
-            body.put("user", userJson);
-            body.put("creditCard", creditCardJson);
+            body.put("account", account);
+            body.put("password", password);
+            body.put("cardNumber", CardNumber);
+            body.put("expirationDate", VaildThru);
+            body.put("cardHolderName", username);
+            body.put("cvv", Cvv);
         } catch (JSONException e) {
             callback.onFailure(e);
             return;
@@ -62,11 +53,10 @@ public class CreditCardRepository {
         try {
             body.put("account", account);
             body.put("password", password);
-        } catch (
-                JSONException e) {
+        } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-
+        System.out.println(body);
         HttpRequest.httpRequest(BuildConfig.BASE_URL + "/unbindCreditCard", "POST", body, new HttpResultCallback<JSONObject>() {
             @Override
             public void onResult(JSONObject result) {
