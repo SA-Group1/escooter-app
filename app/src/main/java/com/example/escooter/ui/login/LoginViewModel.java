@@ -15,10 +15,10 @@ public class LoginViewModel extends ViewModel {
     private final MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
     private final MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
 
-    LiveData<LoginFormState> getLoginFormState() {
+    public LiveData<LoginFormState> getLoginFormState() {
         return loginFormState;
     }
-    LiveData<LoginResult> getLoginResult() {
+    public LiveData<LoginResult> getLoginResult() {
         return loginResult;
     }
     public void login(String username, String password) {

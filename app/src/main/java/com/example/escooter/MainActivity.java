@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         );
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

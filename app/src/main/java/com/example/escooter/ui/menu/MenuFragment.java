@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
-import android.view.inputmethod.EditorInfo;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,6 +79,7 @@ public class MenuFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         binding = FragmentMenuBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -87,6 +88,17 @@ public class MenuFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        requireActivity().getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        );
+
+        final ConstraintLayout personinfobutton = binding.personinfobutton.getRoot();
+        personinfobutton.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+            navController.navigate(R.id.action_navigation_menu_to_personinfoFragment);
+        });
 
         setupMapFragment();
         setupObservers();
@@ -414,7 +426,11 @@ public class MenuFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        // 在 Fragment 銷毀時停止fusedLocationProviderClient
+
+        requireActivity().getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_VISIBLE
+        );
+
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
     }
 }
