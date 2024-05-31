@@ -1,12 +1,14 @@
 package com.example.escooter.service;
 
 import com.example.escooter.callback.ParkCallback;
+import com.example.escooter.callback.RentRecordCallback;
 import com.example.escooter.callback.RentalCallback;
 import com.example.escooter.callback.ReturnCallback;
 import com.example.escooter.data.model.Escooter;
 import com.example.escooter.data.model.RentalRecord;
 import com.example.escooter.repository.RentalRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RentalService {
@@ -58,6 +60,20 @@ public class RentalService {
             @Override
             public void onSuccess(RentalRecord escooter) {
                 callback.onSuccess(escooter);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                callback.onFailure(e);
+            }
+        });
+    }
+
+    public void getRentalRecordList(String account, String password, RentRecordCallback callback) {
+        rentalRepository.getRentalRecordList(account, password, new RentRecordCallback() {
+            @Override
+            public void onSuccess(ArrayList<RentalRecord> RentalRecordList) {
+                callback.onSuccess(RentalRecordList);
             }
 
             @Override

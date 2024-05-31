@@ -4,6 +4,7 @@ package com.example.escooter.repository;
 import com.example.escooter.BuildConfig;
 import com.example.escooter.callback.HttpResultCallback;
 import com.example.escooter.callback.ParkCallback;
+import com.example.escooter.callback.RentRecordCallback;
 import com.example.escooter.callback.RentalCallback;
 import com.example.escooter.callback.ReturnCallback;
 import com.example.escooter.callback.UserCallback;
@@ -83,7 +84,6 @@ public class RentalRepository {
                 try {
                     System.out.println(result);
                     JSONObject escooter = result.getJSONObject("data");
-                    System.out.println(escooter);
                     String escooterId = escooter.getString("escooterId");
                     String modelId = escooter.getString("modelId");
                     String status = escooter.getString("status");
@@ -178,6 +178,53 @@ public class RentalRepository {
             @Override
             public void onError(Exception e) {
                 System.out.println(e.toString());
+                callback.onFailure(e);
+            }
+        });
+    }
+
+    public void getRentalRecordList(String account, String password, RentRecordCallback callback) {
+        JSONObject body = new JSONObject();
+        try {
+            body.put("account", account);
+            body.put("password", password);
+        } catch (JSONException e) {
+            callback.onFailure(e);
+            return;
+        }
+
+        HttpRequest.httpRequest(BuildConfig.BASE_URL + "/getRentalRecordList", "POST", body, new HttpResultCallback<JSONObject>() {
+            @Override
+            public void onResult(JSONObject result) {
+                try {
+                    JSONArray rentalRecordArray = result.getJSONArray("data");
+                    ArrayList<RentalRecord> rentalRecordList = new ArrayList<>();
+
+                    for (int i = 0; i < rentalRecordArray.length(); i++) {
+                        JSONObject rentalRecordJson = rentalRecordArray.getJSONObject(i);
+                        RentalRecord rentalRecord = new RentalRecord();
+                        rentalRecord.setRentalRecordId(rentalRecordJson.getInt("rentalRecordId"));
+                        rentalRecord.setUserId(rentalRecordJson.getInt("userId"));
+                        rentalRecord.setEscooterId(rentalRecordJson.getString("escooterId"));
+                        rentalRecord.setStartTime(rentalRecordJson.getString("startTime"));
+                        rentalRecord.setEndTime(rentalRecordJson.getString("endTime"));
+                        rentalRecord.setPaid(rentalRecordJson.getBoolean("isPaid"));
+                        rentalRecord.setModelId(rentalRecordJson.getString("modelId"));
+                        rentalRecord.setFeePerMinutes(rentalRecordJson.getDouble("feePerMinutes"));
+                        rentalRecord.setDuration(rentalRecordJson.getInt("duration"));
+                        rentalRecord.setTotalFee(rentalRecordJson.getDouble("totalFee"));
+
+                        rentalRecordList.add(rentalRecord);
+                    }
+
+                    callback.onSuccess(rentalRecordList);
+                } catch (JSONException e) {
+                    callback.onFailure(e);
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
                 callback.onFailure(e);
             }
         });
