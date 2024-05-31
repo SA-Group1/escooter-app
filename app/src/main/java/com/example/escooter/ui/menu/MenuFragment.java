@@ -215,8 +215,7 @@ public class MenuFragment extends Fragment {
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(requireActivity(),
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    1);
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
@@ -282,152 +281,165 @@ public class MenuFragment extends Fragment {
             if (currentPolyline != null) {
                 currentPolyline.remove();
             }
-            if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return false;
-            }
-            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
-                LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                LatLng markerLatLng = marker.getPosition();
-//                getDirections(currentLatLng, markerLatLng);
-            });
+            // 设置位置更新回调
+            locationCallback = new LocationCallback() {
+                @Override
+                public void onLocationResult(@NonNull LocationResult locationResult) {
+                    for (Location location : locationResult.getLocations()) {
+                        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                        LatLng markerLatLng = marker.getPosition();
+                        if (googleMap != null) {
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
+                        }
+                        getDirections(currentLatLng, markerLatLng);
+                        setRentableEscooter();
+                    }
+                }
+            };
+            startLocationUpdates();
             //點擊出現彈窗
             dialogSet(requireContext(), marker);
             return true;
         });
     }
 
-    // 使用Directions API獲取導航路徑
-//    private void getDirections(LatLng origin, LatLng destination) {
-//        String apiKey = getApiKey();
-//        String url = "https://maps.googleapis.com/maps/api/directions/json?" +
-//                "origin=" + origin.latitude + "," + origin.longitude +
-//                "&destination=" + destination.latitude + "," + destination.longitude +
-//                "&alternatives=true" + // 請求多條路線
-//                "&departure_time=now" + // 使用即時交通信息
-//                "&avoid=tolls|highways" + // 避免收費路段和高速公路
-//                "&key=" + apiKey;
-//
-//        // 發送HTTP請求獲取導航路徑
-//        navigationThread = new Thread(() -> {
-//            try {
-//                URL directionsUrl = new URL(url);
-//                HttpURLConnection connection = (HttpURLConnection) directionsUrl.openConnection();
-//                connection.setRequestMethod("GET");
-//                connection.connect();
-//
-//                InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
-//                BufferedReader bufferedReader = new BufferedReader(streamReader);
-//                StringBuilder stringBuilder = new StringBuilder();
-//                String line;
-//                while ((line = bufferedReader.readLine()) != null) {
-//                    stringBuilder.append(line);
-//                }
-//
-//                String response = stringBuilder.toString();
-//                parseDirectionsResponse(response); // 解析導航路徑並顯示在地圖上
-//
-//                bufferedReader.close();
-//                streamReader.close();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        });
-//        navigationThread.start();
-//    }
-//
-//    private String getApiKey() {
-//        try {
-//            ApplicationInfo appInfo = requireContext().getPackageManager().getApplicationInfo(requireContext().getPackageName(), PackageManager.GET_META_DATA);
-//            Bundle metaData = appInfo.metaData;
-//            return metaData.getString("com.google.android.geo.API_KEY");
-//        } catch (PackageManager.NameNotFoundException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-//
-//    // 解析Directions API返回的JSON數據並在地圖上顯示導航路徑
-//    private void parseDirectionsResponse(String response) {
-//        requireActivity().runOnUiThread(() -> {
-//            try {
-//                JSONObject jsonResponse = new JSONObject(response);
-//                JSONArray routes = jsonResponse.getJSONArray("routes");
-//                if (routes.length() > 0) {
-//                    JSONObject bestRoute = selectBestRoute(routes);
-//                    JSONObject overviewPolyline = bestRoute.getJSONObject("overview_polyline");
-//                    String encodedPolyline = overviewPolyline.getString("points");
-//                    List<LatLng> points = decodePolyline(encodedPolyline);
-//
-//                    // 顯示導航路徑
-//                    PolylineOptions polylineOptions = new PolylineOptions()
-//                            .addAll(points)
-//                            .color(0xffD08343)
-//                            .width(14);
-//                    currentPolyline = googleMap.addPolyline(polylineOptions);
-//                }
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        });
-//    }
-//
-//    private JSONObject selectBestRoute(JSONArray routes) throws JSONException {
-//        // 根據需求選擇最佳路線，例如最短時間或距離
-//        JSONObject bestRoute = routes.getJSONObject(0);
-//        for (int i = 1; i < routes.length(); i++) {
-//            JSONObject route = routes.getJSONObject(i);
-//            JSONArray legs = route.getJSONArray("legs");
-//            JSONArray bestRouteLegs = bestRoute.getJSONArray("legs");
-//
-//            if (legs.length() > 0 && bestRouteLegs.length() > 0) {
-//                JSONObject leg = legs.getJSONObject(0);
-//                JSONObject bestRouteLeg = bestRouteLegs.getJSONObject(0);
-//
-//                int durationInTraffic = leg.getJSONObject("duration_in_traffic").getInt("value");
-//                int bestRouteDurationInTraffic = bestRouteLeg.getJSONObject("duration_in_traffic").getInt("value");
-//
-//                // 比較邏輯，例如比較總時間
-//                if (durationInTraffic < bestRouteDurationInTraffic) {
-//                    bestRoute = route;
-//                }
-//            }
-//        }
-//        return bestRoute;
-//    }
-//
-//    // 解碼polyline字符串
-//    private List<LatLng> decodePolyline(String encoded) {
-//        List<LatLng> poly = new ArrayList<>();
-//        int index = 0, len = encoded.length();
-//        int lat = 0, lng = 0;
-//
-//        while (index < len) {
-//            int b, shift = 0, result = 0;
-//            do {
-//                b = encoded.charAt(index++) - 63;
-//                result |= (b & 0x1f) << shift;
-//                shift += 5;
-//            } while (b >= 0x20);
-//            int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
-//            lat += dlat;
-//
-//            shift = 0;
-//            result = 0;
-//            do {
-//                b = encoded.charAt(index++) - 63;
-//                result |= (b & 0x1f) << shift;
-//                shift += 5;
-//            } while (b >= 0x20);
-//            int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
-//            lng += dlng;
-//
-//            LatLng p = new LatLng((((double) lat / 1E5)),
-//                    (((double) lng / 1E5)));
-//            poly.add(p);
-//        }
-//
-//        return poly;
-//    }
+//     使用Directions API獲取導航路徑
+    private void getDirections(LatLng origin, LatLng destination) {
+
+        String apiKey = getApiKey();
+        String url = "https://maps.googleapis.com/maps/api/directions/json?" +
+                "origin=" + origin.latitude + "," + origin.longitude +
+                "&destination=" + destination.latitude + "," + destination.longitude +
+                "&mode=bicycling" + // 指定为骑行模式
+                "&alternatives=true" + // 請求多條路線
+                "&departure_time=now" + // 使用即時交通信息
+                "&avoid=tolls|highways" + // 避免收費路段和高速公路
+                "&key=" + apiKey;
+
+        // 發送HTTP請求獲取導航路徑
+        navigationThread = new Thread(() -> {
+            try {
+                URL directionsUrl = new URL(url);
+                HttpURLConnection connection = (HttpURLConnection) directionsUrl.openConnection();
+                connection.setRequestMethod("GET");
+                connection.connect();
+
+                InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
+                BufferedReader bufferedReader = new BufferedReader(streamReader);
+                StringBuilder stringBuilder = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line);
+                }
+
+                String response = stringBuilder.toString();
+                parseDirectionsResponse(response); // 解析導航路徑並顯示在地圖上
+
+                bufferedReader.close();
+                streamReader.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        navigationThread.start();
+    }
+
+    private String getApiKey() {
+        try {
+            ApplicationInfo appInfo = requireContext().getPackageManager().getApplicationInfo(requireContext().getPackageName(), PackageManager.GET_META_DATA);
+            Bundle metaData = appInfo.metaData;
+            return metaData.getString("com.google.android.geo.API_KEY");
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // 解析Directions API返回的JSON數據並在地圖上顯示導航路徑
+    private void parseDirectionsResponse(String response) {
+        requireActivity().runOnUiThread(() -> {
+            try {
+                JSONObject jsonResponse = new JSONObject(response);
+                JSONArray routes = jsonResponse.getJSONArray("routes");
+                if (routes.length() > 0) {
+                    JSONObject bestRoute = selectBestRoute(routes);
+                    JSONObject overviewPolyline = bestRoute.getJSONObject("overview_polyline");
+                    String encodedPolyline = overviewPolyline.getString("points");
+                    List<LatLng> points = decodePolyline(encodedPolyline);
+
+                    // 顯示導航路徑
+                    if (currentPolyline != null) {
+                        currentPolyline.remove();
+                    }
+                    PolylineOptions polylineOptions = new PolylineOptions()
+                            .addAll(points)
+                            .color(0xffD08343)
+                            .width(14);
+                    currentPolyline = googleMap.addPolyline(polylineOptions);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private JSONObject selectBestRoute(JSONArray routes) throws JSONException {
+        // 根據需求選擇最佳路線，例如最短時間或距離
+        JSONObject bestRoute = routes.getJSONObject(0);
+        for (int i = 1; i < routes.length(); i++) {
+            JSONObject route = routes.getJSONObject(i);
+            JSONArray legs = route.getJSONArray("legs");
+            JSONArray bestRouteLegs = bestRoute.getJSONArray("legs");
+
+            if (legs.length() > 0 && bestRouteLegs.length() > 0) {
+                JSONObject leg = legs.getJSONObject(0);
+                JSONObject bestRouteLeg = bestRouteLegs.getJSONObject(0);
+
+                int durationInTraffic = leg.getJSONObject("duration_in_traffic").getInt("value");
+                int bestRouteDurationInTraffic = bestRouteLeg.getJSONObject("duration_in_traffic").getInt("value");
+
+                // 比較邏輯，例如比較總時間
+                if (durationInTraffic < bestRouteDurationInTraffic) {
+                    bestRoute = route;
+                }
+            }
+        }
+        return bestRoute;
+    }
+
+    // 解碼polyline字符串
+    private List<LatLng> decodePolyline(String encoded) {
+        List<LatLng> poly = new ArrayList<>();
+        int index = 0, len = encoded.length();
+        int lat = 0, lng = 0;
+
+        while (index < len) {
+            int b, shift = 0, result = 0;
+            do {
+                b = encoded.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lat += dlat;
+
+            shift = 0;
+            result = 0;
+            do {
+                b = encoded.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lng += dlng;
+
+            LatLng p = new LatLng((((double) lat / 1E5)),
+                    (((double) lng / 1E5)));
+            poly.add(p);
+        }
+
+        return poly;
+    }
 
     private void dialogSet(Context context, Marker marker) {
         String markerEscooterId = marker.getTitle();
