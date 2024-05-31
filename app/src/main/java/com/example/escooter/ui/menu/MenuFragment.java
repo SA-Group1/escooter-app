@@ -153,6 +153,9 @@ public class MenuFragment extends Fragment {
     }
 
     private void handleRentResult(RentResult rentResult) {
+        if(googleMap == null){
+            return;
+        }
         if (rentResult == null) {
             return;
         }
