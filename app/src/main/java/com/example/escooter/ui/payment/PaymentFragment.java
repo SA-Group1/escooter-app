@@ -242,6 +242,9 @@ public class PaymentFragment extends Fragment {
         //判斷使用者是否曾輸入信用卡
         String creditCardNumber = user.getCreditCard().getCreditCardNumber();
         if (!Objects.equals(creditCardNumber, "null")){
+            if (creditCardNumber.length() > 4) {
+                creditCardNumber = creditCardNumber.substring(creditCardNumber.length() - 4);
+            }
             binding.creditcardnfo.setVisibility(View.VISIBLE);
             binding.addPaymentButton.setVisibility(View.GONE);
             TextView creditCardTextView = requireActivity().findViewById(R.id.creditcard_id);
@@ -251,6 +254,4 @@ public class PaymentFragment extends Fragment {
             binding.addPaymentButton.setVisibility(View.VISIBLE);
         }
     }
-
-
 }
