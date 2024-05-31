@@ -41,7 +41,7 @@
     <string name="total_fee_text">total fee</string>
 
     <!-- Distance & Battery -->
-    <string name="battery_time_unit">km</string>
+    <string name="battery_time_unit">%</string>
     <string name="distance_text">4</string>
     <string name="battery_time_text">10</string>
     <string name="max_speed_text">24</string>

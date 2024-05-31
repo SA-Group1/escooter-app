@@ -125,16 +125,16 @@
 
         <TextView
             android:id="@+id/battery_time_unit"
-            android:layout_width="wrap_content"
+            android:layout_width="15dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="21dp"
-            android:text="@string/battery_time_unit"
-            android:textSize="15sp"
-            android:textColor="@color/secondary_dark_gray"
-            android:layout_toEndOf="@id/battery_time_text"
             android:layout_below="@id/distance_unit"
-            android:fontFamily="@font/lufga_regular"/>
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="21dp"
+            android:layout_toEndOf="@id/battery_time_text"
+            android:fontFamily="@font/lufga_regular"
+            android:text="@string/battery_time_unit"
+            android:textColor="@color/secondary_dark_gray"
+            android:textSize="15sp" />
 
         <ImageView
             android:id="@+id/max_speed_icon"

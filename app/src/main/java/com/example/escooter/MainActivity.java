@@ -11,26 +11,24 @@ import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.escooter.databinding.ActivityMainBinding;
+import com.example.escooter.ui.menu.RentViewModel;
 import com.example.escooter.ui.user.UserViewModel;
 import com.example.escooter.ui.user.UserViewModelFactory;
 
 public class MainActivity extends AppCompatActivity {
     private UserViewModel userViewModel;
+    private RentViewModel rentViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        );
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         userViewModel = new ViewModelProvider(this, new UserViewModelFactory()).get(UserViewModel.class);
+        rentViewModel = new ViewModelProvider(this).get(RentViewModel.class);
 
         // 檢查定位權限
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&

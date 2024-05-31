@@ -1,42 +1,33 @@
 package com.example.escooter.data.model;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class RentalRecord {
-    // 根據你的需要填寫 RentalRecord 的屬性和方法
-    private String escooterModel;
-    private String rentRecordId;
+    private int rentalRecordId;
+    private int userId;
     private String escooterId;
-    private String escooterRentTime;
-    private String escooterReturnTime;
-    private double feePerMin;
+    private String startTime;
+    private String endTime;
+    private boolean isPaid;
+    private String modelId;
+    private double feePerMinutes;
     private int duration;
-    private int totalFee;
+    private double totalFee;
 
-    // Getter and Setter for escooterModel
-    public String getEscooterModel() {
-        return escooterModel;
+    public int getRentalRecordId() {
+        return rentalRecordId;
     }
 
-    public void setEscooterModel(String escooterModel) {
-        this.escooterModel = escooterModel;
+    public void setRentalRecordId(int rentalRecordId) {
+        this.rentalRecordId = rentalRecordId;
     }
 
-    // Getter and Setter for rentRecordId
-    public String getRentRecordId() {
-        return rentRecordId;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setRentRecordId(String rentRecordId) {
-        this.rentRecordId = rentRecordId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    // Getter and Setter for escooterId
     public String getEscooterId() {
         return escooterId;
     }
@@ -45,34 +36,46 @@ public class RentalRecord {
         this.escooterId = escooterId;
     }
 
-    // Getter and Setter for escooterRentTime
-    public String getEscooterRentTime() {
-        return escooterRentTime;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setEscooterRentTime(String escooterRentTime) {
-        this.escooterRentTime = escooterRentTime;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
-    // Getter and Setter for escooterReturnTime
-    public String getEscooterReturnTime() {
-        return escooterReturnTime;
+    public String getEndTime() {
+        return endTime;
     }
 
-    public void setEscooterReturnTime(String escooterReturnTime) {
-        this.escooterReturnTime = escooterReturnTime;
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
-    // Getter and Setter for feePerMin
-    public double getFeePerMin() {
-        return feePerMin;
+    public boolean isPaid() {
+        return isPaid;
     }
 
-    public void setFeePerMin(double feePerMin) {
-        this.feePerMin = feePerMin;
+    public void setPaid(boolean paid) {
+        isPaid = paid;
     }
 
-    // Getter and Setter for rentingTime
+    public String getModelId() {
+        return modelId;
+    }
+
+    public void setModelId(String modelId) {
+        this.modelId = modelId;
+    }
+
+    public double getFeePerMinutes() {
+        return feePerMinutes;
+    }
+
+    public void setFeePerMinutes(double feePerMinutes) {
+        this.feePerMinutes = feePerMinutes;
+    }
+
     public int getDuration() {
         return duration;
     }
@@ -81,26 +84,11 @@ public class RentalRecord {
         this.duration = duration;
     }
 
-    // Getter and Setter for totalFee
-    public int getTotalFee() {
+    public double getTotalFee() {
         return totalFee;
     }
 
-    public void setTotalFee(int totalFee) {
+    public void setTotalFee(double totalFee) {
         this.totalFee = totalFee;
-    }
-
-    // fromJson 方法
-    public static RentalRecord fromJson(JSONObject jsonObject) throws JSONException {
-        RentalRecord record = new RentalRecord();
-        record.setEscooterModel(jsonObject.getString("modelId"));
-        record.setRentRecordId(jsonObject.getString("userId"));
-        record.setEscooterId(jsonObject.getString("escooterId"));
-        record.setEscooterRentTime(jsonObject.getString("startTime"));
-        record.setEscooterReturnTime(jsonObject.getString("endTime"));
-        record.setFeePerMin(jsonObject.getDouble("feePerMinutes"));
-        record.setDuration(jsonObject.getInt("duration"));
-        record.setTotalFee(jsonObject.getInt("totalFee"));
-        return record;
     }
 }

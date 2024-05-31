@@ -5,8 +5,10 @@ import com.example.escooter.BuildConfig;
 import com.example.escooter.callback.HttpResultCallback;
 import com.example.escooter.callback.ParkCallback;
 import com.example.escooter.callback.RentalCallback;
+import com.example.escooter.callback.ReturnCallback;
 import com.example.escooter.callback.UserCallback;
 import com.example.escooter.data.model.Escooter;
+import com.example.escooter.data.model.RentalRecord;
 import com.example.escooter.network.HttpRequest;
 
 import org.json.JSONArray;
@@ -79,6 +81,7 @@ public class RentalRepository {
             @Override
             public void onResult(JSONObject result) {
                 try {
+                    System.out.println(result);
                     JSONObject escooter = result.getJSONObject("data");
                     System.out.println(escooter);
                     String escooterId = escooter.getString("escooterId");
@@ -97,6 +100,7 @@ public class RentalRepository {
 
                     callback.onSuccess(escooterList);
                 } catch (JSONException e) {
+                    System.out.println(e);
                     callback.onFailure(e);
                 }
             }
@@ -125,6 +129,48 @@ public class RentalRepository {
                 try {
                     boolean isPark = result.getBoolean("status");
                     callback.onSuccess(isPark);
+                } catch (JSONException e) {
+                    callback.onFailure(e);
+                }
+            }
+            @Override
+            public void onError(Exception e) {
+                System.out.println(e.toString());
+                callback.onFailure(e);
+            }
+        });
+    }
+
+    public void returnEscooter(String account, String password, ReturnCallback callback) {
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("account", account);
+            body.put("password", password);
+        } catch (JSONException e) {
+            callback.onFailure(e);
+            return;
+        }
+
+        HttpRequest.httpRequest(BuildConfig.BASE_URL + "/returnEscooter", "POST", body, new HttpResultCallback<JSONObject>() {
+            @Override
+            public void onResult(JSONObject result) {
+                try {
+                    //寫到這邊
+                    RentalRecord rentalRecord = new RentalRecord();
+                    JSONObject selectedescooter = result.getJSONObject("data");
+                    rentalRecord.setRentalRecordId(selectedescooter.getInt("rentalRecordId"));
+                    rentalRecord.setUserId(selectedescooter.getInt("userId"));
+                    rentalRecord.setEscooterId(selectedescooter.getString("escooterId"));
+                    rentalRecord.setStartTime(selectedescooter.getString("startTime"));
+                    rentalRecord.setEndTime(selectedescooter.getString("endTime"));
+                    rentalRecord.setPaid(selectedescooter.getBoolean("isPaid"));
+                    rentalRecord.setModelId(selectedescooter.getString("modelId"));
+                    rentalRecord.setFeePerMinutes(selectedescooter.getDouble("feePerMinutes"));
+                    rentalRecord.setDuration(selectedescooter.getInt("duration"));
+                    rentalRecord.setTotalFee(selectedescooter.getDouble("totalFee"));
+
+                    callback.onSuccess(rentalRecord);
                 } catch (JSONException e) {
                     callback.onFailure(e);
                 }
