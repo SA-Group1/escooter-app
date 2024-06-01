@@ -458,7 +458,7 @@ public class MenuFragment extends Fragment {
                     String encodedPolyline = overviewPolyline.getString("points");
                     List<LatLng> points = decodePolyline(encodedPolyline);
 
-                    // 顯示導航路徑
+                    // 显示导航路径
                     if (currentPolyline != null) {
                         currentPolyline.remove();
                     }
@@ -475,7 +475,7 @@ public class MenuFragment extends Fragment {
     }
 
     private JSONObject selectBestRoute(JSONArray routes) throws JSONException {
-        // 根據需求選擇最佳路線，例如最短時間或距離
+        // 根据需求选择最佳路线，例如最短时间或距离
         JSONObject bestRoute = routes.getJSONObject(0);
         for (int i = 1; i < routes.length(); i++) {
             JSONObject route = routes.getJSONObject(i);
@@ -486,11 +486,11 @@ public class MenuFragment extends Fragment {
                 JSONObject leg = legs.getJSONObject(0);
                 JSONObject bestRouteLeg = bestRouteLegs.getJSONObject(0);
 
-                int durationInTraffic = leg.getJSONObject("duration_in_traffic").getInt("value");
-                int bestRouteDurationInTraffic = bestRouteLeg.getJSONObject("duration_in_traffic").getInt("value");
+                int duration = leg.getJSONObject("duration").getInt("value");
+                int bestRouteDuration = bestRouteLeg.getJSONObject("duration").getInt("value");
 
-                // 比較邏輯，例如比較總時間
-                if (durationInTraffic < bestRouteDurationInTraffic) {
+                // 比较逻辑，例如比较总时间
+                if (duration < bestRouteDuration) {
                     bestRoute = route;
                 }
             }
