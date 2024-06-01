@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:id="@+id/rent_info"
-        android:layout_width="match_parent"
+        android:layout_width="383dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,10 +42,10 @@
             android:id="@+id/battery_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="170dp"
+            android:layout_marginEnd="14dp"
             android:layout_marginTop="33dp"
             android:src="@drawable/ic_battery"
-            android:layout_toEndOf="@id/scooter_model"
+            android:layout_toStartOf="@id/battery_time_text"
             tools:ignore="ContentDescription" />
 
         <TextView
@@ -53,24 +53,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
-            android:layout_marginStart="15dp"
+            android:layout_marginEnd="5dp"
             android:text="@string/battery_time_text"
             android:textSize="15sp"
             android:textColor="@color/primary_charcoal"
-            android:layout_toEndOf="@id/battery_icon"
+            android:layout_toStartOf="@id/battery_time_unit"
             android:fontFamily="@font/lufga_regular"/>
 
         <TextView
             android:id="@+id/battery_time_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:layout_marginEnd="35dp"
             android:layout_marginTop="28dp"
             android:text="@string/battery_time_unit"
             android:textSize="15sp"
             android:textColor="@color/secondary_dark_gray"
-            android:layout_toEndOf="@id/battery_time_text"
+            android:layout_alignParentEnd="true"
             android:fontFamily="@font/lufga_regular"/>
 
         <ImageView
@@ -198,36 +197,33 @@
             android:layout_below="@id/rent_time_text"
             android:fontFamily="@font/lufga_regular"/>
 
-        <LinearLayout
-            android:id="@+id/total_fee_layout"
+
+        <TextView
+            android:id="@+id/total_fee_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:layout_alignEnd="@id/duration_unit"
-            android:layout_below="@id/duration_unit">
+            android:layout_marginEnd="4dp"
+            android:fontFamily="@font/lufga_regular"
+            android:text="@string/total_fee_image"
+            android:textColor="@color/secondary_burnt_orange"
+            android:textSize="12sp"
+            android:layout_below="@id/rent_time_text"
+            android:layout_toStartOf="@id/total_fee"
+            tools:ignore="TextContrastCheck" />
 
-            <TextView
-                android:id="@+id/total_fee_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lufga_regular"
-                android:text="@string/total_fee_image"
-                android:textColor="@color/secondary_burnt_orange"
-                android:textSize="12sp"
-                tools:ignore="TextContrastCheck" />
-
-            <TextView
-                android:id="@+id/total_fee"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:fontFamily="@font/lufga_regular"
-                android:text="@string/total_fee"
-                android:textColor="@color/secondary_burnt_orange"
-                android:textSize="12sp"
-                tools:ignore="TextContrastCheck" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/total_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/lufga_regular"
+            android:text="@string/total_fee"
+            android:textColor="@color/secondary_burnt_orange"
+            android:textSize="12sp"
+            android:layout_alignEnd="@id/battery_time_unit"
+            android:layout_below="@id/rent_time_text"
+            tools:ignore="TextContrastCheck" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/park_button"
@@ -242,7 +238,7 @@
             android:background="@drawable/bg_border_radius_20dp_dark_gray"
             android:fontFamily="@font/lufga_bold"
             android:textAllCaps="false"
-            android:layout_below="@id/total_fee_layout" />
+            android:layout_below="@id/total_fee" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/return_button"
@@ -258,7 +254,7 @@
             android:backgroundTint="@color/secondary_dark_gray"
             android:fontFamily="@font/lufga_bold"
             android:textAllCaps="false"
-            android:layout_below="@id/total_fee_layout"
+            android:layout_below="@id/total_fee"
             android:layout_toEndOf="@id/park_button"/>
 
     </RelativeLayout>
