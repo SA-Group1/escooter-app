@@ -229,14 +229,14 @@
             android:id="@+id/park_button"
             android:layout_marginTop="27dp"
             android:layout_marginBottom="13dp"
-            android:layout_marginStart="25dp"
+            android:layout_marginStart="11dp"
             android:layout_width="166dp"
             android:layout_height="60dp"
             android:text="@string/dialog_menu_scooter_info_park_button_text"
             android:textColor="@color/primary_charcoal"
             android:textSize="18sp"
             android:background="@drawable/bg_border_radius_20dp_dark_gray"
-            android:fontFamily="@font/lufga_bold"
+            android:fontFamily="@font/lufga_medium"
             android:textAllCaps="false"
             android:layout_below="@id/total_fee" />
 
@@ -244,7 +244,7 @@
             android:id="@+id/return_button"
             android:layout_marginTop="27dp"
             android:layout_marginBottom="13dp"
-            android:layout_marginStart="28dp"
+            android:layout_marginEnd="11dp"
             android:layout_width="166dp"
             android:layout_height="60dp"
             android:text="@string/dialog_menu_scooter_info_return_button_text"
@@ -252,10 +252,10 @@
             android:textSize="18sp"
             android:background="@drawable/bg_radius_20dp"
             android:backgroundTint="@color/secondary_dark_gray"
-            android:fontFamily="@font/lufga_bold"
+            android:fontFamily="@font/lufga_medium"
             android:textAllCaps="false"
             android:layout_below="@id/total_fee"
-            android:layout_toEndOf="@id/park_button"/>
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 
