@@ -1,6 +1,7 @@
 package com.example.escooter.ui.return_successful;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class ReturnSuccessfulFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rentViewModel = new ViewModelProvider(requireActivity()).get(RentViewModel.class);
 
-        setListeners(binding);
+        setListeners();
         setupObservers();
 //        rentViewModel.getReturnResult();
 
@@ -76,8 +77,9 @@ public class ReturnSuccessfulFragment extends Fragment {
     }
 
 
-    private void setListeners(FragmentReturnSuccessfulBinding binding) {
+    private void setListeners() {
         binding.continueButton.setOnClickListener(v -> {
+            rentViewModel.clearReturnResult();
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigate(R.id.action_returnSuccessFragment_to_navigation_menu);
         });

@@ -24,10 +24,12 @@ import androidx.navigation.Navigation;
 
 import com.example.escooter.R;
 import com.example.escooter.data.model.Escooter;
+import com.example.escooter.data.model.Gps;
 import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.ComponentMenuRentInfoBinding;
 import com.example.escooter.databinding.ComponentMenuScooterInfoBinding;
 import com.example.escooter.databinding.FragmentMenuBinding;
+import com.example.escooter.service.EscooterService;
 import com.example.escooter.ui.user.UserResult;
 import com.example.escooter.ui.user.UserViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -73,6 +75,8 @@ public class MenuFragment extends Fragment {
     private List<Escooter> escooterList;
     private Thread navigationThread;
     private View view = null;
+    private EscooterService escooterService;
+    private ComponentMenuScooterInfoBinding scooterInfoBinding;
 
     @Nullable
     @Override
@@ -111,6 +115,7 @@ public class MenuFragment extends Fragment {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 for (Location location : locationResult.getLocations()) {
+                    System.out.println("初始化");
                     String ownLatitude = String.valueOf(location.getLatitude());
                     String ownLongitude = String.valueOf(location.getLongitude());
 
@@ -125,6 +130,12 @@ public class MenuFragment extends Fragment {
         };
     }
 
+    private void stopLocationUpdates() {
+        if (locationCallback != null && fusedLocationProviderClient != null) {
+            fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+        }
+    }
+
     private void setupMapFragment() {
         // 獲取 SupportMapFragment 的實例
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
@@ -137,6 +148,72 @@ public class MenuFragment extends Fragment {
         userViewModel.getUserResult().observe(getViewLifecycleOwner(), this::handleUserResult);
         rentViewModel.getRentResult().observe(getViewLifecycleOwner(), this::handleRentResult);
         rentViewModel.getParkResult().observe(getViewLifecycleOwner(), this::handleParkResult);
+        rentViewModel.getReturnResult().observe(getViewLifecycleOwner(), this::handleReturnResult);
+        rentViewModel.getEscooterGpsResult().observe(getViewLifecycleOwner(), this::handleEscooterGpsResult);
+    }
+
+    private void handleReturnResult(ReturnResult returnResult) {
+
+        if (returnResult == null) {
+            return;
+        }
+        if (returnResult.getError() != null) {
+            showFailed(returnResult.getError());
+        }
+        if (returnResult.getRentalRecord() != null) {
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+            navController.navigate(R.id.action_navigation_menu_to_returnSuccessFragment);
+        }
+    }
+
+    private void handleEscooterGpsResult(EscooterGpsResult escooterGpsResult) {
+        if (escooterGpsResult == null) {
+            return;
+        }
+        if (escooterGpsResult.getError() != null) {
+            showFailed(escooterGpsResult.getError());
+        }
+        if (escooterGpsResult.getEscooterGps() != null) {
+
+            Gps gps = escooterGpsResult.getEscooterGps();
+            locationCallback = new LocationCallback() {
+                @Override
+                public void onLocationResult(@NonNull LocationResult locationResult) {
+                    for (Location location : locationResult.getLocations()) {
+                        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                        LatLng markerLatLng = new LatLng(gps.getLatitude(), gps.getLongitude());
+
+                        if (googleMap != null) {
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
+                        }
+                        // 設置距離閾值 20 米
+                        float distanceThreshold = 20.0f;
+                        // 計算當前位置與 marker 的距離
+                        float[] results = new float[1];
+                        Location.distanceBetween(currentLatLng.latitude, currentLatLng.longitude,
+                                markerLatLng.latitude, markerLatLng.longitude, results);
+                        float distance = results[0];
+
+                        // 判斷距離是否超過閾值，如果超過則顯示 marker
+                        if (distance > distanceThreshold) {
+                            googleMap.addMarker(new MarkerOptions()
+                                    .position(markerLatLng)
+                                    .title(rentViewModel.getEscooterId().toString())
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_escooter)));
+                            getDirections(currentLatLng, markerLatLng);
+                        } else {
+                            if (currentPolyline != null) {
+                                currentPolyline.remove();
+                            }
+                            googleMap.clear();
+                        }
+                    }
+                }
+            };
+            //開始LocationUpdates
+            startLocationUpdates();
+            updataRentEscooterInfo(scooterInfoBinding);
+        }
     }
 
     private void handleParkResult(ParkResult parkResult) {
@@ -147,6 +224,9 @@ public class MenuFragment extends Fragment {
             showFailed(parkResult.getError());
         }
         if (parkResult.getEscooterList()) {
+
+
+
             //改變按鈕顏色寫這邊
             System.out.println("改變按鈕顏色還沒寫");
         }
@@ -221,7 +301,9 @@ public class MenuFragment extends Fragment {
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }
-        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
+        if (fusedLocationProviderClient != null) {
+            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
+        }
     }
 
     private final OnMapReadyCallback callback = new OnMapReadyCallback() {
@@ -234,7 +316,6 @@ public class MenuFragment extends Fragment {
 //            setPolygon();
             // 設定點選事件
             setOnMarkerClick();
-
         }
     };
 
@@ -280,25 +361,15 @@ public class MenuFragment extends Fragment {
     private void setOnMarkerClick() {
         //設定標籤點擊事件
         googleMap.setOnMarkerClickListener(marker -> {
-            //點擊標籤出現引導線
+            //檢查引導線是否已經存在
             if (currentPolyline != null) {
                 currentPolyline.remove();
             }
-            // 设置位置更新回调
-            locationCallback = new LocationCallback() {
-                @Override
-                public void onLocationResult(@NonNull LocationResult locationResult) {
-                    for (Location location : locationResult.getLocations()) {
-                        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                        LatLng markerLatLng = marker.getPosition();
-                        if (googleMap != null) {
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
-                        }
-                        getDirections(currentLatLng, markerLatLng);
-                        setRentableEscooter();
-                    }
-                }
-            };
+            //停止初始locationCallback
+            stopLocationUpdates();
+            //新增導引locationCallback
+            setlocationCallBack(marker);
+            //開始LocationUpdates
             startLocationUpdates();
             //點擊出現彈窗
             dialogSet(requireContext(), marker);
@@ -306,7 +377,26 @@ public class MenuFragment extends Fragment {
         });
     }
 
-//     使用Directions API獲取導航路徑
+    private void setlocationCallBack(Marker marker) {
+        // 设置位置更新回调
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(@NonNull LocationResult locationResult) {
+                System.out.println("導引線");
+                for (Location location : locationResult.getLocations()) {
+                    LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    LatLng markerLatLng = marker.getPosition();
+                    if (googleMap != null) {
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
+                    }
+                    getDirections(currentLatLng, markerLatLng);
+                    setRentableEscooter();
+                }
+            }
+        };
+    }
+
+    //     使用Directions API獲取導航路徑
     private void getDirections(LatLng origin, LatLng destination) {
 
         String apiKey = getApiKey();
@@ -315,8 +405,6 @@ public class MenuFragment extends Fragment {
                 "&destination=" + destination.latitude + "," + destination.longitude +
                 "&mode=bicycling" + // 指定为骑行模式
                 "&alternatives=true" + // 請求多條路線
-                "&departure_time=now" + // 使用即時交通信息
-                "&avoid=tolls|highways" + // 避免收費路段和高速公路
                 "&key=" + apiKey;
 
         // 發送HTTP請求獲取導航路徑
@@ -370,7 +458,7 @@ public class MenuFragment extends Fragment {
                     String encodedPolyline = overviewPolyline.getString("points");
                     List<LatLng> points = decodePolyline(encodedPolyline);
 
-                    // 顯示導航路徑
+                    // 显示导航路径
                     if (currentPolyline != null) {
                         currentPolyline.remove();
                     }
@@ -387,7 +475,7 @@ public class MenuFragment extends Fragment {
     }
 
     private JSONObject selectBestRoute(JSONArray routes) throws JSONException {
-        // 根據需求選擇最佳路線，例如最短時間或距離
+        // 根据需求选择最佳路线，例如最短时间或距离
         JSONObject bestRoute = routes.getJSONObject(0);
         for (int i = 1; i < routes.length(); i++) {
             JSONObject route = routes.getJSONObject(i);
@@ -398,11 +486,11 @@ public class MenuFragment extends Fragment {
                 JSONObject leg = legs.getJSONObject(0);
                 JSONObject bestRouteLeg = bestRouteLegs.getJSONObject(0);
 
-                int durationInTraffic = leg.getJSONObject("duration_in_traffic").getInt("value");
-                int bestRouteDurationInTraffic = bestRouteLeg.getJSONObject("duration_in_traffic").getInt("value");
+                int duration = leg.getJSONObject("duration").getInt("value");
+                int bestRouteDuration = bestRouteLeg.getJSONObject("duration").getInt("value");
 
-                // 比較邏輯，例如比較總時間
-                if (durationInTraffic < bestRouteDurationInTraffic) {
+                // 比较逻辑，例如比较总时间
+                if (duration < bestRouteDuration) {
                     bestRoute = route;
                 }
             }
@@ -452,31 +540,43 @@ public class MenuFragment extends Fragment {
         markerEscooterInfo(rentInfoBinding, markerEscooterId);
 
         rentInfoBinding.rentButton.setOnClickListener(v ->{
+            //清空google map上的標記
+            googleMap.clear();
+            //停止引導locationCallback
+            stopLocationUpdates();
+            //EscooterService固定取得車輛gps
+            escooterService = new EscooterService(rentViewModel);
+            escooterService.startGpsUpdates();
+
+            //ViewStub彈窗新增
             inflateNewViewStub(context, stub, R.layout.component_menu_scooter_info);
-            ComponentMenuScooterInfoBinding scooterInfoBinding = ComponentMenuScooterInfoBinding.bind(view);
+            scooterInfoBinding = ComponentMenuScooterInfoBinding.bind(view);
             rentEscooterInfo(scooterInfoBinding, markerEscooterId);
+
 
             scooterInfoBinding.parkButton.setOnClickListener(b ->{
                 setParking();
             });
             scooterInfoBinding.returnButton.setOnClickListener(b ->{
                 rentViewModel.returnEscooter();
-                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-                navController.navigate(R.id.action_navigation_menu_to_returnSuccessFragment);
             });
         });
     }
 
+
     private void rentEscooterInfo(ComponentMenuScooterInfoBinding binding,String markerEscooterId) {
         rentViewModel.rentEscooter();
         for (Escooter escooter : escooterList) {
-
             binding.scooterId.setText(markerEscooterId);
             binding.scooterModel.setText(escooter.getModelId());
             binding.batteryTimeText.setText(String.valueOf(escooter.getBatteryLevel()));
-            //日期
             binding.feePerMin.setText(String.valueOf(escooter.getFeePerMinutes()));
         }
+    }
+    private void updataRentEscooterInfo(ComponentMenuScooterInfoBinding binding) {
+        binding.escooterRentTime.setText(escooterService.getStartTime());
+        binding.duration.setText(String.valueOf(escooterService.getDuration()));
+        binding.totalFee.setText(String.valueOf(escooterService.getTotalCost()));
     }
 
     private ViewStub inflateViewStub(Context context, int layoutResource) {
@@ -549,6 +649,8 @@ public class MenuFragment extends Fragment {
             currentPolyline.remove();
         }
 
-        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+        if (fusedLocationProviderClient != null) {
+            fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+        }
     }
 }

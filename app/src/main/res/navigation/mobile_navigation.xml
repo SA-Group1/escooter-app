@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/returnSuccessfulFragment"
         android:name="com.example.escooter.ui.return_successful.ReturnSuccessfulFragment"
-        android:label="fragment_maps"
+        android:label="fragment_successful"
         tools:layout="@layout/fragment_return_successful" >
         <action
         android:id="@+id/action_returnSuccessFragment_to_navigation_menu"
