@@ -76,6 +76,7 @@ public class MenuFragment extends Fragment {
     private Thread navigationThread;
     private View view = null;
     private EscooterService escooterService;
+    private ComponentMenuScooterInfoBinding scooterInfoBinding;
 
     @Nullable
     @Override
@@ -173,15 +174,18 @@ public class MenuFragment extends Fragment {
             showFailed(escooterGpsResult.getError());
         }
         if (escooterGpsResult.getEscooterGps() != null) {
+
             Gps gps = escooterGpsResult.getEscooterGps();
             locationCallback = new LocationCallback() {
                 @Override
                 public void onLocationResult(@NonNull LocationResult locationResult) {
                     for (Location location : locationResult.getLocations()) {
-
                         LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                         LatLng markerLatLng = new LatLng(gps.getLatitude(), gps.getLongitude());
 
+                        if (googleMap != null) {
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
+                        }
                         // 設置距離閾值 20 米
                         float distanceThreshold = 20.0f;
                         // 計算當前位置與 marker 的距離
@@ -190,9 +194,6 @@ public class MenuFragment extends Fragment {
                                 markerLatLng.latitude, markerLatLng.longitude, results);
                         float distance = results[0];
 
-                        if (googleMap != null) {
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
-                        }
                         // 判斷距離是否超過閾值，如果超過則顯示 marker
                         if (distance > distanceThreshold) {
                             googleMap.addMarker(new MarkerOptions()
@@ -211,6 +212,7 @@ public class MenuFragment extends Fragment {
             };
             //開始LocationUpdates
             startLocationUpdates();
+            updataRentEscooterInfo(scooterInfoBinding);
         }
     }
 
@@ -314,7 +316,6 @@ public class MenuFragment extends Fragment {
 //            setPolygon();
             // 設定點選事件
             setOnMarkerClick();
-
         }
     };
 
@@ -549,7 +550,7 @@ public class MenuFragment extends Fragment {
 
             //ViewStub彈窗新增
             inflateNewViewStub(context, stub, R.layout.component_menu_scooter_info);
-            ComponentMenuScooterInfoBinding scooterInfoBinding = ComponentMenuScooterInfoBinding.bind(view);
+            scooterInfoBinding = ComponentMenuScooterInfoBinding.bind(view);
             rentEscooterInfo(scooterInfoBinding, markerEscooterId);
 
 
@@ -562,16 +563,20 @@ public class MenuFragment extends Fragment {
         });
     }
 
+
     private void rentEscooterInfo(ComponentMenuScooterInfoBinding binding,String markerEscooterId) {
         rentViewModel.rentEscooter();
         for (Escooter escooter : escooterList) {
-
             binding.scooterId.setText(markerEscooterId);
             binding.scooterModel.setText(escooter.getModelId());
             binding.batteryTimeText.setText(String.valueOf(escooter.getBatteryLevel()));
-            //日期
             binding.feePerMin.setText(String.valueOf(escooter.getFeePerMinutes()));
         }
+    }
+    private void updataRentEscooterInfo(ComponentMenuScooterInfoBinding binding) {
+        binding.escooterRentTime.setText(escooterService.getStartTime());
+        binding.duration.setText(String.valueOf(escooterService.getDuration()));
+        binding.totalFee.setText(String.valueOf(escooterService.getTotalCost()));
     }
 
     private ViewStub inflateViewStub(Context context, int layoutResource) {
