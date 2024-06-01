@@ -6,12 +6,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.escooter.callback.EscooterGpsCallback;
 import com.example.escooter.callback.ParkCallback;
 import com.example.escooter.callback.RentalCallback;
 import com.example.escooter.callback.ReturnCallback;
 import com.example.escooter.callback.UpdataUserCallback;
 import com.example.escooter.callback.UserCallback;
 import com.example.escooter.data.model.Escooter;
+import com.example.escooter.data.model.Gps;
 import com.example.escooter.data.model.RentalRecord;
 import com.example.escooter.data.model.User;
 import com.example.escooter.service.RentalService;
@@ -26,6 +28,7 @@ public class RentViewModel extends ViewModel {
     private final MutableLiveData<RentResult> rentResult = new MutableLiveData<>();
     private final MutableLiveData<ParkResult> ParkResult = new MutableLiveData<>();
     private final MutableLiveData<ReturnResult> ReturnResult = new MutableLiveData<>();
+    private final MutableLiveData<EscooterGpsResult> EscooterGpsResult = new MutableLiveData<>();
     private final MutableLiveData<String> ownLongitude = new MutableLiveData<>();
     private final MutableLiveData<String> ownLatitude = new MutableLiveData<>();
     private final MutableLiveData<String> account = new MutableLiveData<>();
@@ -41,12 +44,13 @@ public class RentViewModel extends ViewModel {
     public LiveData<ReturnResult> getReturnResult() {
         return ReturnResult;
     }
-    public LiveData<String> getOwnLongitude() {
-        return ownLongitude;
+    public LiveData<EscooterGpsResult> getEscooterGpsResult() {
+        return EscooterGpsResult;
     }
-    public LiveData<String> getOwnfLatitude() {
-        return ownLatitude;
+    public LiveData<String> getEscooterId() {
+        return escooterId;
     }
+
 
     public void getRentableEscooterList() {
         RentalService.getRentableEscooterList(ownLongitude.getValue(), ownLatitude.getValue(), new RentalCallback() {
@@ -105,6 +109,22 @@ public class RentViewModel extends ViewModel {
             @Override
             public void onFailure(Exception e) {
                 ReturnResult.postValue(new ReturnResult(e));
+            }
+        });
+    }
+
+    public void getEscooterGps() {
+        RentalService.getEscooterGps(escooterId.getValue(), new EscooterGpsCallback() {
+
+            @Override
+            public void onSuccess(Gps gps) {
+                System.out.println("Success Get Gps");
+                EscooterGpsResult.postValue(new EscooterGpsResult(gps));
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                EscooterGpsResult.postValue(new EscooterGpsResult(e));
             }
         });
     }

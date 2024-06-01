@@ -1,10 +1,12 @@
 package com.example.escooter.service;
 
+import com.example.escooter.callback.EscooterGpsCallback;
 import com.example.escooter.callback.ParkCallback;
 import com.example.escooter.callback.RentRecordCallback;
 import com.example.escooter.callback.RentalCallback;
 import com.example.escooter.callback.ReturnCallback;
 import com.example.escooter.data.model.Escooter;
+import com.example.escooter.data.model.Gps;
 import com.example.escooter.data.model.RentalRecord;
 import com.example.escooter.repository.RentalRepository;
 
@@ -74,6 +76,20 @@ public class RentalService {
             @Override
             public void onSuccess(ArrayList<RentalRecord> RentalRecordList) {
                 callback.onSuccess(RentalRecordList);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                callback.onFailure(e);
+            }
+        });
+    }
+
+    public void getEscooterGps(String escooterId, EscooterGpsCallback callback) {
+        rentalRepository.getEscooterGps(escooterId, new EscooterGpsCallback() {
+            @Override
+            public void onSuccess(Gps gps) {
+                callback.onSuccess(gps);
             }
 
             @Override

@@ -2,6 +2,7 @@ package com.example.escooter.repository;
 
 
 import com.example.escooter.BuildConfig;
+import com.example.escooter.callback.EscooterGpsCallback;
 import com.example.escooter.callback.HttpResultCallback;
 import com.example.escooter.callback.ParkCallback;
 import com.example.escooter.callback.RentRecordCallback;
@@ -9,6 +10,7 @@ import com.example.escooter.callback.RentalCallback;
 import com.example.escooter.callback.ReturnCallback;
 import com.example.escooter.callback.UserCallback;
 import com.example.escooter.data.model.Escooter;
+import com.example.escooter.data.model.Gps;
 import com.example.escooter.data.model.RentalRecord;
 import com.example.escooter.network.HttpRequest;
 
@@ -77,7 +79,6 @@ public class RentalRepository {
             return;
         }
 
-        System.out.println(body);
         HttpRequest.httpRequest(BuildConfig.BASE_URL + "/rentEscooter", "POST", body, new HttpResultCallback<JSONObject>() {
             @Override
             public void onResult(JSONObject result) {
@@ -218,6 +219,37 @@ public class RentalRepository {
                     }
 
                     callback.onSuccess(rentalRecordList);
+                } catch (JSONException e) {
+                    callback.onFailure(e);
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                callback.onFailure(e);
+            }
+        });
+    }
+
+    public void getEscooterGps(String escooterId, EscooterGpsCallback callback) {
+        JSONObject body = new JSONObject();
+        try {
+            body.put("escooterId", escooterId);
+        } catch (JSONException e) {
+            callback.onFailure(e);
+            return;
+        }
+
+        HttpRequest.httpRequest(BuildConfig.BASE_URL + "/getEscooterGps", "POST", body, new HttpResultCallback<JSONObject>() {
+            @Override
+            public void onResult(JSONObject result) {
+                try {
+                    JSONObject EscooterLocation = result.getJSONObject("data");
+                    System.out.println(EscooterLocation);
+                    Gps gps = new Gps();
+                    gps.setLatitude(EscooterLocation.getDouble("latitude"));
+                    gps.setLongitude(EscooterLocation.getDouble("longitude"));
+                    callback.onSuccess(gps);
                 } catch (JSONException e) {
                     callback.onFailure(e);
                 }
