@@ -27,8 +27,8 @@ public class RentViewModel extends ViewModel {
     private final RentalService RentalService = new RentalService();
     private final MutableLiveData<RentResult> rentResult = new MutableLiveData<>();
     private final MutableLiveData<ParkResult> ParkResult = new MutableLiveData<>();
-    private final MutableLiveData<ReturnResult> ReturnResult = new MutableLiveData<>();
-    private final MutableLiveData<EscooterGpsResult> EscooterGpsResult = new MutableLiveData<>();
+    private MutableLiveData<ReturnResult> returnResult = new MutableLiveData<>();
+    private final MutableLiveData<EscooterGpsResult> escooterGpsResult = new MutableLiveData<>();
     private final MutableLiveData<String> ownLongitude = new MutableLiveData<>();
     private final MutableLiveData<String> ownLatitude = new MutableLiveData<>();
     private final MutableLiveData<String> account = new MutableLiveData<>();
@@ -42,15 +42,18 @@ public class RentViewModel extends ViewModel {
         return ParkResult;
     }
     public LiveData<ReturnResult> getReturnResult() {
-        return ReturnResult;
+        return returnResult;
     }
     public LiveData<EscooterGpsResult> getEscooterGpsResult() {
-        return EscooterGpsResult;
+        return escooterGpsResult;
     }
     public LiveData<String> getEscooterId() {
         return escooterId;
     }
 
+    public void clearReturnResult(){
+        returnResult = new MutableLiveData<>();
+    }
 
     public void getRentableEscooterList() {
         RentalService.getRentableEscooterList(ownLongitude.getValue(), ownLatitude.getValue(), new RentalCallback() {
@@ -103,12 +106,12 @@ public class RentViewModel extends ViewModel {
             @Override
             public void onSuccess(RentalRecord escooter) {
                 System.out.println("Success Return");
-                ReturnResult.postValue(new ReturnResult(escooter));
+                returnResult.postValue(new ReturnResult(escooter));
             }
 
             @Override
             public void onFailure(Exception e) {
-                ReturnResult.postValue(new ReturnResult(e));
+                returnResult.postValue(new ReturnResult(e));
             }
         });
     }
@@ -119,12 +122,12 @@ public class RentViewModel extends ViewModel {
             @Override
             public void onSuccess(Gps gps) {
                 System.out.println("Success Get Gps");
-                EscooterGpsResult.postValue(new EscooterGpsResult(gps));
+                escooterGpsResult.postValue(new EscooterGpsResult(gps));
             }
 
             @Override
             public void onFailure(Exception e) {
-                EscooterGpsResult.postValue(new EscooterGpsResult(e));
+                escooterGpsResult.postValue(new EscooterGpsResult(e));
             }
         });
     }

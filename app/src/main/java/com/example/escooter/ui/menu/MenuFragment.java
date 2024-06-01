@@ -130,9 +130,8 @@ public class MenuFragment extends Fragment {
     }
 
     private void stopLocationUpdates() {
-        if (locationCallback != null && locationCallback != null) {
+        if (locationCallback != null && fusedLocationProviderClient != null) {
             fusedLocationProviderClient.removeLocationUpdates(locationCallback);
-            locationCallback = null;
         }
     }
 
@@ -161,8 +160,6 @@ public class MenuFragment extends Fragment {
             showFailed(returnResult.getError());
         }
         if (returnResult.getRentalRecord() != null) {
-            System.out.println("Success");
-            stopLocationUpdates();
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigate(R.id.action_navigation_menu_to_returnSuccessFragment);
         }
@@ -225,6 +222,9 @@ public class MenuFragment extends Fragment {
             showFailed(parkResult.getError());
         }
         if (parkResult.getEscooterList()) {
+
+
+
             //改變按鈕顏色寫這邊
             System.out.println("改變按鈕顏色還沒寫");
         }
@@ -299,7 +299,9 @@ public class MenuFragment extends Fragment {
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }
-        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
+        if (fusedLocationProviderClient != null) {
+            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
+        }
     }
 
     private final OnMapReadyCallback callback = new OnMapReadyCallback() {
@@ -642,6 +644,8 @@ public class MenuFragment extends Fragment {
             currentPolyline.remove();
         }
 
-        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+        if (fusedLocationProviderClient != null) {
+            fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+        }
     }
 }
