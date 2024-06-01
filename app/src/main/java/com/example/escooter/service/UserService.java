@@ -1,16 +1,19 @@
 package com.example.escooter.service;
 
-import com.example.escooter.callback.UpdataUserCallback;
+import com.example.escooter.callback.PhotoCallback;
+import com.example.escooter.callback.UpdateUserCallback;
+import com.example.escooter.callback.UploadUserPhotoCallback;
 import com.example.escooter.callback.UserCallback;
 import com.example.escooter.data.model.User;
 import com.example.escooter.repository.UserRepository;
 
 public class UserService {
-    private final UserRepository UserRepository = new UserRepository();
+    private final UserRepository userRepository = new UserRepository();
 
 
     public void getUserData(String account, String password, UserCallback callback) {
-        UserRepository.getUserData(account, password, new UserCallback() {
+
+        userRepository.getUserData(account, password, new UserCallback() {
             @Override
             public void onSuccess(User user) {
                 callback.onSuccess(user);
@@ -21,13 +24,14 @@ public class UserService {
                 callback.onFailure(e);
             }
         });
+
     }
 
-    public void updataUserData(String account, String password, String username, String email, String phoneNumber, UpdataUserCallback callback) {
-        UserRepository.updataUserData(account, password, username, email, phoneNumber, new UpdataUserCallback() {
+    public void getUserPhoto(String account, String password, PhotoCallback callback){
+        userRepository.getUserPhoto(account, password, new PhotoCallback() {
             @Override
-            public void onSuccess(boolean isUpdataUserData) {
-                callback.onSuccess(isUpdataUserData);
+            public void onSuccess(String photo) {
+                callback.onSuccess(photo);
             }
 
             @Override
@@ -36,4 +40,33 @@ public class UserService {
             }
         });
     }
+
+    public void updateUserData(String account, String password, String username, String email, String phoneNumber, UpdateUserCallback callback) {
+        userRepository.updateUserData(account, password, username, email, phoneNumber, new UpdateUserCallback() {
+            @Override
+            public void onSuccess(boolean isUpdateUserData) {
+                callback.onSuccess(isUpdateUserData);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                callback.onFailure(e);
+            }
+        });
+    }
+
+    public void uploadUserPhoto(String account, String password,String photo, UploadUserPhotoCallback callback){
+        userRepository.uploadUserPhoto(account, password , photo , new UploadUserPhotoCallback() {
+            @Override
+            public void onSuccess(boolean isUploadUserPhoto) {
+                callback.onSuccess(isUploadUserPhoto);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                callback.onFailure(e);
+            }
+        });
+    }
+
 }

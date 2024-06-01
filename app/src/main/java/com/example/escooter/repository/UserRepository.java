@@ -2,7 +2,9 @@ package com.example.escooter.repository;
 
 import com.example.escooter.BuildConfig;
 import com.example.escooter.callback.HttpResultCallback;
-import com.example.escooter.callback.UpdataUserCallback;
+import com.example.escooter.callback.PhotoCallback;
+import com.example.escooter.callback.UpdateUserCallback;
+import com.example.escooter.callback.UploadUserPhotoCallback;
 import com.example.escooter.callback.UserCallback;
 import com.example.escooter.data.model.CreditCard;
 import com.example.escooter.data.model.MemberCard;
@@ -64,7 +66,39 @@ public class UserRepository {
         });
     }
 
-    public void updataUserData(String account, String password, String username, String email, String phoneNumber, UpdataUserCallback callback) {
+    public void getUserPhoto(String account, String password, PhotoCallback callback) {
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("account", account);
+            body.put("password", password);
+        } catch (JSONException e) {
+            callback.onFailure(e);
+            return;
+        }
+
+        HttpRequest.httpRequest(BuildConfig.BASE_URL + "/getUserPhoto", "POST", body, new HttpResultCallback<JSONObject>() {
+            @Override
+            public void onResult(JSONObject result) {
+                try {
+
+                    JSONObject jsonObject = result.getJSONObject("data");
+                    String photo = jsonObject.getString("image");
+                    callback.onSuccess(photo);
+                } catch (JSONException e) {
+                    callback.onFailure(e);
+                }
+            }
+            @Override
+            public void onError(Exception e) {
+                System.out.println(e.toString());
+                callback.onFailure(e);
+            }
+        });
+    }
+
+
+    public void updateUserData(String account, String password, String username, String email, String phoneNumber, UpdateUserCallback callback) {
 
         JSONObject body = new JSONObject();
         try {
@@ -82,8 +116,38 @@ public class UserRepository {
             @Override
             public void onResult(JSONObject result) {
                 try {
-                    boolean isUpdataUserData = result.getBoolean("status");
-                    callback.onSuccess(isUpdataUserData);
+                    boolean isUpdateUserData = result.getBoolean("status");
+                    callback.onSuccess(isUpdateUserData);
+                } catch (JSONException e) {
+                    callback.onFailure(e);
+                }
+            }
+            @Override
+            public void onError(Exception e) {
+                System.out.println(e.toString());
+                callback.onFailure(e);
+            }
+        });
+    }
+
+    public void uploadUserPhoto(String account, String password,String photo, UploadUserPhotoCallback callback) {
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("account",account);
+            body.put("password",password);
+            body.put("image", photo);
+        } catch (
+                JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        HttpRequest.httpRequest(BuildConfig.BASE_URL + "/uploadUserPhoto", "PUT", body, new HttpResultCallback<JSONObject>() {
+            @Override
+            public void onResult(JSONObject result) {
+                try {
+                    boolean isUploadPhoto = result.getBoolean("status");
+                    callback.onSuccess(isUploadPhoto);
                 } catch (JSONException e) {
                     callback.onFailure(e);
                 }
