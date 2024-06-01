@@ -12,6 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/bg_radius_20dp"
         android:backgroundTint="@color/primary_white">
 
