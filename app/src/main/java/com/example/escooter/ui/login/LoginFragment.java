@@ -92,7 +92,6 @@ public class LoginFragment extends Fragment {
             return false;
         });
 
-
         binding.signUpButton.setOnClickListener(this::onSignupButtonClicked);
         binding.loginButton.setOnClickListener(this::onLoginButtonClicked);
     }

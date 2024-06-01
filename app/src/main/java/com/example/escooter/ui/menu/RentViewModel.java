@@ -8,9 +8,11 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.escooter.callback.ParkCallback;
 import com.example.escooter.callback.RentalCallback;
+import com.example.escooter.callback.ReturnCallback;
 import com.example.escooter.callback.UpdataUserCallback;
 import com.example.escooter.callback.UserCallback;
 import com.example.escooter.data.model.Escooter;
+import com.example.escooter.data.model.RentalRecord;
 import com.example.escooter.data.model.User;
 import com.example.escooter.service.RentalService;
 import com.example.escooter.service.UserService;
@@ -23,6 +25,7 @@ public class RentViewModel extends ViewModel {
     private final RentalService RentalService = new RentalService();
     private final MutableLiveData<RentResult> rentResult = new MutableLiveData<>();
     private final MutableLiveData<ParkResult> ParkResult = new MutableLiveData<>();
+    private final MutableLiveData<ReturnResult> ReturnResult = new MutableLiveData<>();
     private final MutableLiveData<String> ownLongitude = new MutableLiveData<>();
     private final MutableLiveData<String> ownLatitude = new MutableLiveData<>();
     private final MutableLiveData<String> account = new MutableLiveData<>();
@@ -34,6 +37,9 @@ public class RentViewModel extends ViewModel {
     }
     public LiveData<ParkResult> getParkResult() {
         return ParkResult;
+    }
+    public LiveData<ReturnResult> getReturnResult() {
+        return ReturnResult;
     }
     public LiveData<String> getOwnLongitude() {
         return ownLongitude;
@@ -83,6 +89,22 @@ public class RentViewModel extends ViewModel {
             @Override
             public void onFailure(Exception e) {
                 rentResult.postValue(new RentResult(e));
+            }
+        });
+    }
+
+    public void returnEscooter() {
+        RentalService.returnEscooter(account.getValue(), password.getValue(), new ReturnCallback() {
+
+            @Override
+            public void onSuccess(RentalRecord escooter) {
+                System.out.println("Success Return");
+                ReturnResult.postValue(new ReturnResult(escooter));
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                ReturnResult.postValue(new ReturnResult(e));
             }
         });
     }

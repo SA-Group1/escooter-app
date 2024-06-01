@@ -25,6 +25,7 @@ import com.example.escooter.databinding.FragmentMenuBinding;
 import com.example.escooter.databinding.FragmentRentRecordBinding;
 import com.example.escooter.network.HttpRequest;
 
+import com.example.escooter.ui.menu.RentViewModel;
 import com.example.escooter.ui.user.UserResult;
 import com.example.escooter.ui.user.UserViewModel;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -34,11 +35,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RentRecordFragment extends Fragment {
 
     private FragmentRentRecordBinding binding;
     private UserViewModel userViewModel;
+    private RentRecordViewModel rentRecordViewModel;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentRentRecordBinding.inflate(inflater, container, false);
@@ -49,6 +52,7 @@ public class RentRecordFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        rentRecordViewModel = new ViewModelProvider(requireActivity()).get(RentRecordViewModel.class);
 
         initializeViews(binding);
         setListeners(binding);
@@ -59,38 +63,6 @@ public class RentRecordFragment extends Fragment {
     private void initializeViews(FragmentRentRecordBinding binding) {
         binding.rentRecordList.setLayoutManager(new LinearLayoutManager(getContext()));
     }
-
-//    private void getRentRecordListAdapter(FragmentRentRecordBinding binding) {
-//        ArrayList<RentalRecord> rentRecordList = new ArrayList<>();
-//
-//        // 抓取UserData
-//        JSONObject postData = new JSONObject();
-//        try {
-//            postData.put("account", account);
-//            postData.put("password", password);
-//        } catch (JSONException e) {
-//            throw new RuntimeException(e);
-//        }
-//        String apiUrl = "http://36.232.110.240:8080/api/getRentalRecordList";
-//        HttpRequest getRentalRecordList= new HttpRequest(apiUrl);
-//        // 發送 HTTP POST 請求
-//        getRentalRecordList.httpPost(postData, result -> {
-//            try {
-//                JSONArray rentalRecordsArray = result.getJSONArray("rentalRecords");
-//                System.out.println(result.getJSONArray("rentalRecords"));
-//
-//                for (int i = 0; i < rentalRecordsArray.length(); i++) {
-//                    JSONObject recordObject = rentalRecordsArray.getJSONObject(i);
-//                    RentalRecord record = RentalRecord.fromJson(recordObject);
-//                    rentRecordList.add(record);
-//                }
-//
-//                setRentRecordListAdapter(binding, rentRecordList);
-//            } catch (JSONException e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
-//    }
     private void setRentRecordListAdapter(FragmentRentRecordBinding binding, ArrayList<RentalRecord> rentRecordList) {
         requireActivity().runOnUiThread(() -> {
             RentRecordListAdapter adapter = new RentRecordListAdapter(rentRecordList);
@@ -100,7 +72,22 @@ public class RentRecordFragment extends Fragment {
 
     private void setupObservers() {
         userViewModel.getUserResult().observe(getViewLifecycleOwner(), this::handleUserResult);
+        rentRecordViewModel.getRentRecordResult().observe(getViewLifecycleOwner(), this::handleRentRecordResult);
     }
+
+    private void handleRentRecordResult(RentRecordResult rentRecordResult) {
+        if (rentRecordResult == null) {
+            return;
+        }
+        if (rentRecordResult.getError() != null) {
+            showFailed(rentRecordResult.getError());
+        }
+        if (rentRecordResult.getRentalRecord() != null) {
+            ArrayList<RentalRecord> rentRecordList = rentRecordResult.getRentalRecord();
+            setRentRecordListAdapter(binding, rentRecordList);
+        }
+    }
+
     private void handleUserResult(UserResult userResult) {
 
         if (userResult == null) {
@@ -112,6 +99,8 @@ public class RentRecordFragment extends Fragment {
         if (userResult.getUser() != null) {
             User user = userResult.getUser();
             updateTextViewInfo(binding, user);
+            rentRecordViewModel.setUserCredential(user.getAccount(),user.getPassword());
+            rentRecordViewModel.getRentalRecordList();
         }
     }
     private void showFailed(Exception errorString) {
@@ -144,18 +133,6 @@ public class RentRecordFragment extends Fragment {
             navController.navigate(R.id.action_rentRecordFragment_to_personinfoFragment);
         });
     }
-
-//    private void setUserViewModel(FragmentRentRecordBinding binding) {
-//        UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-//        userViewModel.getUserData().observe(getViewLifecycleOwner(), user -> {
-//            if (user != null) {
-//                account = user.getAccount();
-//                password = user.getPassword();
-//                updateTextViewInfo(binding, user);
-//                getRentRecordListAdapter(binding);
-//            }
-//        });
-//    }
 
     private void updateTextViewInfo(FragmentRentRecordBinding binding, User user) {
         TextView personNameTextView = binding.personinfobutton.personNameTextView;
