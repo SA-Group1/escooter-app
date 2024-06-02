@@ -1,17 +1,31 @@
 package com.example.escooter.ui.personinfo;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -21,10 +35,10 @@ import com.example.escooter.R;
 import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.DialogPersonInfoEditProfileBinding;
 import com.example.escooter.databinding.FragmentPersonInfoBinding;
-import com.example.escooter.ui.user.UserFormState;
 import com.example.escooter.ui.user.UserResult;
 import com.example.escooter.ui.user.UserViewModel;
 import com.example.escooter.utils.SimpleTextWatcher;
+import com.example.escooter.utils.UriBase64Converter;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.Objects;
@@ -32,8 +46,64 @@ import java.util.Objects;
 public class PersonInfoFragment extends Fragment {
     private FragmentPersonInfoBinding binding;
     private UserViewModel userViewModel;
-    private String account;
-    private String password;
+    private ImageView personInfoImageView;
+    private ActivityResultLauncher<Intent> pickImageLauncher;
+
+    private static final int REQUEST_CODE_PERMISSIONS = 1001;
+
+    private void requestPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(requireActivity(),
+                        new String[]{Manifest.permission.READ_MEDIA_IMAGES},
+                        REQUEST_CODE_PERMISSIONS);
+            } else {
+                pickImageFromGallery();
+            }
+        } else {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_PERMISSIONS);
+            } else {
+                pickImageFromGallery();
+            }
+        }
+    }
+
+    private void pickImageFromGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        pickImageLauncher.launch(intent);
+    }
+
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        pickImageLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        Uri imageUri = result.getData().getData();
+                        if (imageUri != null) {
+                            try {
+                                personInfoImageView.setImageURI(imageUri);
+                                String base64Image = UriBase64Converter.convertUriToBase64(requireContext(), imageUri);
+                                userViewModel.uploadUserPhoto(base64Image);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Toast.makeText(requireContext(), "Error processing the selected image", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(requireContext(), "Failed to get the selected image, please try again", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(requireContext(), "Failed to get the selected image, please try again", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+    }
 
     @Nullable
     @Override
@@ -42,6 +112,7 @@ public class PersonInfoFragment extends Fragment {
         binding = FragmentPersonInfoBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -55,8 +126,8 @@ public class PersonInfoFragment extends Fragment {
     private void setupObservers() {
         userViewModel.getUserResult().observe(getViewLifecycleOwner(), this::handleUserResult);
     }
-    private void handleUserResult(UserResult userResult) {
 
+    private void handleUserResult(UserResult userResult) {
         if (userResult == null) {
             return;
         }
@@ -68,9 +139,11 @@ public class PersonInfoFragment extends Fragment {
             updateTextViewInfo(binding, user);
         }
     }
+
     private void showFailed(Exception errorString) {
         showToast(errorString.toString());
     }
+
     private void showToast(String message) {
         if (getContext() != null && getContext().getApplicationContext() != null) {
             Toast.makeText(getContext().getApplicationContext(), message, Toast.LENGTH_LONG).show();
@@ -114,53 +187,40 @@ public class PersonInfoFragment extends Fragment {
 
         DialogPersonInfoEditProfileBinding dialogBinding = DialogPersonInfoEditProfileBinding.bind(dialogView);
 
-        setDialogListeners(dialogBinding,dialog);
+        personInfoImageView = dialogBinding.personInfoAddImage;
+
+        setDialogListeners(dialogBinding, dialog);
         setupDialogObservers(dialogBinding);
 
         return dialog;
     }
 
-
-
     private void setDialogListeners(DialogPersonInfoEditProfileBinding dialogBinding, AlertDialog dialog) {
+        dialogBinding.personInfoAddImage.setOnClickListener(b -> {
+            requestPermissions();
+        });
 
-        dialogBinding.userName.addTextChangedListener(new SimpleTextWatcher() {
+        SimpleTextWatcher textWatcher = new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 String username = dialogBinding.userName.getText().toString();
                 String email = dialogBinding.userEmail.getText().toString();
                 String phoneNumber = dialogBinding.userPhoneNumber.getText().toString();
-
                 userViewModel.updataDataChanged(username, email, phoneNumber);
             }
-        });
-        dialogBinding.userEmail.addTextChangedListener(new SimpleTextWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                String username = dialogBinding.userName.getText().toString();
-                String email = dialogBinding.userEmail.getText().toString();
-                String phoneNumber = dialogBinding.userPhoneNumber.getText().toString();
+        };
 
-                userViewModel.updataDataChanged(username, email, phoneNumber);
-            }
-        });
-        dialogBinding.userPhoneNumber.addTextChangedListener(new SimpleTextWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                String username = dialogBinding.userName.getText().toString();
-                String email = dialogBinding.userEmail.getText().toString();
-                String phoneNumber = dialogBinding.userPhoneNumber.getText().toString();
-
-                userViewModel.updataDataChanged(username, email, phoneNumber);
-            }
-        });
+        dialogBinding.userName.addTextChangedListener(textWatcher);
+        dialogBinding.userEmail.addTextChangedListener(textWatcher);
+        dialogBinding.userPhoneNumber.addTextChangedListener(textWatcher);
 
         dialogBinding.cancelButton.setOnClickListener(b -> dialog.dismiss());
         dialogBinding.bindButton.setOnClickListener(b -> {
-            userViewModel.updataUserData();
+            userViewModel.updateUserData();
             dialog.dismiss();
         });
     }
+
     private void setupDialogObservers(DialogPersonInfoEditProfileBinding dialogBinding) {
         userViewModel.getUserFormState().observe(getViewLifecycleOwner(), userFormState -> {
             if (userFormState == null) {
@@ -184,14 +244,10 @@ public class PersonInfoFragment extends Fragment {
     private void updateTextViewInfo(FragmentPersonInfoBinding binding, User user) {
         TextView personNameTextView = binding.personinfobutton.personNameTextView;
         personNameTextView.setText(user.getUserName());
-        TextView NameTextView = requireActivity().findViewById(R.id.user_name);
-        NameTextView.setText(user.getUserName());
-        TextView phoneTextView = requireActivity().findViewById(R.id.user_phone);
-        phoneTextView.setText(user.getPhoneNumber());
-        TextView emailTextView = requireActivity().findViewById(R.id.user_email);
-        emailTextView.setText(user.getEmail());
-        TextView identityTextView = requireActivity().findViewById(R.id.user_identity);
-        identityTextView.setText("Student");
+        binding.personinfobutton.imageView.setImageURI(UriBase64Converter.convertBase64ToUri(requireContext(), user.getPhoto()));
+        binding.userName.setText(user.getUserName());
+        binding.userPhone.setText(user.getPhoneNumber());
+        binding.userEmail.setText(user.getEmail());
+        binding.userIdentity.setText("Student");
     }
 }
-

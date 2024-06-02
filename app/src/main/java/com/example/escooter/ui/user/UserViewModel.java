@@ -6,11 +6,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.escooter.callback.UpdataUserCallback;
+import com.example.escooter.callback.PhotoCallback;
+import com.example.escooter.callback.UpdateUserCallback;
+import com.example.escooter.callback.UploadUserPhotoCallback;
 import com.example.escooter.callback.UserCallback;
 import com.example.escooter.data.model.User;
 import com.example.escooter.service.UserService;
-import com.example.escooter.ui.login.LoginFormState;
+
+import java.util.Objects;
 
 public class UserViewModel extends ViewModel {
     private final UserService UserService = new UserService();
@@ -52,20 +55,53 @@ public class UserViewModel extends ViewModel {
                 userResult.postValue(new UserResult(e));
             }
         });
+
+        UserService.getUserPhoto(account.getValue(), password.getValue(), new PhotoCallback() {
+            @Override
+            public void onSuccess(String photo) {
+                User user = Objects.requireNonNull(userResult.getValue()).getUser();
+                assert user != null;
+                user.setPhoto(photo);
+                userResult.postValue(new UserResult(user));
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+
+            }
+        });
+
     }
 
-    public void updataUserData() {
+    public void updateUserData() {
         if (account.getValue() == null || password.getValue() == null){
             System.out.println("Error");
         }
-        UserService.updataUserData(account.getValue(), password.getValue(), username.getValue(), email.getValue(), phoneNumber.getValue(), new UpdataUserCallback() {
+        UserService.updateUserData(account.getValue(), password.getValue(), username.getValue(), email.getValue(), phoneNumber.getValue(), new UpdateUserCallback() {
             @Override
-            public void onSuccess(boolean isUpdataUserData) {
+            public void onSuccess(boolean isUpdateUserData) {
+                if (userResult.getValue() != null && userResult.getValue().getUser() != null) {
+                    User user = userResult.getValue().getUser();
+                    user.setUserName(username.getValue());
+                    user.setEmail(email.getValue());
+                    user.setPhoneNumber(phoneNumber.getValue());
+                    userResult.postValue(new UserResult(user));
+                }
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                userResult.postValue(new UserResult(e));
+            }
+        });
+    }
+
+    public void uploadUserPhoto(String photo){
+        UserService.uploadUserPhoto(account.getValue(), password.getValue(), photo, new UploadUserPhotoCallback() {
+            @Override
+            public void onSuccess(boolean isUploadUserData) {
                 User user = userResult.getValue().getUser();
-                user.setUserName(username.getValue());
-                user.setEmail(email.getValue());
-                user.setPhoneNumber(phoneNumber.getValue());
-                userResult.postValue(new UserResult(user));
+                user.setPhoto(photo);
             }
 
             @Override
