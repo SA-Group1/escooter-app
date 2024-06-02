@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -34,7 +32,6 @@ import com.example.escooter.databinding.FragmentMenuBinding;
 import com.example.escooter.service.EscooterService;
 import com.example.escooter.ui.user.UserResult;
 import com.example.escooter.ui.user.UserViewModel;
-import com.example.escooter.utils.UriBase64Converter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -80,8 +77,6 @@ public class MenuFragment extends Fragment {
     private View view = null;
     private EscooterService escooterService;
     private ComponentMenuScooterInfoBinding scooterInfoBinding;
-
-    private boolean isPark = false;
 
     @Nullable
     @Override
@@ -230,6 +225,10 @@ public class MenuFragment extends Fragment {
         }
         if (parkResult.getEscooterList()) {
 
+
+
+            //改變按鈕顏色寫這邊
+            System.out.println("改變按鈕顏色還沒寫");
         }
     }
 
@@ -272,7 +271,6 @@ public class MenuFragment extends Fragment {
             rentViewModel.setUserCredential(user.getAccount(),user.getPassword());
             TextView personNameTextView = binding.personinfobutton.personNameTextView;
             personNameTextView.setText(user.getUserName());
-            binding.personinfobutton.imageView.setImageURI(UriBase64Converter.convertBase64ToUri(requireContext(), user.getPhoto()));
         }
     }
 
@@ -541,7 +539,6 @@ public class MenuFragment extends Fragment {
         ComponentMenuRentInfoBinding rentInfoBinding = ComponentMenuRentInfoBinding.bind(view);
         markerEscooterInfo(rentInfoBinding, markerEscooterId);
 
-
         rentInfoBinding.rentButton.setOnClickListener(v ->{
             //清空google map上的標記
             googleMap.clear();
@@ -559,25 +556,6 @@ public class MenuFragment extends Fragment {
 
             scooterInfoBinding.parkButton.setOnClickListener(b ->{
                 setParking();
-
-                if (isPark) {
-                    scooterInfoBinding.parkButton.setText("Park");
-                    isPark = !isPark;
-
-                    int textColor = ContextCompat.getColor(context, R.color.secondary_deep_gray);
-                    scooterInfoBinding.parkButton.setTextColor(textColor);
-
-                    scooterInfoBinding.parkButton.setBackgroundTintList(null);
-                } else {
-                    scooterInfoBinding.parkButton.setText("Unpark");
-                    isPark = !isPark;
-
-                    int textColor = ContextCompat.getColor(context, R.color.primary_white);
-                    scooterInfoBinding.parkButton.setTextColor(textColor);
-
-                    ColorStateList backgroundTint = ContextCompat.getColorStateList(context, R.color.secondary_dark_gray);
-                    scooterInfoBinding.parkButton.setBackgroundTintList(backgroundTint);
-                }
             });
             scooterInfoBinding.returnButton.setOnClickListener(b ->{
                 rentViewModel.returnEscooter();

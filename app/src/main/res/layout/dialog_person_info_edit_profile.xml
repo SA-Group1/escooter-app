@@ -26,27 +26,14 @@
             android:fontFamily="@font/lufga_bold"
             tools:ignore="HardcodedText" />
 
-        <androidx.cardview.widget.CardView
+        <ImageView
+            android:id="@+id/person_info_add_image"
+            android:layout_marginTop="27dp"
             android:layout_width="132dp"
             android:layout_height="132dp"
-            android:layout_marginTop="27dp"
-            android:elevation="12dp"
-            android:id="@+id/img_card_view"
-            app:cardCornerRadius="100dp"
-            android:layout_below="@id/person_info_edit_title"
+            android:src="@drawable/ic_add_person_image"
             android:layout_centerHorizontal="true"
-            android:backgroundTint="@color/secondary_dark_gray"
-            android:innerRadius="0dp"
-            android:shape="ring"
-            android:thicknessRatio="1.9">
-            <ImageView
-                android:id="@+id/person_info_add_image"
-                android:layout_width="132dp"
-                android:layout_height="132dp"
-                android:src="@drawable/ic_add_person_image"
-                android:layout_centerHorizontal="true" />
-        </androidx.cardview.widget.CardView>
-
+            android:layout_below="@id/person_info_edit_title"/>
 
         <TextView
             android:id="@+id/person_info_edit_profile_text"
@@ -58,7 +45,7 @@
             android:text="Profile"
             android:textColor="@color/primary_medium_gray"
             android:fontFamily="@font/lufga_light"
-            android:layout_below="@id/img_card_view"
+            android:layout_below="@id/person_info_add_image"
             tools:ignore="HardcodedText" />
 
 

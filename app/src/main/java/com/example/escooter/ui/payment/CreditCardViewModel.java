@@ -1,13 +1,21 @@
 package com.example.escooter.ui.payment;
 
+import android.util.Patterns;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.escooter.callback.BindCreditCardCallback;
 import com.example.escooter.callback.UnbindCreditCardCallback;
+import com.example.escooter.callback.UpdataUserCallback;
+import com.example.escooter.callback.UserCallback;
 import com.example.escooter.data.model.CreditCard;
+import com.example.escooter.data.model.User;
 import com.example.escooter.service.CreditCardService;
+import com.example.escooter.service.UserService;
+import com.example.escooter.ui.user.UserFormState;
+import com.example.escooter.ui.user.UserResult;
 
 public class CreditCardViewModel extends ViewModel {
     private final CreditCardService CreditCardService = new CreditCardService();

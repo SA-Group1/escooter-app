@@ -28,7 +28,6 @@ import com.example.escooter.databinding.FragmentPaymentBinding;
 import com.example.escooter.ui.user.UserResult;
 import com.example.escooter.ui.user.UserViewModel;
 import com.example.escooter.utils.SimpleTextWatcher;
-import com.example.escooter.utils.UriBase64Converter;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.Objects;
@@ -240,7 +239,6 @@ public class PaymentFragment extends Fragment {
     private void updateTextViewInfo(FragmentPaymentBinding binding, User user) {
         TextView personNameTextView = binding.personinfobutton.personNameTextView;
         personNameTextView.setText(user.getUserName());
-        binding.personinfobutton.imageView.setImageURI(UriBase64Converter.convertBase64ToUri(requireContext(), user.getPhoto()));
         //判斷使用者是否曾輸入信用卡
         String creditCardNumber = user.getCreditCard().getCreditCardNumber();
         if (!Objects.equals(creditCardNumber, "null")){

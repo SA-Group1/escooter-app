@@ -28,7 +28,6 @@ import com.example.escooter.network.HttpRequest;
 import com.example.escooter.ui.menu.RentViewModel;
 import com.example.escooter.ui.user.UserResult;
 import com.example.escooter.ui.user.UserViewModel;
-import com.example.escooter.utils.UriBase64Converter;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import org.json.JSONArray;
@@ -138,6 +137,5 @@ public class RentRecordFragment extends Fragment {
     private void updateTextViewInfo(FragmentRentRecordBinding binding, User user) {
         TextView personNameTextView = binding.personinfobutton.personNameTextView;
         personNameTextView.setText(user.getUserName());
-        binding.personinfobutton.imageView.setImageURI(UriBase64Converter.convertBase64ToUri(requireContext(), user.getPhoto()));
     }
 }

@@ -1,7 +1,5 @@
 package com.example.escooter.data.model;
 
-import android.net.Uri;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,7 +14,6 @@ public class User {
     private String phoneNumber;
     private CreditCard creditCard;
     private MemberCard memberCard;
-    private String photo;
 
     public int getUserId() {
         return userId;
@@ -54,9 +51,6 @@ public class User {
         return memberCard;
     }
 
-    public String getPhoto(){
-        return photo;
-    }
 
     public void setUserId(int userId) {
         this.userId = userId;
@@ -92,10 +86,6 @@ public class User {
 
     public void setMemberCard(MemberCard memberCard) {
         this.memberCard = memberCard;
-    }
-
-    public void setPhoto(String photo){
-        this.photo = photo;
     }
 
 }

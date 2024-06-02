@@ -1,14 +1,25 @@
 package com.example.escooter.ui.rentrecord;
 
+import android.util.Patterns;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.escooter.callback.RentRecordCallback;
+import com.example.escooter.callback.ReturnCallback;
+import com.example.escooter.callback.UpdataUserCallback;
+import com.example.escooter.callback.UserCallback;
 import com.example.escooter.data.model.RentalRecord;
+import com.example.escooter.data.model.User;
 import com.example.escooter.service.RentalService;
+import com.example.escooter.service.UserService;
+import com.example.escooter.ui.menu.ReturnResult;
+import com.example.escooter.ui.user.UserFormState;
+import com.example.escooter.ui.user.UserResult;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RentRecordViewModel extends ViewModel {
     private final RentalService RentalService = new RentalService();

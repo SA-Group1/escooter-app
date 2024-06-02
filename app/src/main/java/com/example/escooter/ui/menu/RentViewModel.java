@@ -1,5 +1,7 @@
 package com.example.escooter.ui.menu;
 
+import android.util.Patterns;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -8,10 +10,16 @@ import com.example.escooter.callback.EscooterGpsCallback;
 import com.example.escooter.callback.ParkCallback;
 import com.example.escooter.callback.RentalCallback;
 import com.example.escooter.callback.ReturnCallback;
+import com.example.escooter.callback.UpdataUserCallback;
+import com.example.escooter.callback.UserCallback;
 import com.example.escooter.data.model.Escooter;
 import com.example.escooter.data.model.Gps;
 import com.example.escooter.data.model.RentalRecord;
+import com.example.escooter.data.model.User;
 import com.example.escooter.service.RentalService;
+import com.example.escooter.service.UserService;
+import com.example.escooter.ui.user.UserFormState;
+import com.example.escooter.ui.user.UserResult;
 
 import java.util.List;
 
