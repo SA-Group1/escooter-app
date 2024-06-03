@@ -82,30 +82,6 @@ public class HttpRequest {
         }).start();
     }
 
-    public void httpPut(JSONObject jsonObject, ResultCallback<JSONObject> result) {
-        new Thread(() -> {
-            try {
-                HttpURLConnection connection = (HttpURLConnection) new URL(link).openConnection();
-                connection.setRequestMethod("PUT");
-                connection.setDoOutput(true);
-                connection.addRequestProperty("Content-Type", "application/json");
-                connection.getOutputStream().write(jsonObject.toString().getBytes());
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuilder response = new StringBuilder();
-                String inputLine;
-                while ((inputLine = reader.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                reader.close();
-                connection.disconnect();
-                result.onResult(new JSONObject(response.toString()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
-    }
-
     public interface ResultCallback<T> {
         void onResult(T result);
     }

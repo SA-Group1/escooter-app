@@ -27,6 +27,7 @@ import androidx.navigation.Navigation;
 import com.example.escooter.R;
 import com.example.escooter.data.model.Escooter;
 import com.example.escooter.data.model.Gps;
+import com.example.escooter.data.model.ReturnAreas;
 import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.ComponentMenuRentInfoBinding;
 import com.example.escooter.databinding.ComponentMenuScooterInfoBinding;
@@ -75,6 +76,7 @@ public class MenuFragment extends Fragment {
     private Polyline currentPolyline;
     private UserViewModel userViewModel;
     private RentViewModel rentViewModel;
+    private MapViewModel mapViewModel;
     private List<Escooter> escooterList;
     private Thread navigationThread;
     private View view = null;
@@ -95,6 +97,7 @@ public class MenuFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         rentViewModel = new ViewModelProvider(requireActivity()).get(RentViewModel.class);
+        mapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
 
         requireActivity().getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -128,7 +131,7 @@ public class MenuFragment extends Fragment {
                     setRentableEscooter();
                     LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                     if (googleMap != null) {
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17));
                     }
                 }
             }
@@ -155,6 +158,26 @@ public class MenuFragment extends Fragment {
         rentViewModel.getParkResult().observe(getViewLifecycleOwner(), this::handleParkResult);
         rentViewModel.getReturnResult().observe(getViewLifecycleOwner(), this::handleReturnResult);
         rentViewModel.getEscooterGpsResult().observe(getViewLifecycleOwner(), this::handleEscooterGpsResult);
+        mapViewModel.getMapResult().observe(getViewLifecycleOwner(), this::handleMapResult);
+    }
+
+    private void handleMapResult(MapResult mapResult) {
+        if (mapResult == null) {
+            return;
+        }
+        if (mapResult.getError() != null) {
+            showFailed(mapResult.getError());
+        }
+        if (mapResult.getReturnAreas() != null) {
+            ReturnAreas returnAreas = mapResult.getReturnAreas();
+            for (ReturnAreas.ReturnArea returnArea : returnAreas.getData()) {
+                List<LatLng> points = new ArrayList<>();
+                for (ReturnAreas.AreaPoint areaPoint : returnArea.getAreaPoint()) {
+                    points.add(new LatLng(areaPoint.getLatitude(), areaPoint.getLongitude()));
+                }
+                setPolygon(points);
+            }
+        }
     }
 
     private void handleReturnResult(ReturnResult returnResult) {
@@ -189,7 +212,7 @@ public class MenuFragment extends Fragment {
                         LatLng markerLatLng = new LatLng(gps.getLatitude(), gps.getLongitude());
 
                         if (googleMap != null) {
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17));
                         }
                         // 設置距離閾值 20 米
                         float distanceThreshold = 20.0f;
@@ -314,8 +337,7 @@ public class MenuFragment extends Fragment {
             googleMap = map;
             // 開啟我的位置功能
             updateLocation();
-            // 設定多邊形
-//            setPolygon();
+            mapViewModel.getReturnAreas();
             // 設定點選事件
             setOnMarkerClick();
         }
@@ -347,17 +369,15 @@ public class MenuFragment extends Fragment {
         }
     }
 
-    private void setPolygon() {
+    private void setPolygon(List<LatLng> points) {
         // 新增多邊形
-        Polygon polygon = googleMap.addPolygon(new PolygonOptions().clickable(true).add(
-                new LatLng(23.6948, 120.5313),
-                new LatLng(23.6960, 120.5379),
-                new LatLng(23.6893, 120.5383),
-                new LatLng(23.6882, 120.5332)));
+        Polygon polygon = googleMap.addPolygon(new PolygonOptions()
+                .clickable(true)
+                .addAll(points)); // 添加多邊形的所有點
         polygon.setTag("alpha");
-        polygon.setStrokeColor(0x5000ABA5);
+        polygon.setStrokeColor(0x500080FF);
         polygon.setStrokeWidth(8);
-        polygon.setFillColor(0x2000ABA5);
+        polygon.setFillColor(0x200080FF);
     }
 
     private void setOnMarkerClick() {
@@ -389,7 +409,7 @@ public class MenuFragment extends Fragment {
                     LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                     LatLng markerLatLng = marker.getPosition();
                     if (googleMap != null) {
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17));
                     }
                     getDirections(currentLatLng, markerLatLng);
                     setRentableEscooter();
