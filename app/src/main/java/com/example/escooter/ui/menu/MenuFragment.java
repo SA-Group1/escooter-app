@@ -82,8 +82,10 @@ public class MenuFragment extends Fragment {
     private View view = null;
     private EscooterService escooterService;
     private ComponentMenuScooterInfoBinding scooterInfoBinding;
-
+    private Marker marker;
     private boolean isPark = false;
+    private Double ownLatitude;
+    private Double ownLongitude;
 
     @Nullable
     @Override
@@ -124,10 +126,10 @@ public class MenuFragment extends Fragment {
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 for (Location location : locationResult.getLocations()) {
                     System.out.println("初始化");
-                    String ownLatitude = String.valueOf(location.getLatitude());
-                    String ownLongitude = String.valueOf(location.getLongitude());
+                    ownLatitude = location.getLatitude();
+                    ownLongitude = location.getLongitude();
 
-                    rentViewModel.setUserlocation(ownLongitude,ownLatitude);
+                    rentViewModel.setUserlocation(ownLongitude.toString(),ownLatitude.toString());
                     setRentableEscooter();
                     LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                     if (googleMap != null) {
@@ -202,46 +204,40 @@ public class MenuFragment extends Fragment {
             showFailed(escooterGpsResult.getError());
         }
         if (escooterGpsResult.getEscooterGps() != null) {
-
             Gps gps = escooterGpsResult.getEscooterGps();
-            locationCallback = new LocationCallback() {
-                @Override
-                public void onLocationResult(@NonNull LocationResult locationResult) {
-                    for (Location location : locationResult.getLocations()) {
-                        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                        LatLng markerLatLng = new LatLng(gps.getLatitude(), gps.getLongitude());
+            LatLng markerLatLng = new LatLng(gps.getLatitude(), gps.getLongitude());
 
-                        if (googleMap != null) {
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17));
-                        }
-                        // 設置距離閾值 20 米
-                        float distanceThreshold = 20.0f;
-                        // 計算當前位置與 marker 的距離
-                        float[] results = new float[1];
-                        Location.distanceBetween(currentLatLng.latitude, currentLatLng.longitude,
-                                markerLatLng.latitude, markerLatLng.longitude, results);
-                        float distance = results[0];
+            // 設置距離閾值 20 米
+            float distanceThreshold = 20.0f;
+            // 計算當前位置與 marker 的距離
+            float[] results = new float[1];
+            Location.distanceBetween(ownLatitude, ownLongitude,
+                    markerLatLng.latitude, markerLatLng.longitude, results);
+            float distance = results[0];
 
-                        // 判斷距離是否超過閾值，如果超過則顯示 marker
-                        if (distance > distanceThreshold) {
-                            googleMap.clear();
-                            googleMap.addMarker(new MarkerOptions()
-                                    .position(markerLatLng)
-                                    .title(rentViewModel.getEscooterId().toString())
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_escooter)));
-                            getDirections(currentLatLng, markerLatLng);
-                        } else {
-                            if (currentPolyline != null) {
-                                currentPolyline.remove();
-                            }
-                            googleMap.clear();
-                        }
-                    }
+            // 判斷距離是否超過閾值，如果超過則顯示 marker
+            if (distance > distanceThreshold) {
+                if (marker == null) {
+                    marker = googleMap.addMarker(new MarkerOptions()
+                            .position(markerLatLng)
+                            .title(rentViewModel.getEscooterId().toString())
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_escooter)));
+                } else {
+                    marker.setPosition(markerLatLng);
                 }
-            };
-            //開始LocationUpdates
-            startLocationUpdates();
-            updataRentEscooterInfo(scooterInfoBinding);
+                // 更新位置信息
+                updataRentEscooterInfo(scooterInfoBinding);
+            } else {
+                if (marker != null) {
+                    marker.remove(); // 移除 marker
+                    marker = null;
+                }
+                if (currentPolyline != null) {
+                    currentPolyline.remove(); // 移除 polyline
+                    currentPolyline = null;
+                }
+                googleMap.clear(); // 清除地圖上的所有圖層
+            }
         }
     }
 
@@ -412,7 +408,7 @@ public class MenuFragment extends Fragment {
                     if (googleMap != null) {
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17));
                     }
-                    getDirections(currentLatLng, markerLatLng);
+//                    getDirections(currentLatLng, markerLatLng);
                     setRentableEscooter();
                 }
             }
@@ -564,12 +560,13 @@ public class MenuFragment extends Fragment {
 
 
         rentInfoBinding.rentButton.setOnClickListener(v ->{
-            //清空google map上的標記
-            googleMap.clear();
-            //停止引導locationCallback
-            stopLocationUpdates();
             //EscooterService固定取得車輛gps
             escooterService = new EscooterService(rentViewModel);
+            //清空google map上的標記
+            googleMap.clear();
+            stopLocationUpdates();
+            setRentLocationCallBack();
+            startLocationUpdates();
             escooterService.startGpsUpdates();
 
             //ViewStub彈窗新增
@@ -603,6 +600,21 @@ public class MenuFragment extends Fragment {
                 rentViewModel.returnEscooter();
             });
         });
+    }
+
+    private void setRentLocationCallBack() {
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(@NonNull LocationResult locationResult) {
+                for (Location location : locationResult.getLocations()) {
+                    System.out.println("租車中");
+                    LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    if (googleMap != null) {
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17));
+                    }
+                }
+            }
+        };
     }
 
 

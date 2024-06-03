@@ -31,7 +31,7 @@ public class EscooterService {
             TotalCost = (int) (duration * feePerMin);
             rentViewModel.getEscooterGps();
 
-        }, 0, 5, TimeUnit.SECONDS); // 初始延迟为0，之后每60秒执行一次
+        }, 0, 1, TimeUnit.SECONDS); // 初始延迟为0，之后每60秒执行一次
     }
 
     public void stopGpsUpdates() {

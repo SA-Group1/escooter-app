@@ -42,6 +42,12 @@ public class RentViewModel extends ViewModel {
     public LiveData<String> getEscooterId() {
         return escooterId;
     }
+    public LiveData<String> getOwnLongitude() {
+        return ownLongitude;
+    }
+    public MutableLiveData<String> getOwnLatitude() {
+        return ownLatitude;
+    }
 
     public void clearReturnResult(){
         returnResult = new MutableLiveData<>();
