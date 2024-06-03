@@ -1,20 +1,15 @@
 package com.example.escooter.repository;
 
 import com.example.escooter.BuildConfig;
-import com.example.escooter.callback.BindCreditCardCallback;
+import com.example.escooter.callback.BooleanCallback;
 import com.example.escooter.callback.HttpResultCallback;
-import com.example.escooter.callback.UnbindCreditCardCallback;
-import com.example.escooter.callback.UserCallback;
-import com.example.escooter.data.model.CreditCard;
-import com.example.escooter.data.model.MemberCard;
-import com.example.escooter.data.model.User;
 import com.example.escooter.network.HttpRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class CreditCardRepository {
-    public void bindCreditCard(String account, String password, String CardNumber, String VaildThru, String username, String Cvv, BindCreditCardCallback callback) {
+    public void bindCreditCard(String account, String password, String CardNumber, String VaildThru, String username, String Cvv, BooleanCallback callback) {
 
         JSONObject body = new JSONObject();
         try {
@@ -47,7 +42,7 @@ public class CreditCardRepository {
         });
     }
 
-    public void unbindCreditCard(String account, String password, UnbindCreditCardCallback callback) {
+    public void unbindCreditCard(String account, String password, BooleanCallback callback) {
 
         JSONObject body = new JSONObject();
         try {

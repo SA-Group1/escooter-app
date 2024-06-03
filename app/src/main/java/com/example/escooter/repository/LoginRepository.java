@@ -2,10 +2,7 @@ package com.example.escooter.repository;
 
 import com.example.escooter.BuildConfig;
 import com.example.escooter.callback.HttpResultCallback;
-import com.example.escooter.callback.LoginCallback;
-import com.example.escooter.data.LoginDataSource;
-import com.example.escooter.data.Result;
-import com.example.escooter.data.model.LoggedInUser;
+import com.example.escooter.callback.BooleanCallback;
 import com.example.escooter.network.HttpRequest;
 
 import org.json.JSONException;
@@ -17,7 +14,7 @@ import org.json.JSONObject;
  */
 public class LoginRepository {
 
-    public void login(String account, String password, LoginCallback callback) {
+    public void login(String account, String password, BooleanCallback callback) {
 
         JSONObject body = new JSONObject();
         try {

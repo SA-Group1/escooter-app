@@ -224,6 +224,7 @@ public class MenuFragment extends Fragment {
 
                         // 判斷距離是否超過閾值，如果超過則顯示 marker
                         if (distance > distanceThreshold) {
+                            googleMap.clear();
                             googleMap.addMarker(new MarkerOptions()
                                     .position(markerLatLng)
                                     .title(rentViewModel.getEscooterId().toString())
@@ -575,7 +576,6 @@ public class MenuFragment extends Fragment {
             inflateNewViewStub(context, stub, R.layout.component_menu_scooter_info);
             scooterInfoBinding = ComponentMenuScooterInfoBinding.bind(view);
             rentEscooterInfo(scooterInfoBinding, markerEscooterId);
-
 
             scooterInfoBinding.parkButton.setOnClickListener(b ->{
                 setParking();

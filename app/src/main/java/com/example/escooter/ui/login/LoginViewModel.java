@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
-import com.example.escooter.callback.LoginCallback;
+import com.example.escooter.callback.BooleanCallback;
 import com.example.escooter.service.LoginService;
 
 public class LoginViewModel extends ViewModel {
@@ -23,7 +23,7 @@ public class LoginViewModel extends ViewModel {
     }
     public void login(String username, String password) {
 
-        loginService.login(username, password, new LoginCallback() {
+        loginService.login(username, password, new BooleanCallback() {
 
             @Override
             public void onSuccess(boolean isLogin) {

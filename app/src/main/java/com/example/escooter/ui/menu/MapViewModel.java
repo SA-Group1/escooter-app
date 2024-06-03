@@ -4,17 +4,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.escooter.callback.EscooterGpsCallback;
-import com.example.escooter.callback.ParkCallback;
-import com.example.escooter.callback.RentalCallback;
 import com.example.escooter.callback.ReturnAreasCallback;
-import com.example.escooter.callback.ReturnCallback;
-import com.example.escooter.data.model.Escooter;
-import com.example.escooter.data.model.Gps;
-import com.example.escooter.data.model.RentalRecord;
 import com.example.escooter.data.model.ReturnAreas;
 import com.example.escooter.service.MapService;
-import com.example.escooter.service.RentalService;
 
 import java.util.List;
 

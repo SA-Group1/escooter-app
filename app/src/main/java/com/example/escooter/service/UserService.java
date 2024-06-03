@@ -1,8 +1,7 @@
 package com.example.escooter.service;
 
+import com.example.escooter.callback.BooleanCallback;
 import com.example.escooter.callback.PhotoCallback;
-import com.example.escooter.callback.UpdateUserCallback;
-import com.example.escooter.callback.UploadUserPhotoCallback;
 import com.example.escooter.callback.UserCallback;
 import com.example.escooter.data.model.User;
 import com.example.escooter.repository.UserRepository;
@@ -41,8 +40,8 @@ public class UserService {
         });
     }
 
-    public void updateUserData(String account, String password, String username, String email, String phoneNumber, UpdateUserCallback callback) {
-        userRepository.updateUserData(account, password, username, email, phoneNumber, new UpdateUserCallback() {
+    public void updateUserData(String account, String password, String username, String email, String phoneNumber, BooleanCallback callback) {
+        userRepository.updateUserData(account, password, username, email, phoneNumber, new BooleanCallback() {
             @Override
             public void onSuccess(boolean isUpdateUserData) {
                 callback.onSuccess(isUpdateUserData);
@@ -55,8 +54,8 @@ public class UserService {
         });
     }
 
-    public void uploadUserPhoto(String account, String password,String photo, UploadUserPhotoCallback callback){
-        userRepository.uploadUserPhoto(account, password , photo , new UploadUserPhotoCallback() {
+    public void uploadUserPhoto(String account, String password,String photo, BooleanCallback callback){
+        userRepository.uploadUserPhoto(account, password , photo , new BooleanCallback() {
             @Override
             public void onSuccess(boolean isUploadUserPhoto) {
                 callback.onSuccess(isUploadUserPhoto);

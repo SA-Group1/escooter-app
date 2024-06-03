@@ -1,6 +1,5 @@
 package com.example.escooter.service;
 
-import com.example.escooter.callback.LoginCallback;
 import com.example.escooter.callback.ReturnAreasCallback;
 import com.example.escooter.data.model.ReturnAreas;
 import com.example.escooter.repository.MapRepository;

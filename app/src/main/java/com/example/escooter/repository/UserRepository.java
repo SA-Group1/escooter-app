@@ -1,10 +1,9 @@
 package com.example.escooter.repository;
 
 import com.example.escooter.BuildConfig;
+import com.example.escooter.callback.BooleanCallback;
 import com.example.escooter.callback.HttpResultCallback;
 import com.example.escooter.callback.PhotoCallback;
-import com.example.escooter.callback.UpdateUserCallback;
-import com.example.escooter.callback.UploadUserPhotoCallback;
 import com.example.escooter.callback.UserCallback;
 import com.example.escooter.data.model.CreditCard;
 import com.example.escooter.data.model.MemberCard;
@@ -98,7 +97,7 @@ public class UserRepository {
     }
 
 
-    public void updateUserData(String account, String password, String username, String email, String phoneNumber, UpdateUserCallback callback) {
+    public void updateUserData(String account, String password, String username, String email, String phoneNumber, BooleanCallback callback) {
 
         JSONObject body = new JSONObject();
         try {
@@ -130,7 +129,7 @@ public class UserRepository {
         });
     }
 
-    public void uploadUserPhoto(String account, String password,String photo, UploadUserPhotoCallback callback) {
+    public void uploadUserPhoto(String account, String password,String photo, BooleanCallback callback) {
 
         JSONObject body = new JSONObject();
         try {

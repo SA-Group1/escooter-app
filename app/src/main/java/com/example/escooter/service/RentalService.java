@@ -1,7 +1,7 @@
 package com.example.escooter.service;
 
+import com.example.escooter.callback.BooleanCallback;
 import com.example.escooter.callback.EscooterGpsCallback;
-import com.example.escooter.callback.ParkCallback;
 import com.example.escooter.callback.RentRecordCallback;
 import com.example.escooter.callback.RentalCallback;
 import com.example.escooter.callback.ReturnCallback;
@@ -43,8 +43,8 @@ public class RentalService {
         });
     }
 
-    public void updateEscooterParkStatus(String account, String password, ParkCallback callback) {
-        rentalRepository.updateEscooterParkStatus(account, password, new ParkCallback() {
+    public void updateEscooterParkStatus(String account, String password, BooleanCallback callback) {
+        rentalRepository.updateEscooterParkStatus(account, password, new BooleanCallback() {
             @Override
             public void onSuccess(boolean isPark) {
                 callback.onSuccess(isPark);

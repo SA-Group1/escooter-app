@@ -6,9 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.escooter.callback.BooleanCallback;
 import com.example.escooter.callback.PhotoCallback;
-import com.example.escooter.callback.UpdateUserCallback;
-import com.example.escooter.callback.UploadUserPhotoCallback;
 import com.example.escooter.callback.UserCallback;
 import com.example.escooter.data.model.User;
 import com.example.escooter.service.UserService;
@@ -77,7 +76,7 @@ public class UserViewModel extends ViewModel {
         if (account.getValue() == null || password.getValue() == null){
             System.out.println("Error");
         }
-        UserService.updateUserData(account.getValue(), password.getValue(), username.getValue(), email.getValue(), phoneNumber.getValue(), new UpdateUserCallback() {
+        UserService.updateUserData(account.getValue(), password.getValue(), username.getValue(), email.getValue(), phoneNumber.getValue(), new BooleanCallback() {
             @Override
             public void onSuccess(boolean isUpdateUserData) {
                 if (userResult.getValue() != null && userResult.getValue().getUser() != null) {
@@ -97,7 +96,7 @@ public class UserViewModel extends ViewModel {
     }
 
     public void uploadUserPhoto(String photo){
-        UserService.uploadUserPhoto(account.getValue(), password.getValue(), photo, new UploadUserPhotoCallback() {
+        UserService.uploadUserPhoto(account.getValue(), password.getValue(), photo, new BooleanCallback() {
             @Override
             public void onSuccess(boolean isUploadUserData) {
                 User user = userResult.getValue().getUser();

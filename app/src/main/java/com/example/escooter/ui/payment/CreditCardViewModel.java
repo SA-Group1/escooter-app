@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.escooter.callback.BindCreditCardCallback;
-import com.example.escooter.callback.UnbindCreditCardCallback;
+import com.example.escooter.callback.BooleanCallback;
 import com.example.escooter.data.model.CreditCard;
 import com.example.escooter.service.CreditCardService;
 
@@ -29,7 +28,7 @@ public class CreditCardViewModel extends ViewModel {
     }
 
     public void bindCreditCard() {
-        CreditCardService.bindCreditCard(account.getValue(), password.getValue(), CardNumber.getValue(), VaildThru.getValue(), username.getValue(), Cvv.getValue(), new BindCreditCardCallback() {
+        CreditCardService.bindCreditCard(account.getValue(), password.getValue(), CardNumber.getValue(), VaildThru.getValue(), username.getValue(), Cvv.getValue(), new BooleanCallback() {
             @Override
             public void onSuccess(boolean isBindCreditCard) {
                 CreditCard creditCard = new CreditCard();
@@ -46,7 +45,7 @@ public class CreditCardViewModel extends ViewModel {
     }
 
     public void unbindCreditCard() {
-        CreditCardService.unbindCreditCard(account.getValue(), password.getValue(), new UnbindCreditCardCallback() {
+        CreditCardService.unbindCreditCard(account.getValue(), password.getValue(), new BooleanCallback() {
             @Override
             public void onSuccess(boolean isUnbindCreditCard) {
                 CreditCard creditCard = new CreditCard();

@@ -2,13 +2,12 @@ package com.example.escooter.repository;
 
 
 import com.example.escooter.BuildConfig;
+import com.example.escooter.callback.BooleanCallback;
 import com.example.escooter.callback.EscooterGpsCallback;
 import com.example.escooter.callback.HttpResultCallback;
-import com.example.escooter.callback.ParkCallback;
 import com.example.escooter.callback.RentRecordCallback;
 import com.example.escooter.callback.RentalCallback;
 import com.example.escooter.callback.ReturnCallback;
-import com.example.escooter.callback.UserCallback;
 import com.example.escooter.data.model.Escooter;
 import com.example.escooter.data.model.Gps;
 import com.example.escooter.data.model.RentalRecord;
@@ -113,7 +112,7 @@ public class RentalRepository {
         });
     }
 
-    public void updateEscooterParkStatus(String account, String password, ParkCallback callback) {
+    public void updateEscooterParkStatus(String account, String password, BooleanCallback callback) {
 
         JSONObject body = new JSONObject();
         try {
