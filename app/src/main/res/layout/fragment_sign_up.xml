@@ -90,6 +90,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <TextView
+            android:id="@+id/account_information_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:textSize="12sp"
+            android:text="@string/account_information"
+            android:textColor="@color/primary_medium_gray"
+            android:fontFamily="@font/lufga_light"/>
+
         <EditText
             android:id="@+id/user_account"
             android:layout_width="match_parent"
@@ -103,6 +113,7 @@
             android:textSize="14sp"
             android:hint="@string/prompt_account"
             android:inputType="textEmailAddress"
+            android:layout_below="@id/account_information_text"
             android:background="@drawable/bg_radius_8dp"
             android:backgroundTint="@color/secondary_dark_gray"
             android:selectAllOnFocus="true" />

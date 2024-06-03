@@ -69,6 +69,7 @@
     <string name="forgot_password">Forgot your password?</string>
     <string name="show_password">Show Password</string>
     <string name="hide_password">Hide Password</string>
+    <string name="account_information">Account Information</string>
     <string name="invalid_input">Invalid input. Please check your username and password.</string>
     <string name="prompt_account">Account</string>
     <string name="prompt_phone_number">Phone Number</string>
