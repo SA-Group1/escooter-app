@@ -21,7 +21,7 @@ public class CreditCardFormState {
         this.isDataValid = false;
     }
 
-    CreditCardFormState(boolean isDataValid) {
+    public CreditCardFormState(boolean isDataValid) {
         this.cardNumberError = null;
         this.vaildThruError = null;
         this.cvvError = null;

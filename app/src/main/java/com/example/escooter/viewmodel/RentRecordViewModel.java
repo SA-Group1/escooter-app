@@ -1,4 +1,4 @@
-package com.example.escooter.ui.rentrecord;
+package com.example.escooter.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -7,12 +7,13 @@ import androidx.lifecycle.ViewModel;
 import com.example.escooter.callback.RentRecordCallback;
 import com.example.escooter.data.model.RentalRecord;
 import com.example.escooter.service.RentalService;
+import com.example.escooter.ui.rentrecord.RentRecordResult;
 
 import java.util.ArrayList;
 
 public class RentRecordViewModel extends ViewModel {
     private final RentalService RentalService = new RentalService();
-    private final MutableLiveData<RentRecordResult> RentRecordResult = new MutableLiveData<>();
+    private final MutableLiveData<com.example.escooter.ui.rentrecord.RentRecordResult> RentRecordResult = new MutableLiveData<>();
     private final MutableLiveData<String> account = new MutableLiveData<>();
     private final MutableLiveData<String> password = new MutableLiveData<>();
 

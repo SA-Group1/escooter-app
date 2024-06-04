@@ -1,4 +1,4 @@
-package com.example.escooter.ui.menu;
+package com.example.escooter.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.escooter.callback.ReturnAreasCallback;
 import com.example.escooter.data.model.ReturnAreas;
 import com.example.escooter.service.MapService;
+import com.example.escooter.ui.menu.MapResult;
 
 import java.util.List;
 

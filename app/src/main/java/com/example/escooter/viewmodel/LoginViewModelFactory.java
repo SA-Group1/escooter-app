@@ -1,11 +1,8 @@
-package com.example.escooter.ui.login;
+package com.example.escooter.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
-
-import com.example.escooter.data.LoginDataSource;
-import com.example.escooter.repository.LoginRepository;
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.

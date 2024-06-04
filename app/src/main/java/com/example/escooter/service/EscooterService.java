@@ -2,7 +2,7 @@ package com.example.escooter.service;
 
 import static java.lang.Math.round;
 
-import com.example.escooter.ui.menu.RentViewModel;
+import com.example.escooter.viewmodel.RentViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

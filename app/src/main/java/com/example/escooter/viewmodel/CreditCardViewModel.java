@@ -1,4 +1,4 @@
-package com.example.escooter.ui.payment;
+package com.example.escooter.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -7,11 +7,13 @@ import androidx.lifecycle.ViewModel;
 import com.example.escooter.callback.BooleanCallback;
 import com.example.escooter.data.model.CreditCard;
 import com.example.escooter.service.CreditCardService;
+import com.example.escooter.ui.payment.CreditCardFormState;
+import com.example.escooter.ui.payment.CreditCardResult;
 
 public class CreditCardViewModel extends ViewModel {
     private final CreditCardService CreditCardService = new CreditCardService();
     private final MutableLiveData<CreditCardFormState> creditCardFormState = new MutableLiveData<>();
-    private final MutableLiveData<CreditCardResult> CreditCardResult = new MutableLiveData<>();
+    private final MutableLiveData<com.example.escooter.ui.payment.CreditCardResult> CreditCardResult = new MutableLiveData<>();
     private final MutableLiveData<String> account = new MutableLiveData<>();
     private final MutableLiveData<String> password = new MutableLiveData<>();
     private final MutableLiveData<String> username = new MutableLiveData<>();

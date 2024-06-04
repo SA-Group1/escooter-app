@@ -19,16 +19,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.escooter.R;
-import com.example.escooter.data.model.CreditCard;
 import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.DialogPaymentAddCreditCardBinding;
 import com.example.escooter.databinding.DialogPaymentUnbindCreditCardBinding;
-import com.example.escooter.databinding.DialogPersonInfoEditProfileBinding;
 import com.example.escooter.databinding.FragmentPaymentBinding;
 import com.example.escooter.ui.user.UserResult;
 import com.example.escooter.ui.user.UserViewModel;
 import com.example.escooter.utils.SimpleTextWatcher;
 import com.example.escooter.utils.UriBase64Converter;
+import com.example.escooter.viewmodel.CreditCardViewModel;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.Objects;

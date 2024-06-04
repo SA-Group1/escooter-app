@@ -1,4 +1,4 @@
-package com.example.escooter.ui.login;
+package com.example.escooter.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -8,6 +8,9 @@ import android.util.Patterns;
 
 import com.example.escooter.callback.BooleanCallback;
 import com.example.escooter.service.LoginService;
+import com.example.escooter.ui.login.LoggedInUserView;
+import com.example.escooter.ui.login.LoginFormState;
+import com.example.escooter.ui.login.LoginResult;
 
 public class LoginViewModel extends ViewModel {
 

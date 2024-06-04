@@ -75,8 +75,6 @@ public class PersonInfoFragment extends Fragment {
         pickImageLauncher.launch(intent);
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,6 +168,10 @@ public class PersonInfoFragment extends Fragment {
         rent_record_button.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigate(R.id.action_personinfoFragment_to_rentRecordFragment);
+        });
+        binding.logoutTextView.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+            navController.navigate(R.id.action_personinfoFragment_to_loginFragment);
         });
     }
 

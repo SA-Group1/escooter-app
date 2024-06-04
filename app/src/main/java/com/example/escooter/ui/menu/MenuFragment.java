@@ -36,6 +36,8 @@ import com.example.escooter.service.EscooterService;
 import com.example.escooter.ui.user.UserResult;
 import com.example.escooter.ui.user.UserViewModel;
 import com.example.escooter.utils.UriBase64Converter;
+import com.example.escooter.viewmodel.MapViewModel;
+import com.example.escooter.viewmodel.RentViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -131,10 +133,6 @@ public class MenuFragment extends Fragment {
 
                     rentViewModel.setUserlocation(ownLongitude.toString(),ownLatitude.toString());
                     setRentableEscooter();
-                    LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                    if (googleMap != null) {
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17));
-                    }
                 }
             }
         };
@@ -247,9 +245,6 @@ public class MenuFragment extends Fragment {
         }
         if (parkResult.getError() != null) {
             showFailed(parkResult.getError());
-        }
-        if (parkResult.getEscooterList()) {
-
         }
     }
 
@@ -554,7 +549,8 @@ public class MenuFragment extends Fragment {
     private void dialogSet(Context context, Marker marker) {
         String markerEscooterId = marker.getTitle();
 
-        ViewStub stub = inflateViewStub(context, R.layout.component_menu_rent_info);
+        ViewStub originalStub = binding.viewStub; // 获取初始ViewStub
+        inflateViewStub(context, R.layout.component_menu_rent_info,originalStub);
         ComponentMenuRentInfoBinding rentInfoBinding = ComponentMenuRentInfoBinding.bind(view);
         markerEscooterInfo(rentInfoBinding, markerEscooterId);
 
@@ -570,7 +566,7 @@ public class MenuFragment extends Fragment {
             escooterService.startGpsUpdates();
 
             //ViewStub彈窗新增
-            inflateNewViewStub(context, stub, R.layout.component_menu_scooter_info);
+            inflateViewStub(context,R.layout.component_menu_scooter_info,originalStub);
             scooterInfoBinding = ComponentMenuScooterInfoBinding.bind(view);
             rentEscooterInfo(scooterInfoBinding, markerEscooterId);
 
@@ -607,7 +603,6 @@ public class MenuFragment extends Fragment {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 for (Location location : locationResult.getLocations()) {
-                    System.out.println("租車中");
                     LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                     if (googleMap != null) {
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17));
@@ -633,37 +628,30 @@ public class MenuFragment extends Fragment {
         binding.totalFee.setText(String.valueOf(escooterService.getTotalCost()));
     }
 
-    private ViewStub inflateViewStub(Context context, int layoutResource) {
+    private void inflateViewStub(Context context, int layoutResource, ViewStub originalStub) {
         if (view != null) {
             ViewGroup parent = (ViewGroup) view.getParent();
             if (parent != null) {
                 parent.removeView(view);
             }
         }
-        ViewStub stub = binding.viewStub;
-        stub.setLayoutResource(layoutResource);
-        view = stub.inflate();
-        return stub;
-    }
 
-    private void inflateNewViewStub(Context context,ViewStub stub, int layoutResource) {
-        if (view != null) {
-            ViewGroup parent = (ViewGroup) view.getParent();
-            if (parent != null) {
-                parent.removeView(view);
-            }
+        ViewStub newStub = new ViewStub(context);
+        ViewGroup.LayoutParams params = originalStub.getLayoutParams();
+        if (params instanceof ViewGroup.MarginLayoutParams) {
+            ((ViewGroup.MarginLayoutParams) params).bottomMargin =
+                    ((ViewGroup.MarginLayoutParams) originalStub.getLayoutParams()).bottomMargin;
         }
-        ViewStub newstub = new ViewStub(context);
-        binding.getRoot().addView(newstub);
+        newStub.setLayoutParams(params);
+        newStub.setLayoutResource(layoutResource);
+        newStub.setId(originalStub.getId());
+        newStub.setInflatedId(originalStub.getInflatedId());
 
-        newstub.setLayoutParams(stub.getLayoutParams());
-        newstub.setVisibility(stub.getVisibility());
-        newstub.setInflatedId(stub.getInflatedId());
-        newstub.setLayoutResource(layoutResource);
+        binding.getRoot().removeView(originalStub); // 移除初始ViewStub
+        binding.getRoot().addView(newStub); // 添加新的ViewStub
 
-        view = newstub.inflate();
+        view = newStub.inflate();
     }
-
 
     private void markerEscooterInfo(ComponentMenuRentInfoBinding binding, String markerEscooterId) {
         for (Escooter escooter : escooterList) {
