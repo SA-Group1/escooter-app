@@ -17,6 +17,7 @@ public class EscooterService {
     private int duration;
     private double feePerMin = 100;
     private int TotalCost;
+    private boolean isGet = false;
 
     public EscooterService(RentViewModel rentViewModel) {
         startTime = System.currentTimeMillis();
@@ -26,6 +27,7 @@ public class EscooterService {
 
     public void startGpsUpdates() {
         scheduler.scheduleWithFixedDelay(() -> {
+            isGet = true;
             tempTime = System.currentTimeMillis();
             duration = (int) ((tempTime - startTime) / 1000/ 60);
             TotalCost = (int) (duration * feePerMin);
@@ -60,5 +62,8 @@ public class EscooterService {
     }
     public int getDuration() {
         return duration;
+    }
+    public boolean getIsGet() {
+        return isGet;
     }
 }

@@ -80,7 +80,6 @@ public class UserRepository {
             @Override
             public void onResult(JSONObject result) {
                 try {
-
                     JSONObject jsonObject = result.getJSONObject("data");
                     String photo = jsonObject.getString("image");
                     callback.onSuccess(photo);

@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.escooter.R;
+import com.example.escooter.data.model.CreditCard;
+import com.example.escooter.data.model.MemberCard;
 import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.DialogPaymentAddCreditCardBinding;
 import com.example.escooter.databinding.DialogPaymentUnbindCreditCardBinding;
@@ -40,12 +42,10 @@ public class PaymentFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPaymentBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -66,20 +66,24 @@ public class PaymentFragment extends Fragment {
 
     private void setupObservers() {
         userViewModel.getUserResult().observe(getViewLifecycleOwner(), this::handleUserResult);
-        creditCardViewModel.getCreditCardResult().observe(getViewLifecycleOwner(), this::handleCreditCardResult);
+        creditCardViewModel.getUserPaymentResult().observe(getViewLifecycleOwner(), this::handleUserPaymentResult);
     }
 
-    private void handleCreditCardResult(CreditCardResult creditCardResult) {
-
-        if (creditCardResult == null) {
+    private void handleUserPaymentResult(UserPaymentResult userPaymentResult) {
+        User user = userViewModel.getUserResult().getValue().getUser();
+        if (userPaymentResult == null) {
             return;
         }
-        if (creditCardResult.getError() != null) {
-            showFailed(creditCardResult.getError());
+        if (userPaymentResult.getError() != null) {
+            showFailed(userPaymentResult.getError());
         }
-        if (creditCardResult.getCreditCard() != null) {
-            User user = userViewModel.getUserResult().getValue().getUser();
-            user.setCreditCard(creditCardResult.getCreditCard());
+        if (userPaymentResult.getCreditCard() != null) {
+            user.setCreditCard(userPaymentResult.getCreditCard());
+            updateTextViewInfo(binding,user);
+        }
+        if (userPaymentResult.getMemberCard() != null) {
+            MemberCard memberCard = userPaymentResult.getMemberCard();
+            user.setMemberCard(memberCard);
             updateTextViewInfo(binding,user);
         }
     }
@@ -151,6 +155,7 @@ public class PaymentFragment extends Fragment {
         dialogBinding.cancelButton.setOnClickListener(v -> dialog.dismiss());
         dialogBinding.unbindButton.setOnClickListener(v -> {
             creditCardViewModel.unbindCreditCard();
+            creditCardViewModel.getUserPayment();
             dialog.dismiss();
         });
 
@@ -213,6 +218,7 @@ public class PaymentFragment extends Fragment {
         dialogBinding.confirmButton.setOnClickListener(b -> {
 
             creditCardViewModel.bindCreditCard();
+            creditCardViewModel.getUserPayment();
             dialog.dismiss();
         });
     }
@@ -248,11 +254,19 @@ public class PaymentFragment extends Fragment {
             }
             binding.creditcardnfo.setVisibility(View.VISIBLE);
             binding.addPaymentButton.setVisibility(View.GONE);
+
             TextView creditCardTextView = requireActivity().findViewById(R.id.creditcard_id);
             creditCardTextView.setText(creditCardNumber);
+            ;
         }else {
             binding.creditcardnfo.setVisibility(View.GONE);
             binding.addPaymentButton.setVisibility(View.VISIBLE);
+        }
+        if (user.getMemberCard().getValid()){
+            binding.membercardnfo.setVisibility(View.VISIBLE);
+            binding.memberCardDate.setText(user.getMemberCard().getExpirationDate());
+        }else {
+            binding.memberCardDate.setVisibility(View.GONE);
         }
     }
 }

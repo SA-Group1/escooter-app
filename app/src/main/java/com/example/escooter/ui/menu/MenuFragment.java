@@ -102,6 +102,7 @@ public class MenuFragment extends Fragment {
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         rentViewModel = new ViewModelProvider(requireActivity()).get(RentViewModel.class);
         mapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
+        escooterService = new EscooterService(rentViewModel);
 
         requireActivity().getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -114,8 +115,6 @@ public class MenuFragment extends Fragment {
         setupMapFragment();
         setupObservers();
         setupListeners();
-        userViewModel.getUserData();
-
     }
 
     private void setupFusedLocation() {
@@ -127,7 +126,6 @@ public class MenuFragment extends Fragment {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 for (Location location : locationResult.getLocations()) {
-                    System.out.println("初始化");
                     ownLatitude = location.getLatitude();
                     ownLongitude = location.getLongitude();
 
@@ -162,6 +160,9 @@ public class MenuFragment extends Fragment {
     }
 
     private void handleMapResult(MapResult mapResult) {
+        if(googleMap == null){
+            return;
+        }
         if (mapResult == null) {
             return;
         }
@@ -181,7 +182,9 @@ public class MenuFragment extends Fragment {
     }
 
     private void handleReturnResult(ReturnResult returnResult) {
-
+        if(googleMap == null){
+            return;
+        }
         if (returnResult == null) {
             return;
         }
@@ -195,6 +198,9 @@ public class MenuFragment extends Fragment {
     }
 
     private void handleEscooterGpsResult(EscooterGpsResult escooterGpsResult) {
+        if(googleMap == null){
+            return;
+        }
         if (escooterGpsResult == null) {
             return;
         }
@@ -240,6 +246,9 @@ public class MenuFragment extends Fragment {
     }
 
     private void handleParkResult(ParkResult parkResult) {
+        if(googleMap == null){
+            return;
+        }
         if (parkResult == null) {
             return;
         }
@@ -303,6 +312,9 @@ public class MenuFragment extends Fragment {
     private void setupListeners() {
         final ConstraintLayout personinfobutton = binding.personinfobutton.getRoot();
         personinfobutton.setOnClickListener(v -> {
+            if (escooterService.getIsGet()){
+                escooterService.stopGpsUpdates();
+            }
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigate(R.id.action_navigation_menu_to_personinfoFragment);
         });
@@ -328,6 +340,7 @@ public class MenuFragment extends Fragment {
         public void onMapReady(@NonNull GoogleMap map) {
             googleMap = map;
             // 開啟我的位置功能
+            userViewModel.getUserData();
             updateLocation();
             mapViewModel.getReturnAreas();
             // 設定點選事件
@@ -557,7 +570,7 @@ public class MenuFragment extends Fragment {
 
         rentInfoBinding.rentButton.setOnClickListener(v ->{
             //EscooterService固定取得車輛gps
-            escooterService = new EscooterService(rentViewModel);
+
             //清空google map上的標記
             googleMap.clear();
             stopLocationUpdates();
@@ -579,7 +592,6 @@ public class MenuFragment extends Fragment {
 
                     int textColor = ContextCompat.getColor(context, R.color.secondary_deep_gray);
                     scooterInfoBinding.parkButton.setTextColor(textColor);
-
                     scooterInfoBinding.parkButton.setBackgroundTintList(null);
                 } else {
                     scooterInfoBinding.parkButton.setText("Unpark");
@@ -593,6 +605,7 @@ public class MenuFragment extends Fragment {
                 }
             });
             scooterInfoBinding.returnButton.setOnClickListener(b ->{
+                escooterService.stopGpsUpdates();
                 rentViewModel.returnEscooter();
             });
         });
@@ -666,7 +679,6 @@ public class MenuFragment extends Fragment {
             }
         }
     }
-
 
     private void setParking() {
         rentViewModel.updateEscooterParkStatus();

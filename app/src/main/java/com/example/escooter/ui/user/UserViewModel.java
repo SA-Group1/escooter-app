@@ -66,10 +66,9 @@ public class UserViewModel extends ViewModel {
 
             @Override
             public void onFailure(Exception e) {
-
+                userResult.postValue(new UserResult(e));
             }
         });
-
     }
 
     public void updateUserData() {
