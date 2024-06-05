@@ -21,316 +21,322 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
+    <!-- SwipeRefreshLayout 包裹主內容 -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/gobackbutton">
 
-
-    <!-- 主内容布局 -->
-    <LinearLayout
-        android:id="@+id/mainContent"
-        android:layout_width="345dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/gobackbutton"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="13dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <!-- 个人信息 -->
-        <include
-            android:id="@+id/personinfobutton"
-            layout="@layout/component_person_info_button" />
-
-        <!-- 用户个人信息切换按钮 -->
+        <!-- 主内容布局 -->
         <LinearLayout
-            android:id="@+id/changepagebutton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:layout_marginBottom="18dp"
-            android:orientation="horizontal"
-            android:paddingStart="11dp"
-            android:paddingEnd="11dp">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/profileButton"
-                android:layout_width="91dp"
-                android:layout_height="35dp"
-                android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/secondary_dark_gray"
-                android:fontFamily="@font/lufga_bold"
-                android:text="@string/profile_button_text"
-                android:textAllCaps="false"
-                android:textColor="@color/primary_medium_gray"
-                android:textSize="12sp"
-                tools:ignore="HardcodedText,TouchTargetSizeCheck" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/paymentButton"
-                android:layout_width="91dp"
-                android:layout_height="35dp"
-                android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/primary_gold"
-                android:fontFamily="@font/lufga_bold"
-                android:text="@string/payment_button_text"
-                android:textAllCaps="false"
-                android:textColor="@color/primary_charcoal"
-                android:textSize="12sp"
-                tools:ignore="HardcodedText" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/rentRecordButton"
-                android:layout_width="91dp"
-                android:layout_height="35dp"
-                android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/secondary_dark_gray"
-                android:fontFamily="@font/lufga_bold"
-                android:text="@string/rent_record_button_text"
-                android:textAllCaps="false"
-                android:textColor="@color/primary_medium_gray"
-                android:textSize="12sp"
-                tools:ignore="HardcodedText" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="120dp"
-            android:text="Credit Card"
-            android:textColor="@color/primary_medium_gray"
-            android:textSize="12sp"
-            android:fontFamily="@font/lufga_light"/>
-
-        <LinearLayout
-            android:id="@+id/creditcardnfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="36dp"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="29dp"
-                android:paddingBottom="19dp"
-                android:orientation="vertical"
-                android:background="@drawable/bg_creditcard">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="26dp"
-                    android:src="@drawable/ic_visa"/>
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/delete_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="19dp"
-                    android:layout_marginStart="206dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_delete"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="41dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/primary_white"
-                        android:text=". . . ."
-                        android:fontFamily="@font/lufga_medium"
-                        android:textSize="24sp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/primary_white"
-                        android:layout_marginStart="16dp"
-                        android:text=". . . ."
-                        android:fontFamily="@font/lufga_medium"
-                        android:textSize="24sp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/primary_white"
-                        android:layout_marginStart="16dp"
-                        android:text=". . . ."
-                        android:fontFamily="@font/lufga_medium"
-                        android:textSize="24sp" />
-                    <TextView
-                        android:id="@+id/creditcard_id"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/primary_white"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="5dp"
-                        android:text="0123"
-                        android:fontFamily="@font/lufga_medium"
-                        android:textSize="24sp" />
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="41dp">
-
-                    <TextView
-                        android:id="@+id/valid_thru"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/primary_white"
-                        android:text="VALID THRU"
-                        android:fontFamily="@font/lufga_medium"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/cvv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/valid_thru"
-                        android:layout_marginStart="23dp"
-                        android:textColor="@color/primary_white"
-                        android:text="CVV"
-                        android:fontFamily="@font/lufga_medium"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/valid_thru_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/valid_thru"
-                        android:letterSpacing="0.19"
-                        android:textColor="@color/primary_white"
-                        android:text="09/24"
-                        android:fontFamily="@font/lufga_medium"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/cvv_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/valid_thru_date"
-                        android:layout_marginStart="47dp"
-                        android:textColor="@color/primary_white"
-                        android:text=". . ."
-                        android:fontFamily="@font/lufga_medium"
-                        android:textSize="24sp" />
-                    
-                </RelativeLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/add_payment_button"
+            android:id="@+id/mainContent"
             android:layout_width="345dp"
-            android:layout_height="58dp"
-            android:layout_marginBottom="26dp"
-            android:background="@drawable/bg_radius_20dp"
-            android:backgroundTint="@color/primary_gold">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/add_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="19dp"
-                android:layout_marginStart="17dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_add_payment"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="21dp"
-                android:layout_marginStart="37dp"
-                android:text="@string/add_card_text"
-                android:textColor="@color/secondary_black_opaque"
-                android:textSize="14sp"
-                android:fontFamily="@font/lufga_regular"
-                android:layout_toEndOf="@id/add_button"/>
-
-        </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/membercardnfo"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_below="@id/gobackbutton"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="13dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <!-- 个人信息 -->
+            <include
+                android:id="@+id/personinfobutton"
+                layout="@layout/component_person_info_button" />
+
+            <!-- 用户个人信息切换按钮 -->
+            <LinearLayout
+                android:id="@+id/changepagebutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:layout_marginBottom="18dp"
+                android:orientation="horizontal"
+                android:paddingStart="11dp"
+                android:paddingEnd="11dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/profileButton"
+                    android:layout_width="91dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/bg_radius_8dp"
+                    android:backgroundTint="@color/secondary_dark_gray"
+                    android:fontFamily="@font/lufga_bold"
+                    android:text="@string/profile_button_text"
+                    android:textAllCaps="false"
+                    android:textColor="@color/primary_medium_gray"
+                    android:textSize="12sp"
+                    tools:ignore="HardcodedText,TouchTargetSizeCheck" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/paymentButton"
+                    android:layout_width="91dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/bg_radius_8dp"
+                    android:backgroundTint="@color/primary_gold"
+                    android:fontFamily="@font/lufga_bold"
+                    android:text="@string/payment_button_text"
+                    android:textAllCaps="false"
+                    android:textColor="@color/primary_charcoal"
+                    android:textSize="12sp"
+                    tools:ignore="HardcodedText" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/rentRecordButton"
+                    android:layout_width="91dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/bg_radius_8dp"
+                    android:backgroundTint="@color/secondary_dark_gray"
+                    android:fontFamily="@font/lufga_bold"
+                    android:text="@string/rent_record_button_text"
+                    android:textAllCaps="false"
+                    android:textColor="@color/primary_medium_gray"
+                    android:textSize="12sp"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Member Card"
+                android:layout_marginEnd="120dp"
+                android:text="Credit Card"
                 android:textColor="@color/primary_medium_gray"
                 android:textSize="12sp"
-                android:fontFamily="@font/lufga_light"
-                android:layout_marginStart="18dp"/>
+                android:fontFamily="@font/lufga_light"/>
 
             <LinearLayout
+                android:id="@+id/creditcardnfo"
                 android:layout_width="match_parent"
-                android:layout_height="62dp"
-                android:paddingStart="29dp"
-                android:paddingTop="21dp"
-                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="36dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="29dp"
+                    android:paddingBottom="19dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_creditcard">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="26dp"
+                            android:src="@drawable/ic_visa"/>
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/delete_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="19dp"
+                            android:layout_marginStart="206dp"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_delete"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentStart="true" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="41dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/primary_white"
+                            android:text=". . . ."
+                            android:fontFamily="@font/lufga_medium"
+                            android:textSize="24sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/primary_white"
+                            android:layout_marginStart="16dp"
+                            android:text=". . . ."
+                            android:fontFamily="@font/lufga_medium"
+                            android:textSize="24sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/primary_white"
+                            android:layout_marginStart="16dp"
+                            android:text=". . . ."
+                            android:fontFamily="@font/lufga_medium"
+                            android:textSize="24sp" />
+                        <TextView
+                            android:id="@+id/creditcard_id"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/primary_white"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="5dp"
+                            android:text="0123"
+                            android:fontFamily="@font/lufga_medium"
+                            android:textSize="24sp" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="41dp">
+
+                        <TextView
+                            android:id="@+id/valid_thru"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/primary_white"
+                            android:text="VALID THRU"
+                            android:fontFamily="@font/lufga_medium"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/cvv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/valid_thru"
+                            android:layout_marginStart="23dp"
+                            android:textColor="@color/primary_white"
+                            android:text="CVV"
+                            android:fontFamily="@font/lufga_medium"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/valid_thru_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/valid_thru"
+                            android:letterSpacing="0.19"
+                            android:textColor="@color/primary_white"
+                            android:text="09/24"
+                            android:fontFamily="@font/lufga_medium"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/cvv_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/valid_thru_date"
+                            android:layout_marginStart="47dp"
+                            android:textColor="@color/primary_white"
+                            android:text=". . ."
+                            android:fontFamily="@font/lufga_medium"
+                            android:textSize="24sp" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/add_payment_button"
+                android:layout_width="345dp"
+                android:layout_height="58dp"
+                android:layout_marginBottom="26dp"
                 android:background="@drawable/bg_radius_20dp"
                 android:backgroundTint="@color/primary_gold">
 
-                <LinearLayout
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/add_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-                    
-                    <TextView
+                    android:layout_marginTop="19dp"
+                    android:layout_marginStart="17dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_add_payment"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="21dp"
+                    android:layout_marginStart="37dp"
+                    android:text="@string/add_card_text"
+                    android:textColor="@color/secondary_black_opaque"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/lufga_regular"
+                    android:layout_toEndOf="@id/add_button"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/membercardnfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Member Card"
+                    android:textColor="@color/primary_medium_gray"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/lufga_light"
+                    android:layout_marginStart="18dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:paddingStart="29dp"
+                    android:paddingTop="21dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_radius_20dp"
+                    android:backgroundTint="@color/primary_gold">
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/primary_charcoal"
-                        android:text="Expiration date"
-                        android:fontFamily="@font/lufga_light"
-                        android:textSize="14sp" />
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/primary_charcoal"
+                            android:text="Expiration date"
+                            android:fontFamily="@font/lufga_light"
+                            android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/member_card_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/primary_charcoal"
-                        android:layout_marginEnd="29dp"
-                        android:text="2024/5/16"
-                        android:fontFamily="@font/lufga_light"
-                        android:textSize="14sp" />
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/member_card_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/primary_charcoal"
+                            android:layout_marginEnd="29dp"
+                            android:text="2024/5/16"
+                            android:fontFamily="@font/lufga_light"
+                            android:textSize="14sp" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>

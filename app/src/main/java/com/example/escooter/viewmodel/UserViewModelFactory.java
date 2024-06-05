@@ -1,4 +1,4 @@
-package com.example.escooter.ui.user;
+package com.example.escooter.viewmodel;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;

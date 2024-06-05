@@ -34,7 +34,7 @@ import com.example.escooter.databinding.ComponentMenuScooterInfoBinding;
 import com.example.escooter.databinding.FragmentMenuBinding;
 import com.example.escooter.service.EscooterService;
 import com.example.escooter.ui.user.UserResult;
-import com.example.escooter.ui.user.UserViewModel;
+import com.example.escooter.viewmodel.UserViewModel;
 import com.example.escooter.utils.UriBase64Converter;
 import com.example.escooter.viewmodel.MapViewModel;
 import com.example.escooter.viewmodel.RentViewModel;

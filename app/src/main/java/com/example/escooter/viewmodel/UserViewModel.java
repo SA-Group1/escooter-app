@@ -1,4 +1,4 @@
-package com.example.escooter.ui.user;
+package com.example.escooter.viewmodel;
 
 import android.util.Patterns;
 
@@ -11,6 +11,8 @@ import com.example.escooter.callback.PhotoCallback;
 import com.example.escooter.callback.UserCallback;
 import com.example.escooter.data.model.User;
 import com.example.escooter.service.UserService;
+import com.example.escooter.ui.user.UserFormState;
+import com.example.escooter.ui.user.UserResult;
 
 import java.util.Objects;
 

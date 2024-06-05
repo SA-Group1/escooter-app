@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.example.escooter.databinding.FragmentLoginBinding;
 import com.example.escooter.R;
-import com.example.escooter.ui.user.UserViewModel;
+import com.example.escooter.viewmodel.UserViewModel;
 import com.example.escooter.utils.SimpleTextWatcher;
 import com.example.escooter.viewmodel.LoginViewModel;
 import com.example.escooter.viewmodel.LoginViewModelFactory;

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.text.Editable;
 import android.view.LayoutInflater;
@@ -19,14 +20,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.escooter.R;
-import com.example.escooter.data.model.CreditCard;
 import com.example.escooter.data.model.MemberCard;
 import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.DialogPaymentAddCreditCardBinding;
 import com.example.escooter.databinding.DialogPaymentUnbindCreditCardBinding;
 import com.example.escooter.databinding.FragmentPaymentBinding;
 import com.example.escooter.ui.user.UserResult;
-import com.example.escooter.ui.user.UserViewModel;
+import com.example.escooter.viewmodel.UserViewModel;
 import com.example.escooter.utils.SimpleTextWatcher;
 import com.example.escooter.utils.UriBase64Converter;
 import com.example.escooter.viewmodel.CreditCardViewModel;
@@ -39,6 +39,7 @@ public class PaymentFragment extends Fragment {
     private FragmentPaymentBinding binding;
     private UserViewModel userViewModel;
     private CreditCardViewModel creditCardViewModel;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -55,9 +56,32 @@ public class PaymentFragment extends Fragment {
 
         initializeViews(binding);
         setListeners(binding);
+        setupSwipeRefresh(binding.getRoot());
         setupObservers();
 
         userViewModel.getUserData();
+    }
+
+    private void setupSwipeRefresh(View rootView) {
+        swipeRefreshLayout = rootView.findViewById(R.id.swipeRefreshLayout);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // 刷新操作逻辑
+                refreshContent();
+            }
+        });
+    }
+
+    private void refreshContent() {
+        // 模拟刷新操作，刷新完成后停止刷新动画
+        swipeRefreshLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }, 2000); // 2秒后停止刷新动画
     }
 
     private void initializeViews(FragmentPaymentBinding binding) {

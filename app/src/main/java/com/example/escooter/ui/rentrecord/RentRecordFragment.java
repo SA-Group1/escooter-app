@@ -24,7 +24,7 @@ import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.FragmentRentRecordBinding;
 
 import com.example.escooter.ui.user.UserResult;
-import com.example.escooter.ui.user.UserViewModel;
+import com.example.escooter.viewmodel.UserViewModel;
 import com.example.escooter.utils.UriBase64Converter;
 import com.example.escooter.viewmodel.RentRecordViewModel;
 import com.google.android.material.imageview.ShapeableImageView;
