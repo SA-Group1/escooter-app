@@ -24,20 +24,19 @@
     <!-- SwipeRefreshLayout 包裹主內容 -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_marginTop="13dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/gobackbutton">
 
         <!-- 主内容布局 -->
         <LinearLayout
             android:id="@+id/mainContent"
-            android:layout_width="345dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/gobackbutton"
             android:orientation="vertical"
-            android:gravity="center"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="13dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -49,11 +48,12 @@
             <!-- 用户个人信息切换按钮 -->
             <LinearLayout
                 android:id="@+id/changepagebutton"
-                android:layout_width="match_parent"
+                android:layout_width="345dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
                 android:layout_marginBottom="18dp"
                 android:orientation="horizontal"
+                android:layout_gravity="center"
                 android:paddingStart="11dp"
                 android:paddingEnd="11dp">
 
@@ -111,6 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="120dp"
+                android:layout_marginStart="40dp"
                 android:text="Credit Card"
                 android:textColor="@color/primary_medium_gray"
                 android:textSize="12sp"
@@ -118,8 +119,9 @@
 
             <LinearLayout
                 android:id="@+id/creditcardnfo"
-                android:layout_width="match_parent"
+                android:layout_width="345dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginBottom="36dp"
                 android:orientation="vertical">
 
@@ -224,21 +226,40 @@
                             android:textSize="12sp" />
 
                         <TextView
-                            android:id="@+id/valid_thru_date"
+                            android:id="@+id/valid_thru_date1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/valid_thru"
-                            android:letterSpacing="0.19"
                             android:textColor="@color/primary_white"
-                            android:text="09/24"
+                            android:text=". . "
+                            android:fontFamily="@font/lufga_medium"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/valid_thru_date_slash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:textColor="@color/primary_white"
+                            android:layout_toEndOf="@id/valid_thru_date1"
+                            android:text="/"
                             android:fontFamily="@font/lufga_medium"
                             android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/valid_thru_date2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/primary_white"
+                            android:layout_toEndOf="@id/valid_thru_date_slash"
+                            android:text=" . ."
+                            android:fontFamily="@font/lufga_medium"
+                            android:textSize="24sp" />
 
                         <TextView
                             android:id="@+id/cvv_number"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toEndOf="@id/valid_thru_date"
+                            android:layout_alignEnd="@id/cvv"
                             android:layout_marginStart="47dp"
                             android:textColor="@color/primary_white"
                             android:text=". . ."
@@ -254,6 +275,7 @@
                 android:layout_width="345dp"
                 android:layout_height="58dp"
                 android:layout_marginBottom="26dp"
+                android:layout_gravity="center"
                 android:background="@drawable/bg_radius_20dp"
                 android:backgroundTint="@color/primary_gold">
 
@@ -282,27 +304,26 @@
 
             </RelativeLayout>
 
-            <LinearLayout
-                android:id="@+id/membercardnfo"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/member_card_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginEnd="120dp"
+                android:layout_marginStart="40dp"
+                android:text="Member Card"
+                android:textColor="@color/primary_medium_gray"
+                android:textSize="12sp"
+                android:fontFamily="@font/lufga_light" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Member Card"
-                    android:textColor="@color/primary_medium_gray"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/lufga_light"
-                    android:layout_marginStart="18dp"/>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/member_card_info"
+                    android:layout_width="345dp"
                     android:layout_height="62dp"
                     android:paddingStart="29dp"
                     android:paddingTop="21dp"
                     android:orientation="vertical"
+                    android:layout_gravity="center"
                     android:background="@drawable/bg_radius_20dp"
                     android:backgroundTint="@color/primary_gold">
 
@@ -334,7 +355,6 @@
                             android:text="2024/5/16"
                             android:fontFamily="@font/lufga_light"
                             android:textSize="14sp" />
-                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

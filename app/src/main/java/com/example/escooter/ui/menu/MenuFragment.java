@@ -167,6 +167,7 @@ public class MenuFragment extends Fragment {
             return;
         }
         if (mapResult.getError() != null) {
+            Toast.makeText(requireContext().getApplicationContext(), "未取得Return區域", Toast.LENGTH_LONG).show();
             showFailed(mapResult.getError());
         }
         if (mapResult.getReturnAreas() != null) {
@@ -189,6 +190,7 @@ public class MenuFragment extends Fragment {
             return;
         }
         if (returnResult.getError() != null) {
+            Toast.makeText(requireContext().getApplicationContext(), "尚未在還車區域內", Toast.LENGTH_LONG).show();
             showFailed(returnResult.getError());
         }
         if (returnResult.getRentalRecord() != null) {
@@ -202,6 +204,7 @@ public class MenuFragment extends Fragment {
             return;
         }
         if (escooterGpsResult == null) {
+            Toast.makeText(requireContext().getApplicationContext(), "未取得E-scooter GPS", Toast.LENGTH_LONG).show();
             return;
         }
         if (escooterGpsResult.getError() != null) {
@@ -265,6 +268,7 @@ public class MenuFragment extends Fragment {
             return;
         }
         if (rentResult.getError() != null) {
+            Toast.makeText(requireContext().getApplicationContext(), "使用者租借錯誤", Toast.LENGTH_LONG).show();
             showFailed(rentResult.getError());
         }
         if (rentResult.getEscooterList() != null) {
@@ -289,6 +293,7 @@ public class MenuFragment extends Fragment {
             return;
         }
         if (userResult.getError() != null) {
+            Toast.makeText(requireContext().getApplicationContext(), "未取得User Data", Toast.LENGTH_LONG).show();
             showFailed(userResult.getError());
         }
         if (userResult.getUser() != null) {
@@ -305,7 +310,7 @@ public class MenuFragment extends Fragment {
     }
     private void showToast(String message) {
         if (getContext() != null && getContext().getApplicationContext() != null) {
-            Toast.makeText(getContext().getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            System.out.println(message);
         }
     }
 

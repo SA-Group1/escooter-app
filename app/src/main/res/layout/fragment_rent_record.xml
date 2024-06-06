@@ -100,10 +100,19 @@
             android:id="@+id/rent_record_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_below="@id/changepagebutton">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_weight="1"/>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/no_record_info_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lufga_regular"
+        android:text="@string/no_record_info_text"
+        android:textColor="@color/primary_medium_gray"
+        android:textSize="32sp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+
 </RelativeLayout>

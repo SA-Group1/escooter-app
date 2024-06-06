@@ -51,7 +51,6 @@ public class RentRecordFragment extends Fragment {
         initializeViews(binding);
         setListeners(binding);
         setupObservers();
-        userViewModel.getUserData();
     }
 
     private void initializeViews(FragmentRentRecordBinding binding) {
@@ -132,5 +131,6 @@ public class RentRecordFragment extends Fragment {
         TextView personNameTextView = binding.personinfobutton.personNameTextView;
         personNameTextView.setText(user.getUserName());
         binding.personinfobutton.imageView.setImageURI(UriBase64Converter.convertBase64ToUri(requireContext(), user.getPhoto()));
+        binding.noRecordInfoText.setVisibility(View.GONE);x,
     }
 }

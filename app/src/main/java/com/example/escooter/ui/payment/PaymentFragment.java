@@ -58,8 +58,6 @@ public class PaymentFragment extends Fragment {
         setListeners(binding);
         setupSwipeRefresh(binding.getRoot());
         setupObservers();
-
-        userViewModel.getUserData();
     }
 
     private void setupSwipeRefresh(View rootView) {
@@ -281,16 +279,16 @@ public class PaymentFragment extends Fragment {
 
             TextView creditCardTextView = requireActivity().findViewById(R.id.creditcard_id);
             creditCardTextView.setText(creditCardNumber);
-            ;
         }else {
             binding.creditcardnfo.setVisibility(View.GONE);
             binding.addPaymentButton.setVisibility(View.VISIBLE);
         }
-        if (user.getMemberCard().getValid()){
-            binding.membercardnfo.setVisibility(View.VISIBLE);
-            binding.memberCardDate.setText(user.getMemberCard().getExpirationDate());
+        if (Objects.equals(user.getMemberCard(), "null")){
+            binding.memberCardText.setVisibility(View.GONE);
+            binding.memberCardInfo.setVisibility(View.GONE);
         }else {
-            binding.memberCardDate.setVisibility(View.GONE);
+            binding.memberCardInfo.setVisibility(View.VISIBLE);
+            binding.memberCardDate.setText(user.getMemberCard().getExpirationDate());
         }
     }
 }

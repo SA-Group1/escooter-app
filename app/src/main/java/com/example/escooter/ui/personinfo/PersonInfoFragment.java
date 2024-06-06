@@ -115,7 +115,6 @@ public class PersonInfoFragment extends Fragment {
 
         setListeners(binding);
         setupObservers();
-        userViewModel.getUserData();
     }
 
     private void setupObservers() {

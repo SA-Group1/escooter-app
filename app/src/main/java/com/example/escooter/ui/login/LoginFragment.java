@@ -147,8 +147,8 @@ public class LoginFragment extends Fragment {
         String password = binding.password.getText().toString();
         userViewModel.setUserCredential(account,password);
 
-        String welcome = getString(R.string.welcome) + model.getUserName();
-        showToast(welcome);
+        String welcome = getString(R.string.welcome) + " " + model.getUserName();
+        Toast.makeText(getContext().getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
         navigateToMenuFragment();
     }
 
@@ -168,7 +168,8 @@ public class LoginFragment extends Fragment {
 
     private void showToast(String message) {
         if (getContext() != null && getContext().getApplicationContext() != null) {
-            Toast.makeText(getContext().getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            System.out.println(message);
+            Toast.makeText(getContext().getApplicationContext(),"登入失敗", Toast.LENGTH_LONG).show();
         }
     }
 
