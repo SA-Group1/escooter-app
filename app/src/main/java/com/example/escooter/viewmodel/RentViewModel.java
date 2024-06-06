@@ -1,4 +1,4 @@
-package com.example.escooter.ui.menu;
+package com.example.escooter.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -12,13 +12,17 @@ import com.example.escooter.data.model.Escooter;
 import com.example.escooter.data.model.Gps;
 import com.example.escooter.data.model.RentalRecord;
 import com.example.escooter.service.RentalService;
+import com.example.escooter.ui.menu.EscooterGpsResult;
+import com.example.escooter.ui.menu.ParkResult;
+import com.example.escooter.ui.menu.RentResult;
+import com.example.escooter.ui.menu.ReturnResult;
 
 import java.util.List;
 
 public class RentViewModel extends ViewModel {
     private final RentalService RentalService = new RentalService();
     private final MutableLiveData<RentResult> rentResult = new MutableLiveData<>();
-    private final MutableLiveData<ParkResult> ParkResult = new MutableLiveData<>();
+    private final MutableLiveData<com.example.escooter.ui.menu.ParkResult> ParkResult = new MutableLiveData<>();
     private MutableLiveData<ReturnResult> returnResult = new MutableLiveData<>();
     private final MutableLiveData<EscooterGpsResult> escooterGpsResult = new MutableLiveData<>();
     private final MutableLiveData<String> ownLongitude = new MutableLiveData<>();
@@ -41,6 +45,12 @@ public class RentViewModel extends ViewModel {
     }
     public LiveData<String> getEscooterId() {
         return escooterId;
+    }
+    public LiveData<String> getOwnLongitude() {
+        return ownLongitude;
+    }
+    public MutableLiveData<String> getOwnLatitude() {
+        return ownLatitude;
     }
 
     public void clearReturnResult(){

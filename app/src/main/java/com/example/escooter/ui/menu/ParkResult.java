@@ -2,12 +2,7 @@ package com.example.escooter.ui.menu;
 
 import androidx.annotation.Nullable;
 
-import com.example.escooter.data.model.Escooter;
-
-import java.util.List;
-
 public class ParkResult {
-    @Nullable
     private boolean isPark;
     @Nullable
     private Exception error;
@@ -16,11 +11,10 @@ public class ParkResult {
         this.error = error;
     }
 
-    public ParkResult(@Nullable boolean isPark) {
+    public ParkResult(boolean isPark) {
         this.isPark = isPark;
     }
 
-    @Nullable
     public boolean getEscooterList() {
         return isPark;
     }

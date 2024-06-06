@@ -21,7 +21,7 @@ public class UserFormState {
         this.isDataValid = false;
     }
 
-    UserFormState(boolean isDataValid) {
+    public UserFormState(boolean isDataValid) {
         this.usernameError = null;
         this.emailError = null;
         this.phoneNumberError = null;

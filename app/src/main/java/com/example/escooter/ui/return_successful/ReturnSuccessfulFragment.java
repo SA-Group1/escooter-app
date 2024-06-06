@@ -1,7 +1,6 @@
 package com.example.escooter.ui.return_successful;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +15,9 @@ import androidx.navigation.Navigation;
 
 import com.example.escooter.R;
 import com.example.escooter.data.model.RentalRecord;
-import com.example.escooter.data.model.User;
-import com.example.escooter.databinding.FragmentMenuBinding;
 import com.example.escooter.databinding.FragmentReturnSuccessfulBinding;
-import com.example.escooter.ui.menu.RentViewModel;
+import com.example.escooter.viewmodel.RentViewModel;
 import com.example.escooter.ui.menu.ReturnResult;
-import com.example.escooter.ui.user.UserViewModel;
 
 
 public class ReturnSuccessfulFragment extends Fragment {

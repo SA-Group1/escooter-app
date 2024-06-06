@@ -1,6 +1,9 @@
 package com.example.escooter.service;
 
 import com.example.escooter.callback.BooleanCallback;
+import com.example.escooter.callback.UserPaymentCallback;
+import com.example.escooter.data.model.CreditCard;
+import com.example.escooter.data.model.MemberCard;
 import com.example.escooter.repository.CreditCardRepository;
 
 public class CreditCardService {
@@ -25,6 +28,20 @@ public class CreditCardService {
             @Override
             public void onSuccess(boolean isUnbindCreditCard) {
                 callback.onSuccess(isUnbindCreditCard);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                callback.onFailure(e);
+            }
+        });
+    }
+
+    public void getUserPayment(String account, String password, UserPaymentCallback callback) {
+        CreditCardRepository.getUserPayment(account, password, new UserPaymentCallback() {
+            @Override
+            public void onSuccess(CreditCard creditCard, MemberCard memberCard) {
+                callback.onSuccess(creditCard,memberCard);
             }
 
             @Override

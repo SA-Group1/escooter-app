@@ -2,7 +2,7 @@ package com.example.escooter.service;
 
 import static java.lang.Math.round;
 
-import com.example.escooter.ui.menu.RentViewModel;
+import com.example.escooter.viewmodel.RentViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,6 +17,7 @@ public class EscooterService {
     private int duration;
     private double feePerMin = 100;
     private int TotalCost;
+    private boolean isGet = false;
 
     public EscooterService(RentViewModel rentViewModel) {
         startTime = System.currentTimeMillis();
@@ -26,12 +27,13 @@ public class EscooterService {
 
     public void startGpsUpdates() {
         scheduler.scheduleWithFixedDelay(() -> {
+            isGet = true;
             tempTime = System.currentTimeMillis();
             duration = (int) ((tempTime - startTime) / 1000/ 60);
             TotalCost = (int) (duration * feePerMin);
             rentViewModel.getEscooterGps();
 
-        }, 0, 5, TimeUnit.SECONDS); // 初始延迟为0，之后每60秒执行一次
+        }, 0, 1, TimeUnit.SECONDS); // 初始延迟为0，之后每60秒执行一次
     }
 
     public void stopGpsUpdates() {
@@ -60,5 +62,8 @@ public class EscooterService {
     }
     public int getDuration() {
         return duration;
+    }
+    public boolean getIsGet() {
+        return isGet;
     }
 }

@@ -3,7 +3,6 @@ package com.example.escooter;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,9 +10,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.escooter.databinding.ActivityMainBinding;
-import com.example.escooter.ui.menu.RentViewModel;
-import com.example.escooter.ui.user.UserViewModel;
-import com.example.escooter.ui.user.UserViewModelFactory;
+import com.example.escooter.viewmodel.RentViewModel;
+import com.example.escooter.viewmodel.UserViewModel;
+import com.example.escooter.viewmodel.UserViewModelFactory;
 
 public class MainActivity extends AppCompatActivity {
     private UserViewModel userViewModel;

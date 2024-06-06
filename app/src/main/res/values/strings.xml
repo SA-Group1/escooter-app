@@ -28,6 +28,7 @@
     <string name="rent_record_number">#NMSL-7414</string>
     <string name="rent_record_time">2021/5/16 11:25</string>
     <string name="return_record_time">2021/5/16 12:10</string>
+    <string name="no_record_info_text">No Records</string>
 
     <!-- Fee Info -->
     <string name="fee_text">fee per/min</string>

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.text.Editable;
 import android.view.LayoutInflater;
@@ -19,16 +20,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.escooter.R;
-import com.example.escooter.data.model.CreditCard;
+import com.example.escooter.data.model.MemberCard;
 import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.DialogPaymentAddCreditCardBinding;
 import com.example.escooter.databinding.DialogPaymentUnbindCreditCardBinding;
-import com.example.escooter.databinding.DialogPersonInfoEditProfileBinding;
 import com.example.escooter.databinding.FragmentPaymentBinding;
 import com.example.escooter.ui.user.UserResult;
-import com.example.escooter.ui.user.UserViewModel;
+import com.example.escooter.viewmodel.UserViewModel;
 import com.example.escooter.utils.SimpleTextWatcher;
 import com.example.escooter.utils.UriBase64Converter;
+import com.example.escooter.viewmodel.CreditCardViewModel;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.Objects;
@@ -38,15 +39,14 @@ public class PaymentFragment extends Fragment {
     private FragmentPaymentBinding binding;
     private UserViewModel userViewModel;
     private CreditCardViewModel creditCardViewModel;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPaymentBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -56,9 +56,30 @@ public class PaymentFragment extends Fragment {
 
         initializeViews(binding);
         setListeners(binding);
+        setupSwipeRefresh(binding.getRoot());
         setupObservers();
+    }
 
-        userViewModel.getUserData();
+    private void setupSwipeRefresh(View rootView) {
+        swipeRefreshLayout = rootView.findViewById(R.id.swipeRefreshLayout);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // 刷新操作逻辑
+                refreshContent();
+            }
+        });
+    }
+
+    private void refreshContent() {
+        // 模拟刷新操作，刷新完成后停止刷新动画
+        swipeRefreshLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }, 2000); // 2秒后停止刷新动画
     }
 
     private void initializeViews(FragmentPaymentBinding binding) {
@@ -67,20 +88,24 @@ public class PaymentFragment extends Fragment {
 
     private void setupObservers() {
         userViewModel.getUserResult().observe(getViewLifecycleOwner(), this::handleUserResult);
-        creditCardViewModel.getCreditCardResult().observe(getViewLifecycleOwner(), this::handleCreditCardResult);
+        creditCardViewModel.getUserPaymentResult().observe(getViewLifecycleOwner(), this::handleUserPaymentResult);
     }
 
-    private void handleCreditCardResult(CreditCardResult creditCardResult) {
-
-        if (creditCardResult == null) {
+    private void handleUserPaymentResult(UserPaymentResult userPaymentResult) {
+        User user = userViewModel.getUserResult().getValue().getUser();
+        if (userPaymentResult == null) {
             return;
         }
-        if (creditCardResult.getError() != null) {
-            showFailed(creditCardResult.getError());
+        if (userPaymentResult.getError() != null) {
+            showFailed(userPaymentResult.getError());
         }
-        if (creditCardResult.getCreditCard() != null) {
-            User user = userViewModel.getUserResult().getValue().getUser();
-            user.setCreditCard(creditCardResult.getCreditCard());
+        if (userPaymentResult.getCreditCard() != null) {
+            user.setCreditCard(userPaymentResult.getCreditCard());
+            updateTextViewInfo(binding,user);
+        }
+        if (userPaymentResult.getMemberCard() != null) {
+            MemberCard memberCard = userPaymentResult.getMemberCard();
+            user.setMemberCard(memberCard);
             updateTextViewInfo(binding,user);
         }
     }
@@ -152,6 +177,7 @@ public class PaymentFragment extends Fragment {
         dialogBinding.cancelButton.setOnClickListener(v -> dialog.dismiss());
         dialogBinding.unbindButton.setOnClickListener(v -> {
             creditCardViewModel.unbindCreditCard();
+            creditCardViewModel.getUserPayment();
             dialog.dismiss();
         });
 
@@ -214,6 +240,7 @@ public class PaymentFragment extends Fragment {
         dialogBinding.confirmButton.setOnClickListener(b -> {
 
             creditCardViewModel.bindCreditCard();
+            creditCardViewModel.getUserPayment();
             dialog.dismiss();
         });
     }
@@ -249,11 +276,19 @@ public class PaymentFragment extends Fragment {
             }
             binding.creditcardnfo.setVisibility(View.VISIBLE);
             binding.addPaymentButton.setVisibility(View.GONE);
+
             TextView creditCardTextView = requireActivity().findViewById(R.id.creditcard_id);
             creditCardTextView.setText(creditCardNumber);
         }else {
             binding.creditcardnfo.setVisibility(View.GONE);
             binding.addPaymentButton.setVisibility(View.VISIBLE);
+        }
+        if (Objects.equals(user.getMemberCard(), "null")){
+            binding.memberCardText.setVisibility(View.GONE);
+            binding.memberCardInfo.setVisibility(View.GONE);
+        }else {
+            binding.memberCardInfo.setVisibility(View.VISIBLE);
+            binding.memberCardDate.setText(user.getMemberCard().getExpirationDate());
         }
     }
 }

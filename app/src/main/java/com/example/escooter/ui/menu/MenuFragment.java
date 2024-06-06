@@ -34,8 +34,10 @@ import com.example.escooter.databinding.ComponentMenuScooterInfoBinding;
 import com.example.escooter.databinding.FragmentMenuBinding;
 import com.example.escooter.service.EscooterService;
 import com.example.escooter.ui.user.UserResult;
-import com.example.escooter.ui.user.UserViewModel;
+import com.example.escooter.viewmodel.UserViewModel;
 import com.example.escooter.utils.UriBase64Converter;
+import com.example.escooter.viewmodel.MapViewModel;
+import com.example.escooter.viewmodel.RentViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -82,8 +84,10 @@ public class MenuFragment extends Fragment {
     private View view = null;
     private EscooterService escooterService;
     private ComponentMenuScooterInfoBinding scooterInfoBinding;
-
+    private Marker marker;
     private boolean isPark = false;
+    private Double ownLatitude;
+    private Double ownLongitude;
 
     @Nullable
     @Override
@@ -98,6 +102,7 @@ public class MenuFragment extends Fragment {
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         rentViewModel = new ViewModelProvider(requireActivity()).get(RentViewModel.class);
         mapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
+        escooterService = new EscooterService(rentViewModel);
 
         requireActivity().getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -110,8 +115,6 @@ public class MenuFragment extends Fragment {
         setupMapFragment();
         setupObservers();
         setupListeners();
-        userViewModel.getUserData();
-
     }
 
     private void setupFusedLocation() {
@@ -123,16 +126,11 @@ public class MenuFragment extends Fragment {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 for (Location location : locationResult.getLocations()) {
-                    System.out.println("初始化");
-                    String ownLatitude = String.valueOf(location.getLatitude());
-                    String ownLongitude = String.valueOf(location.getLongitude());
+                    ownLatitude = location.getLatitude();
+                    ownLongitude = location.getLongitude();
 
-                    rentViewModel.setUserlocation(ownLongitude,ownLatitude);
+                    rentViewModel.setUserlocation(ownLongitude.toString(),ownLatitude.toString());
                     setRentableEscooter();
-                    LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                    if (googleMap != null) {
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17));
-                    }
                 }
             }
         };
@@ -162,10 +160,14 @@ public class MenuFragment extends Fragment {
     }
 
     private void handleMapResult(MapResult mapResult) {
+        if(googleMap == null){
+            return;
+        }
         if (mapResult == null) {
             return;
         }
         if (mapResult.getError() != null) {
+            Toast.makeText(requireContext().getApplicationContext(), "未取得Return區域", Toast.LENGTH_LONG).show();
             showFailed(mapResult.getError());
         }
         if (mapResult.getReturnAreas() != null) {
@@ -181,11 +183,14 @@ public class MenuFragment extends Fragment {
     }
 
     private void handleReturnResult(ReturnResult returnResult) {
-
+        if(googleMap == null){
+            return;
+        }
         if (returnResult == null) {
             return;
         }
         if (returnResult.getError() != null) {
+            Toast.makeText(requireContext().getApplicationContext(), "尚未在還車區域內", Toast.LENGTH_LONG).show();
             showFailed(returnResult.getError());
         }
         if (returnResult.getRentalRecord() != null) {
@@ -195,65 +200,63 @@ public class MenuFragment extends Fragment {
     }
 
     private void handleEscooterGpsResult(EscooterGpsResult escooterGpsResult) {
+        if(googleMap == null){
+            return;
+        }
         if (escooterGpsResult == null) {
+            Toast.makeText(requireContext().getApplicationContext(), "未取得E-scooter GPS", Toast.LENGTH_LONG).show();
             return;
         }
         if (escooterGpsResult.getError() != null) {
             showFailed(escooterGpsResult.getError());
         }
         if (escooterGpsResult.getEscooterGps() != null) {
-
             Gps gps = escooterGpsResult.getEscooterGps();
-            locationCallback = new LocationCallback() {
-                @Override
-                public void onLocationResult(@NonNull LocationResult locationResult) {
-                    for (Location location : locationResult.getLocations()) {
-                        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                        LatLng markerLatLng = new LatLng(gps.getLatitude(), gps.getLongitude());
+            LatLng markerLatLng = new LatLng(gps.getLatitude(), gps.getLongitude());
 
-                        if (googleMap != null) {
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17));
-                        }
-                        // 設置距離閾值 20 米
-                        float distanceThreshold = 20.0f;
-                        // 計算當前位置與 marker 的距離
-                        float[] results = new float[1];
-                        Location.distanceBetween(currentLatLng.latitude, currentLatLng.longitude,
-                                markerLatLng.latitude, markerLatLng.longitude, results);
-                        float distance = results[0];
+            // 設置距離閾值 20 米
+            float distanceThreshold = 20.0f;
+            // 計算當前位置與 marker 的距離
+            float[] results = new float[1];
+            Location.distanceBetween(ownLatitude, ownLongitude,
+                    markerLatLng.latitude, markerLatLng.longitude, results);
+            float distance = results[0];
 
-                        // 判斷距離是否超過閾值，如果超過則顯示 marker
-                        if (distance > distanceThreshold) {
-                            googleMap.clear();
-                            googleMap.addMarker(new MarkerOptions()
-                                    .position(markerLatLng)
-                                    .title(rentViewModel.getEscooterId().toString())
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_escooter)));
-                            getDirections(currentLatLng, markerLatLng);
-                        } else {
-                            if (currentPolyline != null) {
-                                currentPolyline.remove();
-                            }
-                            googleMap.clear();
-                        }
-                    }
+            // 判斷距離是否超過閾值，如果超過則顯示 marker
+            if (distance > distanceThreshold) {
+                if (marker == null) {
+                    marker = googleMap.addMarker(new MarkerOptions()
+                            .position(markerLatLng)
+                            .title(rentViewModel.getEscooterId().toString())
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_escooter)));
+                } else {
+                    marker.setPosition(markerLatLng);
                 }
-            };
-            //開始LocationUpdates
-            startLocationUpdates();
-            updataRentEscooterInfo(scooterInfoBinding);
+                // 更新位置信息
+                updataRentEscooterInfo(scooterInfoBinding);
+            } else {
+                if (marker != null) {
+                    marker.remove(); // 移除 marker
+                    marker = null;
+                }
+                if (currentPolyline != null) {
+                    currentPolyline.remove(); // 移除 polyline
+                    currentPolyline = null;
+                }
+                googleMap.clear(); // 清除地圖上的所有圖層
+            }
         }
     }
 
     private void handleParkResult(ParkResult parkResult) {
+        if(googleMap == null){
+            return;
+        }
         if (parkResult == null) {
             return;
         }
         if (parkResult.getError() != null) {
             showFailed(parkResult.getError());
-        }
-        if (parkResult.getEscooterList()) {
-
         }
     }
 
@@ -265,6 +268,7 @@ public class MenuFragment extends Fragment {
             return;
         }
         if (rentResult.getError() != null) {
+            Toast.makeText(requireContext().getApplicationContext(), "使用者租借錯誤", Toast.LENGTH_LONG).show();
             showFailed(rentResult.getError());
         }
         if (rentResult.getEscooterList() != null) {
@@ -289,6 +293,7 @@ public class MenuFragment extends Fragment {
             return;
         }
         if (userResult.getError() != null) {
+            Toast.makeText(requireContext().getApplicationContext(), "未取得User Data", Toast.LENGTH_LONG).show();
             showFailed(userResult.getError());
         }
         if (userResult.getUser() != null) {
@@ -305,13 +310,16 @@ public class MenuFragment extends Fragment {
     }
     private void showToast(String message) {
         if (getContext() != null && getContext().getApplicationContext() != null) {
-            Toast.makeText(getContext().getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            System.out.println(message);
         }
     }
 
     private void setupListeners() {
         final ConstraintLayout personinfobutton = binding.personinfobutton.getRoot();
         personinfobutton.setOnClickListener(v -> {
+            if (escooterService.getIsGet()){
+                escooterService.stopGpsUpdates();
+            }
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigate(R.id.action_navigation_menu_to_personinfoFragment);
         });
@@ -337,6 +345,7 @@ public class MenuFragment extends Fragment {
         public void onMapReady(@NonNull GoogleMap map) {
             googleMap = map;
             // 開啟我的位置功能
+            userViewModel.getUserData();
             updateLocation();
             mapViewModel.getReturnAreas();
             // 設定點選事件
@@ -412,7 +421,7 @@ public class MenuFragment extends Fragment {
                     if (googleMap != null) {
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17));
                     }
-                    getDirections(currentLatLng, markerLatLng);
+//                    getDirections(currentLatLng, markerLatLng);
                     setRentableEscooter();
                 }
             }
@@ -558,22 +567,24 @@ public class MenuFragment extends Fragment {
     private void dialogSet(Context context, Marker marker) {
         String markerEscooterId = marker.getTitle();
 
-        ViewStub stub = inflateViewStub(context, R.layout.component_menu_rent_info);
+        ViewStub originalStub = binding.viewStub; // 获取初始ViewStub
+        inflateViewStub(context, R.layout.component_menu_rent_info,originalStub);
         ComponentMenuRentInfoBinding rentInfoBinding = ComponentMenuRentInfoBinding.bind(view);
         markerEscooterInfo(rentInfoBinding, markerEscooterId);
 
 
         rentInfoBinding.rentButton.setOnClickListener(v ->{
+            //EscooterService固定取得車輛gps
+
             //清空google map上的標記
             googleMap.clear();
-            //停止引導locationCallback
             stopLocationUpdates();
-            //EscooterService固定取得車輛gps
-            escooterService = new EscooterService(rentViewModel);
+            setRentLocationCallBack();
+            startLocationUpdates();
             escooterService.startGpsUpdates();
 
             //ViewStub彈窗新增
-            inflateNewViewStub(context, stub, R.layout.component_menu_scooter_info);
+            inflateViewStub(context,R.layout.component_menu_scooter_info,originalStub);
             scooterInfoBinding = ComponentMenuScooterInfoBinding.bind(view);
             rentEscooterInfo(scooterInfoBinding, markerEscooterId);
 
@@ -586,7 +597,6 @@ public class MenuFragment extends Fragment {
 
                     int textColor = ContextCompat.getColor(context, R.color.secondary_deep_gray);
                     scooterInfoBinding.parkButton.setTextColor(textColor);
-
                     scooterInfoBinding.parkButton.setBackgroundTintList(null);
                 } else {
                     scooterInfoBinding.parkButton.setText("Unpark");
@@ -600,9 +610,24 @@ public class MenuFragment extends Fragment {
                 }
             });
             scooterInfoBinding.returnButton.setOnClickListener(b ->{
+                escooterService.stopGpsUpdates();
                 rentViewModel.returnEscooter();
             });
         });
+    }
+
+    private void setRentLocationCallBack() {
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(@NonNull LocationResult locationResult) {
+                for (Location location : locationResult.getLocations()) {
+                    LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    if (googleMap != null) {
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17));
+                    }
+                }
+            }
+        };
     }
 
 
@@ -621,37 +646,30 @@ public class MenuFragment extends Fragment {
         binding.totalFee.setText(String.valueOf(escooterService.getTotalCost()));
     }
 
-    private ViewStub inflateViewStub(Context context, int layoutResource) {
+    private void inflateViewStub(Context context, int layoutResource, ViewStub originalStub) {
         if (view != null) {
             ViewGroup parent = (ViewGroup) view.getParent();
             if (parent != null) {
                 parent.removeView(view);
             }
         }
-        ViewStub stub = binding.viewStub;
-        stub.setLayoutResource(layoutResource);
-        view = stub.inflate();
-        return stub;
-    }
 
-    private void inflateNewViewStub(Context context,ViewStub stub, int layoutResource) {
-        if (view != null) {
-            ViewGroup parent = (ViewGroup) view.getParent();
-            if (parent != null) {
-                parent.removeView(view);
-            }
+        ViewStub newStub = new ViewStub(context);
+        ViewGroup.LayoutParams params = originalStub.getLayoutParams();
+        if (params instanceof ViewGroup.MarginLayoutParams) {
+            ((ViewGroup.MarginLayoutParams) params).bottomMargin =
+                    ((ViewGroup.MarginLayoutParams) originalStub.getLayoutParams()).bottomMargin;
         }
-        ViewStub newstub = new ViewStub(context);
-        binding.getRoot().addView(newstub);
+        newStub.setLayoutParams(params);
+        newStub.setLayoutResource(layoutResource);
+        newStub.setId(originalStub.getId());
+        newStub.setInflatedId(originalStub.getInflatedId());
 
-        newstub.setLayoutParams(stub.getLayoutParams());
-        newstub.setVisibility(stub.getVisibility());
-        newstub.setInflatedId(stub.getInflatedId());
-        newstub.setLayoutResource(layoutResource);
+        binding.getRoot().removeView(originalStub); // 移除初始ViewStub
+        binding.getRoot().addView(newStub); // 添加新的ViewStub
 
-        view = newstub.inflate();
+        view = newStub.inflate();
     }
-
 
     private void markerEscooterInfo(ComponentMenuRentInfoBinding binding, String markerEscooterId) {
         for (Escooter escooter : escooterList) {
@@ -666,7 +684,6 @@ public class MenuFragment extends Fragment {
             }
         }
     }
-
 
     private void setParking() {
         rentViewModel.updateEscooterParkStatus();

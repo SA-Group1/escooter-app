@@ -1,7 +1,5 @@
 package com.example.escooter.ui.personinfo;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -10,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +33,7 @@ import com.example.escooter.data.model.User;
 import com.example.escooter.databinding.DialogPersonInfoEditProfileBinding;
 import com.example.escooter.databinding.FragmentPersonInfoBinding;
 import com.example.escooter.ui.user.UserResult;
-import com.example.escooter.ui.user.UserViewModel;
+import com.example.escooter.viewmodel.UserViewModel;
 import com.example.escooter.utils.SimpleTextWatcher;
 import com.example.escooter.utils.UriBase64Converter;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -74,8 +71,6 @@ public class PersonInfoFragment extends Fragment {
         intent.setType("image/*");
         pickImageLauncher.launch(intent);
     }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -120,7 +115,6 @@ public class PersonInfoFragment extends Fragment {
 
         setListeners(binding);
         setupObservers();
-        userViewModel.getUserData();
     }
 
     private void setupObservers() {
@@ -170,6 +164,10 @@ public class PersonInfoFragment extends Fragment {
         rent_record_button.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigate(R.id.action_personinfoFragment_to_rentRecordFragment);
+        });
+        binding.logoutTextView.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+            navController.navigate(R.id.action_personinfoFragment_to_loginFragment);
         });
     }
 

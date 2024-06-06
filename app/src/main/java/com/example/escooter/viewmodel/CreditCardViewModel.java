@@ -1,17 +1,21 @@
-package com.example.escooter.ui.payment;
+package com.example.escooter.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.escooter.callback.BooleanCallback;
+import com.example.escooter.callback.UserPaymentCallback;
 import com.example.escooter.data.model.CreditCard;
+import com.example.escooter.data.model.MemberCard;
 import com.example.escooter.service.CreditCardService;
+import com.example.escooter.ui.payment.CreditCardFormState;
+import com.example.escooter.ui.payment.UserPaymentResult;
 
 public class CreditCardViewModel extends ViewModel {
     private final CreditCardService CreditCardService = new CreditCardService();
     private final MutableLiveData<CreditCardFormState> creditCardFormState = new MutableLiveData<>();
-    private final MutableLiveData<CreditCardResult> CreditCardResult = new MutableLiveData<>();
+    private final MutableLiveData<UserPaymentResult> userPaymentResult = new MutableLiveData<>();
     private final MutableLiveData<String> account = new MutableLiveData<>();
     private final MutableLiveData<String> password = new MutableLiveData<>();
     private final MutableLiveData<String> username = new MutableLiveData<>();
@@ -19,8 +23,8 @@ public class CreditCardViewModel extends ViewModel {
     private final MutableLiveData<String> VaildThru = new MutableLiveData<>();
     private final MutableLiveData<String> Cvv = new MutableLiveData<>();
 
-    public LiveData<CreditCardResult> getCreditCardResult() {
-        return CreditCardResult;
+    public LiveData<UserPaymentResult> getUserPaymentResult() {
+        return userPaymentResult;
     }
 
     public LiveData<CreditCardFormState> getCreditCardFormState() {
@@ -34,12 +38,12 @@ public class CreditCardViewModel extends ViewModel {
                 CreditCard creditCard = new CreditCard();
                 creditCard.setCardNumber(CardNumber.getValue());
                 creditCard.setExpirationDate(VaildThru.getValue());
-                CreditCardResult.postValue(new CreditCardResult(creditCard));
+                userPaymentResult.postValue(new UserPaymentResult(creditCard,null));
             }
 
             @Override
             public void onFailure(Exception e) {
-                CreditCardResult.postValue(new CreditCardResult(e));
+                userPaymentResult.postValue(new UserPaymentResult(e));
             }
         });
     }
@@ -51,12 +55,26 @@ public class CreditCardViewModel extends ViewModel {
                 CreditCard creditCard = new CreditCard();
                 creditCard.setCardNumber("null");
                 creditCard.setExpirationDate("null");
-                CreditCardResult.postValue(new CreditCardResult(creditCard));
+                userPaymentResult.postValue(new UserPaymentResult(creditCard,null));
             }
 
             @Override
             public void onFailure(Exception e) {
-                CreditCardResult.postValue(new CreditCardResult(e));
+                userPaymentResult.postValue(new UserPaymentResult(e));
+            }
+        });
+    }
+
+    public void getUserPayment() {
+        CreditCardService.getUserPayment(account.getValue(), password.getValue(), new UserPaymentCallback() {
+            @Override
+            public void onSuccess(CreditCard creditCard, MemberCard memberCard) {
+                userPaymentResult.postValue(new UserPaymentResult(creditCard,memberCard));
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                userPaymentResult.postValue(new UserPaymentResult(e));
             }
         });
     }

@@ -38,6 +38,7 @@ android {
 
 dependencies {
 
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation(libs.annotation)
     implementation(libs.material)
     implementation(libs.constraintlayout)

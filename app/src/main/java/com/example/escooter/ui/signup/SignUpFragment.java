@@ -11,99 +11,96 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.escooter.R;
-import com.example.escooter.data.model.LoggedInUser;
 import com.example.escooter.databinding.FragmentSignUpBinding;
-import com.example.escooter.network.HttpRequest;
-import com.google.android.material.imageview.ShapeableImageView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.escooter.viewmodel.SignUpViewModel;
 
 public class SignUpFragment extends Fragment {
 
     private FragmentSignUpBinding binding;
+    private SignUpViewModel signUpViewModel;
     private String[] spinnerOptions;  // 存储资源数据，避免重复访问
     private static final int PHONE_NUMBER_MAX_LENGTH = 10;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // 使用View Binding初始化布局
         binding = FragmentSignUpBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-        final ShapeableImageView goback_button = binding.gobackbutton;
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         spinnerOptions = getResources().getStringArray(R.array.spinner_options);  // 加载一次，复用
-        final AppCompatButton signUpButton = binding.signUpButton;
+        signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
 
         // 初始化按钮状态
-        signUpButton.setEnabled(false);
-
+        binding.signUpButton.setEnabled(false);
         // 添加TextWatcher来监控输入字段的变化
         addTextWatchers();
-
         // 设置电话号码输入限制
         setPhoneNumberInputFilter();
+        setupObservers();
+        setupListeners();
+        // 设置Spinner和事件监听器
+        setUpSpinner();
+    }
 
-        signUpButton.setOnClickListener(v -> {
+    private void setupObservers() {
+        signUpViewModel.getSignUpResult().observe(getViewLifecycleOwner(), this::handleSignUpResult);
+    }
+
+    private void handleSignUpResult(SignUpResult signUpResult) {
+        if (signUpResult == null) {
+            return;
+        }
+        if (signUpResult.getError() != null) {
+            showFailed(signUpResult.getError());
+        }
+        if (signUpResult.getSignUp()) {
+
+        }
+    }
+
+    private void showFailed(Exception errorString) {
+        showToast(errorString.toString());
+    }
+    private void showToast(String message) {
+        if (getContext() != null && getContext().getApplicationContext() != null) {
+            Toast.makeText(getContext().getApplicationContext(), message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void setupListeners() {
+        binding.signUpButton.setOnClickListener(v -> {
             if (validateInputs()) {
-                JSONObject postData = new JSONObject();
-                try {
-                    // 準備 POST 請求的資料
-                    postData.put("account", binding.userAccount.getText().toString());
-                    postData.put("password", binding.userPassword.getText().toString());
-                    postData.put("userName", binding.userName.getText().toString());
-                    postData.put("email", binding.userEmail.getText().toString());
-                    postData.put("phoneNumber", binding.userPhoneNumber.getText().toString());
-
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-
-                String registerUrl = "http://36.232.88.50:8080/api/register";
-                HttpRequest registerData = new HttpRequest(registerUrl);
-
-                registerData.httpPost(postData, Result -> {
-                    try {
-                        if (Result.getBoolean("status")) {
-                            String message = Result.getString("message");
-                            getActivity().runOnUiThread(() -> {Toast.makeText(getContext(),message , Toast.LENGTH_SHORT).show();});
-                            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-                            navController.navigate(R.id.action_signUpFragment_to_loginFragment);
-                        } else {
-                            getActivity().runOnUiThread(() -> {Toast.makeText(getContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show();});
-                        }
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-//                int selectedPosition = binding.userIdentity.getSelectedItemPosition();
-
+                String account = binding.userAccount.getText().toString().trim();
+                String password = binding.userPassword.getText().toString().trim();
+                String username = binding.userName.getText().toString().trim();
+                String email = binding.userEmail.getText().toString().trim();
+                String phoneNumber = binding.userPhoneNumber.getText().toString().trim();
+                signUpViewModel.SignUp(account, password, username, email, phoneNumber);
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+                navController.navigate(R.id.action_signUpFragment_to_loginFragment);
             } else {
                 Toast.makeText(getContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
             }
         });
 
-        goback_button.setOnClickListener(v -> {
+        binding.gobackbutton.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigate(R.id.action_signUpFragment_to_loginFragment);
         });
-
-
-        // 设置Spinner和事件监听器
-        setUpSpinner();
-
-        return root;
     }
 
     private void setUpSpinner() {

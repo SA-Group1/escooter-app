@@ -21,22 +21,15 @@ import com.example.escooter.R;
 import com.example.escooter.adapter.RentRecordListAdapter;
 import com.example.escooter.data.model.RentalRecord;
 import com.example.escooter.data.model.User;
-import com.example.escooter.databinding.FragmentMenuBinding;
 import com.example.escooter.databinding.FragmentRentRecordBinding;
-import com.example.escooter.network.HttpRequest;
 
-import com.example.escooter.ui.menu.RentViewModel;
 import com.example.escooter.ui.user.UserResult;
-import com.example.escooter.ui.user.UserViewModel;
+import com.example.escooter.viewmodel.UserViewModel;
 import com.example.escooter.utils.UriBase64Converter;
+import com.example.escooter.viewmodel.RentRecordViewModel;
 import com.google.android.material.imageview.ShapeableImageView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class RentRecordFragment extends Fragment {
 
@@ -58,7 +51,6 @@ public class RentRecordFragment extends Fragment {
         initializeViews(binding);
         setListeners(binding);
         setupObservers();
-        userViewModel.getUserData();
     }
 
     private void initializeViews(FragmentRentRecordBinding binding) {
@@ -139,5 +131,6 @@ public class RentRecordFragment extends Fragment {
         TextView personNameTextView = binding.personinfobutton.personNameTextView;
         personNameTextView.setText(user.getUserName());
         binding.personinfobutton.imageView.setImageURI(UriBase64Converter.convertBase64ToUri(requireContext(), user.getPhoto()));
+        binding.noRecordInfoText.setVisibility(View.GONE);x,
     }
 }

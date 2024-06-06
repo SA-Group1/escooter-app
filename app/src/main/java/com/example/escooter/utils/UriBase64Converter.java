@@ -58,8 +58,6 @@ public class UriBase64Converter {
             return null;
         }
 
-        System.out.println("hello" + base64String);
-
         try {
             byte[] decodedBytes = Base64.decode(base64String, Base64.DEFAULT);
 

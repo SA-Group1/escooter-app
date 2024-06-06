@@ -3,7 +3,6 @@ package com.example.escooter.ui.menu;
 import androidx.annotation.Nullable;
 
 import com.example.escooter.data.model.Gps;
-import com.example.escooter.data.model.RentalRecord;
 
 public class EscooterGpsResult {
     @Nullable
