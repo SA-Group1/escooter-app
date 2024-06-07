@@ -8,14 +8,23 @@ import com.example.escooter.callback.ReturnAreasCallback;
 import com.example.escooter.data.model.ReturnAreas;
 import com.example.escooter.service.MapService;
 import com.example.escooter.ui.menu.MapResult;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
 public class MapViewModel extends ViewModel {
     private final MapService MapService = new MapService();
     private final MutableLiveData<MapResult> mapResult = new MutableLiveData<>();
+    private final MutableLiveData<LatLng> currentLatLng = new MutableLiveData<>();
+    private final MutableLiveData<LatLng> markerLatLng = new MutableLiveData<>();
     public LiveData<MapResult> getMapResult() {
         return mapResult;
+    }
+    public LiveData<LatLng> getCurrentLatLng() {
+        return currentLatLng;
+    }
+    public LiveData<LatLng> getMarkerLatLng() {
+        return markerLatLng;
     }
 
     public void getReturnAreas() {
@@ -32,5 +41,10 @@ public class MapViewModel extends ViewModel {
                 mapResult.postValue(new MapResult(e));
             }
         });
+    }
+
+    public void setDirections(LatLng currentLatLng,LatLng markerLatLng) {
+        this.currentLatLng.setValue(currentLatLng);
+        this.markerLatLng.setValue(markerLatLng);
     }
 }
