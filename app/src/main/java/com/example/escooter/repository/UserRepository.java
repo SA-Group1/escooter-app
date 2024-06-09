@@ -89,8 +89,7 @@ public class UserRepository {
             }
             @Override
             public void onError(Exception e) {
-                System.out.println(e.toString());
-                callback.onFailure(e);
+                callback.onSuccess("null");
             }
         });
     }

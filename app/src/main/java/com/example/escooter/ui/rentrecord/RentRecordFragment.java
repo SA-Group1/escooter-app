@@ -77,6 +77,9 @@ public class RentRecordFragment extends Fragment {
         }
         if (rentRecordResult.getRentalRecord() != null) {
             ArrayList<RentalRecord> rentRecordList = rentRecordResult.getRentalRecord();
+            if (!rentRecordList.isEmpty()){
+                updateRecordInfo(binding);
+            }
             setRentRecordListAdapter(binding, rentRecordList);
         }
     }
@@ -131,6 +134,8 @@ public class RentRecordFragment extends Fragment {
         TextView personNameTextView = binding.personinfobutton.personNameTextView;
         personNameTextView.setText(user.getUserName());
         binding.personinfobutton.imageView.setImageURI(UriBase64Converter.convertBase64ToUri(requireContext(), user.getPhoto()));
+    }
+    private void updateRecordInfo(FragmentRentRecordBinding binding) {
         binding.noRecordInfoText.setVisibility(View.GONE);
     }
 }

@@ -49,12 +49,10 @@ public class EscooterService {
     private GoogleMap googleMap; // 假设你在其他地方初始化了 googleMap
     private Polyline currentPolyline;
 
-    public EscooterService(RentViewModel rentViewModel, MapViewModel mapViewModel, Context context, GoogleMap googleMap) {
+    public EscooterService(RentViewModel rentViewModel, MapViewModel mapViewModel) {
         startTime = System.currentTimeMillis();
         this.rentViewModel = rentViewModel;
         this.mapViewModel = mapViewModel;
-        this.context = context;
-        this.googleMap = googleMap;
         scheduler = Executors.newScheduledThreadPool(1);
     }
 

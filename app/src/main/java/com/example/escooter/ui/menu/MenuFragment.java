@@ -103,7 +103,7 @@ public class MenuFragment extends Fragment {
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         rentViewModel = new ViewModelProvider(requireActivity()).get(RentViewModel.class);
         mapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
-        escooterService = new EscooterService(rentViewModel,mapViewModel,context,googleMap);
+        escooterService = new EscooterService(rentViewModel,mapViewModel);
 
         requireActivity().getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
