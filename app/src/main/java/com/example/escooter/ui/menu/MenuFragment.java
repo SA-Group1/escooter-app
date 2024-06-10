@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,7 +104,7 @@ public class MenuFragment extends Fragment {
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         rentViewModel = new ViewModelProvider(requireActivity()).get(RentViewModel.class);
         mapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
-        escooterService = new EscooterService(rentViewModel,mapViewModel);
+        escooterService = new EscooterService(getContext());
 
         requireActivity().getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -158,6 +159,34 @@ public class MenuFragment extends Fragment {
         rentViewModel.getReturnResult().observe(getViewLifecycleOwner(), this::handleReturnResult);
         rentViewModel.getEscooterGpsResult().observe(getViewLifecycleOwner(), this::handleEscooterGpsResult);
         mapViewModel.getMapResult().observe(getViewLifecycleOwner(), this::handleMapResult);
+        mapViewModel.getPolylinePoints().observe(getViewLifecycleOwner(), this::handlePolylineResult);
+    }
+
+    private void handlePolylineResult(List<LatLng> points) {
+        if (googleMap == null) {
+            return;
+        }
+        if (points != null && !points.isEmpty()) {
+            try {
+                if (currentPolyline != null) {
+                    currentPolyline.remove();
+                }
+                PolylineOptions polylineOptions = new PolylineOptions()
+                        .addAll(points)
+                        .color(0xffD08343)
+                        .width(14);
+                currentPolyline = googleMap.addPolyline(polylineOptions);
+            } catch (Exception e) {
+                Log.e("MapFragment", "Failed to add polyline", e);
+                Toast.makeText(requireContext(), "Failed to draw route", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            if (currentPolyline != null) {
+                currentPolyline.remove();
+                currentPolyline = null;
+            }
+            googleMap.clear();
+        }
     }
 
     private void handleMapResult(MapResult mapResult) {
@@ -168,7 +197,7 @@ public class MenuFragment extends Fragment {
             return;
         }
         if (mapResult.getError() != null) {
-            Toast.makeText(requireContext().getApplicationContext(), "未取得Return區域", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext().getApplicationContext(), "Return area not obtained", Toast.LENGTH_LONG).show();
             showFailed(mapResult.getError());
         }
         if (mapResult.getReturnAreas() != null) {
@@ -191,7 +220,7 @@ public class MenuFragment extends Fragment {
             return;
         }
         if (returnResult.getError() != null) {
-            Toast.makeText(requireContext().getApplicationContext(), "尚未在還車區域內", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext().getApplicationContext(), "Not within the return area", Toast.LENGTH_LONG).show();
             showFailed(returnResult.getError());
         }
         if (returnResult.getRentalRecord() != null) {
@@ -205,7 +234,7 @@ public class MenuFragment extends Fragment {
             return;
         }
         if (escooterGpsResult == null) {
-            Toast.makeText(requireContext().getApplicationContext(), "未取得E-scooter GPS", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext().getApplicationContext(), "E-scooter GPS not obtained", Toast.LENGTH_LONG).show();
             return;
         }
         if (escooterGpsResult.getError() != null) {
@@ -269,7 +298,7 @@ public class MenuFragment extends Fragment {
             return;
         }
         if (rentResult.getError() != null) {
-            Toast.makeText(requireContext().getApplicationContext(), "使用者租借錯誤", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext().getApplicationContext(), "User rental error", Toast.LENGTH_LONG).show();
             showFailed(rentResult.getError());
         }
         if (rentResult.getEscooterList() != null) {
@@ -294,7 +323,7 @@ public class MenuFragment extends Fragment {
             return;
         }
         if (userResult.getError() != null) {
-            Toast.makeText(requireContext().getApplicationContext(), "未取得User Data", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext().getApplicationContext(), "User Data not obtained", Toast.LENGTH_LONG).show();
             showFailed(userResult.getError());
         }
         if (userResult.getUser() != null) {
@@ -423,8 +452,8 @@ public class MenuFragment extends Fragment {
                     if (googleMap != null) {
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17));
                     }
-                    setRentableEscooter();
                 }
+                setRentableEscooter();
             }
         };
     }
@@ -439,16 +468,13 @@ public class MenuFragment extends Fragment {
         ComponentMenuRentInfoBinding rentInfoBinding = ComponentMenuRentInfoBinding.bind(view);
         markerEscooterInfo(rentInfoBinding, markerEscooterId);
 
-
         rentInfoBinding.rentButton.setOnClickListener(v ->{
-            //EscooterService固定取得車輛gps
-
             //清空google map上的標記
             googleMap.clear();
             stopLocationUpdates();
-            setRentLocationCallBack();
+            setRentLocationCallBack(marker);
             startLocationUpdates();
-            escooterService.startGpsUpdates();
+            escooterService.startGpsUpdates(rentViewModel, mapViewModel);
 
             //ViewStub彈窗新增
             inflateViewStub(context,R.layout.component_menu_scooter_info,originalStub);
@@ -483,12 +509,14 @@ public class MenuFragment extends Fragment {
         });
     }
 
-    private void setRentLocationCallBack() {
+    private void setRentLocationCallBack(Marker marker) {
         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 for (Location location : locationResult.getLocations()) {
                     LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    LatLng markerLatLng = marker.getPosition();
+                    mapViewModel.setDirections(currentLatLng,markerLatLng);
                     if (googleMap != null) {
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17));
                     }

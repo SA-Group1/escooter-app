@@ -166,6 +166,7 @@ public class PersonInfoFragment extends Fragment {
             navController.navigate(R.id.action_personinfoFragment_to_rentRecordFragment);
         });
         binding.logoutTextView.setOnClickListener(v -> {
+            userViewModel.clearData();
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigate(R.id.action_personinfoFragment_to_loginFragment);
         });

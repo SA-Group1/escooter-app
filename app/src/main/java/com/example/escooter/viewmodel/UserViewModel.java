@@ -35,6 +35,10 @@ public class UserViewModel extends ViewModel {
     public LiveData<String> getPassword() {
         return password;
     }
+    public LiveData<String> getUsername() {
+        return username;
+    }
+
     public LiveData<UserFormState> getUserFormState() {
         return userFormState;
     }
@@ -42,6 +46,7 @@ public class UserViewModel extends ViewModel {
     public void getUserData() {
         if (account.getValue() == null || password.getValue() == null){
             System.out.println("Error");
+            return;
         }
         UserService.getUserData(account.getValue(), password.getValue(), new UserCallback() {
 
@@ -146,6 +151,16 @@ public class UserViewModel extends ViewModel {
 
     private boolean isPhoneNumberValid(String phoneNumber) {
         return phoneNumber != null && phoneNumber.trim().length() > 5;
+    }
+
+    public void clearData() {
+        User user = new User();
+        userResult.setValue(new UserResult(user));
+        account.setValue(null);
+        password.setValue(null);
+        username.setValue(null);
+        email.setValue(null);
+        phoneNumber.setValue(null);
     }
 
 }

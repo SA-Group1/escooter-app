@@ -17,6 +17,8 @@ public class MapViewModel extends ViewModel {
     private final MutableLiveData<MapResult> mapResult = new MutableLiveData<>();
     private final MutableLiveData<LatLng> currentLatLng = new MutableLiveData<>();
     private final MutableLiveData<LatLng> markerLatLng = new MutableLiveData<>();
+    private MutableLiveData<List<LatLng>> polylinePoints = new MutableLiveData<>();
+
     public LiveData<MapResult> getMapResult() {
         return mapResult;
     }
@@ -25,6 +27,12 @@ public class MapViewModel extends ViewModel {
     }
     public LiveData<LatLng> getMarkerLatLng() {
         return markerLatLng;
+    }
+    public LiveData<List<LatLng>> getPolylinePoints() {
+        return polylinePoints;
+    }
+    public void setPolylinePoints(List<LatLng> points) {
+        polylinePoints.setValue(points);
     }
 
     public void getReturnAreas() {

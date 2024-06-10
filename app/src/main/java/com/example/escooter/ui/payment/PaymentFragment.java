@@ -97,6 +97,7 @@ public class PaymentFragment extends Fragment {
             return;
         }
         if (userPaymentResult.getError() != null) {
+            Toast.makeText(getContext().getApplicationContext(), "User Payment Data not obtained.", Toast.LENGTH_LONG).show();
             showFailed(userPaymentResult.getError());
         }
         if (userPaymentResult.getCreditCard() != null) {
@@ -132,7 +133,7 @@ public class PaymentFragment extends Fragment {
     }
     private void showToast(String message) {
         if (getContext() != null && getContext().getApplicationContext() != null) {
-            Toast.makeText(getContext().getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            System.out.println(getContext().getApplicationContext() + message);
         }
     }
 
@@ -177,8 +178,8 @@ public class PaymentFragment extends Fragment {
         dialogBinding.cancelButton.setOnClickListener(v -> dialog.dismiss());
         dialogBinding.unbindButton.setOnClickListener(v -> {
             creditCardViewModel.unbindCreditCard();
-            creditCardViewModel.getUserPayment();
             dialog.dismiss();
+            creditCardViewModel.getUserPayment();
         });
 
         return dialog;
@@ -240,8 +241,8 @@ public class PaymentFragment extends Fragment {
         dialogBinding.confirmButton.setOnClickListener(b -> {
 
             creditCardViewModel.bindCreditCard();
-            creditCardViewModel.getUserPayment();
             dialog.dismiss();
+            creditCardViewModel.getUserPayment();
         });
     }
     private void setupDialogObservers(DialogPaymentAddCreditCardBinding dialogBinding) {
@@ -283,7 +284,7 @@ public class PaymentFragment extends Fragment {
             binding.creditcardnfo.setVisibility(View.GONE);
             binding.addPaymentButton.setVisibility(View.VISIBLE);
         }
-        if (Objects.equals(user.getMemberCard(), "null")){
+        if (Objects.equals(user.getMemberCard().getMemberCardNumber(), "null")){
             binding.memberCardText.setVisibility(View.GONE);
             binding.memberCardInfo.setVisibility(View.GONE);
         }else {

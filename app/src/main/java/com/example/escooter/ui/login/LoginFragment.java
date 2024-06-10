@@ -169,7 +169,7 @@ public class LoginFragment extends Fragment {
     private void showToast(String message) {
         if (getContext() != null && getContext().getApplicationContext() != null) {
             System.out.println(message);
-            Toast.makeText(getContext().getApplicationContext(),"登入失敗", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext().getApplicationContext(),"Login failed", Toast.LENGTH_LONG).show();
         }
     }
 
