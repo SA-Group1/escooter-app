@@ -71,6 +71,7 @@ public class EscooterService {
             float distance = results[0];
 
             if (distance > distanceThreshold) {
+                //導引線尚未開啟
 //                getDirections(currentLatLng, markerLatLng, mapViewModel);
             } else {
                 mapViewModel.setPolylinePoints(null);

@@ -471,6 +471,7 @@ public class MenuFragment extends Fragment {
         rentInfoBinding.rentButton.setOnClickListener(v ->{
             //清空google map上的標記
             googleMap.clear();
+            googleMap.setOnMarkerClickListener(null);
             stopLocationUpdates();
             setRentLocationCallBack(marker);
             startLocationUpdates();

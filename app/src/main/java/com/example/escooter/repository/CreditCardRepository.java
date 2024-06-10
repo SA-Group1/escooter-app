@@ -26,6 +26,8 @@ public class CreditCardRepository {
             callback.onFailure(e);
             return;
         }
+        
+        System.out.println(body);
 
         HttpRequest.httpRequest(BuildConfig.BASE_URL + "/bindCreditCard", "POST", body, new HttpResultCallback<JSONObject>() {
             @Override

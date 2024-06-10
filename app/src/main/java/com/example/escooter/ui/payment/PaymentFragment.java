@@ -289,7 +289,11 @@ public class PaymentFragment extends Fragment {
             binding.memberCardInfo.setVisibility(View.GONE);
         }else {
             binding.memberCardInfo.setVisibility(View.VISIBLE);
-            binding.memberCardDate.setText(user.getMemberCard().getExpirationDate());
+            String expirationDate = user.getMemberCard().getExpirationDate();
+            String month = expirationDate.substring(0, 2);
+            String day = expirationDate.substring(2);
+            String formattedDate = month + "/" + day;
+            binding.memberCardDate.setText(formattedDate);
         }
     }
 }
