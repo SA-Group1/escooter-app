@@ -11,10 +11,14 @@
         tools:layout="@layout/fragment_menu" >
         <action
             android:id="@+id/action_navigation_menu_to_returnSuccessFragment"
-            app:destination="@id/returnSuccessfulFragment" />
+            app:destination="@id/returnSuccessfulFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_navigation_menu_to_personinfoFragment"
-            app:destination="@id/personinfoFragment" />
+            app:destination="@id/personinfoFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
 
     <fragment
@@ -23,8 +27,10 @@
         android:label="fragment_successful"
         tools:layout="@layout/fragment_return_successful" >
         <action
-        android:id="@+id/action_returnSuccessFragment_to_navigation_menu"
-        app:destination="@id/navigation_menuFragment" />
+            android:id="@+id/action_returnSuccessFragment_to_navigation_menu"
+            app:destination="@id/navigation_menuFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/personinfoFragment"
@@ -33,16 +39,24 @@
         tools:layout="@layout/fragment_person_info" >
         <action
             android:id="@+id/action_personinfoFragment_to_navigation_menu"
-            app:destination="@id/navigation_menuFragment" />
+            app:destination="@id/navigation_menuFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_personinfoFragment_to_paymentFragment"
-            app:destination="@id/paymentFragment" />
+            app:destination="@id/paymentFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_personinfoFragment_to_rentRecordFragment"
-            app:destination="@id/rentRecordFragment" />
+            app:destination="@id/rentRecordFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_personinfoFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"
@@ -51,13 +65,19 @@
         tools:layout="@layout/fragment_payment" >
         <action
             android:id="@+id/action_paymentFragment_to_personinfoFragment"
-            app:destination="@id/personinfoFragment" />
+            app:destination="@id/personinfoFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_paymentFragment_to_navigation_menuFragment"
-            app:destination="@id/navigation_menuFragment" />
+            app:destination="@id/navigation_menuFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_paymentFragment_to_rentRecordFragment"
-            app:destination="@id/rentRecordFragment" />
+            app:destination="@id/rentRecordFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -66,10 +86,14 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_navigation_menuFragment"
-            app:destination="@id/navigation_menuFragment" />
+            app:destination="@id/navigation_menuFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+            app:destination="@id/signUpFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/rentRecordFragment"
@@ -78,13 +102,19 @@
         tools:layout="@layout/fragment_rent_record" >
         <action
             android:id="@+id/action_rentRecordFragment_to_paymentFragment"
-            app:destination="@id/paymentFragment" />
+            app:destination="@id/paymentFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_rentRecordFragment_to_personinfoFragment"
-            app:destination="@id/personinfoFragment" />
+            app:destination="@id/personinfoFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_rentRecordFragment_to_navigation_menuFragment"
-            app:destination="@id/navigation_menuFragment" />
+            app:destination="@id/navigation_menuFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -93,7 +123,9 @@
         tools:layout="@layout/fragment_sign_up" >
         <action
             android:id="@+id/action_signUpFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
 
 </navigation>

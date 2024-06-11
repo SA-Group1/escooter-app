@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -28,7 +29,7 @@ public class SignUpFragment extends Fragment {
 
     private FragmentSignUpBinding binding;
     private SignUpViewModel signUpViewModel;
-    private String[] spinnerOptions;  // 存储资源数据，避免重复访问
+    private String[] spinnerOptions;
     private static final int PHONE_NUMBER_MAX_LENGTH = 10;
 
     @Nullable
@@ -44,15 +45,14 @@ public class SignUpFragment extends Fragment {
         spinnerOptions = getResources().getStringArray(R.array.spinner_options);  // 加载一次，复用
         signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
 
-        // 初始化按钮状态
         binding.signUpButton.setEnabled(false);
-        // 添加TextWatcher来监控输入字段的变化
+
         addTextWatchers();
-        // 设置电话号码输入限制
+
         setPhoneNumberInputFilter();
         setupObservers();
         setupListeners();
-        // 设置Spinner和事件监听器
+
         setUpSpinner();
     }
 
@@ -117,12 +117,12 @@ public class SignUpFragment extends Fragment {
             binding.userIdentity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    validateInputs();  // 当选择身份时也验证输入
+                    validateInputs();
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
-                    // 可以留空
+
                 }
             });
         }
@@ -188,7 +188,7 @@ public class SignUpFragment extends Fragment {
             TextView textView = convertView.findViewById(R.id.text1);
             if (position == 0) {
                 // Set the hint text color gray
-                textView.setTextColor(Color.GRAY);
+                textView.setTextColor(ContextCompat.getColor(getContext(), R.color.primary_medium_gray));
             } else {
                 textView.setTextColor(Color.WHITE);
             }

@@ -8,20 +8,24 @@
     tools:context=".ui.login.LoginFragment"
     android:background="@drawable/bg_main">
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <FrameLayout
         android:id="@+id/gobackbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:strokeColor="@null"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="27dp"
-        android:layout_marginTop="31dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_back_button"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="18dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="8dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:strokeColor="@null"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_back_button" />
+    </FrameLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -33,8 +37,8 @@
 
     <ImageView
         android:id="@+id/app_logo"
-        android:layout_width="200dp"
-        android:layout_height="196dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:src="@drawable/ic_app_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

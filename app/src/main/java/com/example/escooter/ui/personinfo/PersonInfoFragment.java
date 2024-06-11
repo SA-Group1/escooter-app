@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -145,7 +146,7 @@ public class PersonInfoFragment extends Fragment {
     }
 
     private void setListeners(FragmentPersonInfoBinding binding) {
-        final ShapeableImageView goback_button = binding.gobackbutton;
+        final FrameLayout goback_button = binding.gobackbutton;
         final Button payment_button = binding.paymentButton;
         final Button rent_record_button = binding.rentRecordButton;
 

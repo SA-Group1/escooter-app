@@ -65,9 +65,14 @@ public class UserViewModel extends ViewModel {
         UserService.getUserPhoto(account.getValue(), password.getValue(), new PhotoCallback() {
             @Override
             public void onSuccess(String photo) {
-                User user = Objects.requireNonNull(userResult.getValue()).getUser();
-                assert user != null;
-                user.setPhoto(photo);
+                if(userResult.getValue() == null){
+                    return;
+                }
+                User user = userResult.getValue().getUser();
+                if(!Objects.equals(photo, "null")){
+                    user.setPhoto(photo);
+                }
+
                 userResult.postValue(new UserResult(user));
             }
 
