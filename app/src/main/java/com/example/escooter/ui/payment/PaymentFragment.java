@@ -98,7 +98,6 @@ public class PaymentFragment extends Fragment {
             return;
         }
         if (userPaymentResult.getError() != null) {
-            Toast.makeText(getContext().getApplicationContext(), "User Payment Data not obtained.", Toast.LENGTH_LONG).show();
             showFailed(userPaymentResult.getError());
         }
         if (userPaymentResult.getCreditCard() != null) {

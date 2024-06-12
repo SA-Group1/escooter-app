@@ -52,6 +52,7 @@ public class RentRecordFragment extends Fragment {
         initializeViews(binding);
         setListeners(binding);
         setupObservers();
+        userViewModel.getUserData();
     }
 
     private void initializeViews(FragmentRentRecordBinding binding) {

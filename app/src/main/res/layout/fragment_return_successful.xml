@@ -232,7 +232,7 @@
             android:id="@+id/payment_method"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/fragment_return_successful_payment_method"
+            android:text="@string/fragment_return_successful_payment_method_member"
             android:textSize="15sp"
             android:textColor="@color/primary_medium_gray"
             android:fontFamily="@font/lufga_regular"

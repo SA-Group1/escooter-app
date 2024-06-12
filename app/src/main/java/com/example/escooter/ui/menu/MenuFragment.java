@@ -224,6 +224,7 @@ public class MenuFragment extends Fragment {
             showFailed(returnResult.getError());
         }
         if (returnResult.getRentalRecord() != null) {
+            escooterService.stopGpsUpdates();
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigate(R.id.action_navigation_menu_to_returnSuccessFragment);
         }
@@ -517,7 +518,6 @@ public class MenuFragment extends Fragment {
                 }
             });
             scooterInfoBinding.returnButton.setOnClickListener(b ->{
-                escooterService.stopGpsUpdates();
                 rentViewModel.returnEscooter();
             });
         });
