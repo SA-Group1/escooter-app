@@ -3,27 +3,26 @@ package com.example.escooter.ui.menu;
 import androidx.annotation.Nullable;
 
 import com.example.escooter.data.model.Escooter;
-import com.example.escooter.data.model.User;
 
 import java.util.List;
 
-public class RentResult {
+public class RentableListResult {
     @Nullable
-    private Escooter escooter;
+    private List<Escooter> escooterList;
     @Nullable
     private Exception error;
 
-    public RentResult(@Nullable Exception error) {
+    public RentableListResult(@Nullable Exception error) {
         this.error = error;
     }
 
-    public RentResult(@Nullable Escooter escooter) {
-        this.escooter = escooter;
+    public RentableListResult(@Nullable List<Escooter> escooterList) {
+        this.escooterList = escooterList;
     }
 
     @Nullable
-    public Escooter getEscooter() {
-        return escooter;
+    public List<Escooter> getEscooterList() {
+        return escooterList;
     }
 
     @Nullable

@@ -2,6 +2,7 @@ package com.example.escooter.service;
 
 import com.example.escooter.callback.BooleanCallback;
 import com.example.escooter.callback.EscooterGpsCallback;
+import com.example.escooter.callback.RentCallback;
 import com.example.escooter.callback.RentRecordCallback;
 import com.example.escooter.callback.RentalCallback;
 import com.example.escooter.callback.ReturnCallback;
@@ -29,11 +30,11 @@ public class RentalService {
         });
     }
 
-    public void rentEscooter(String account, String password, String escooterId, RentalCallback callback) {
-        rentalRepository.rentEscooter(account, password, escooterId, new RentalCallback() {
+    public void rentEscooter(String account, String password, String escooterId, RentCallback callback) {
+        rentalRepository.rentEscooter(account, password, escooterId, new RentCallback() {
             @Override
-            public void onSuccess(List<Escooter> escooterList) {
-                callback.onSuccess(escooterList);
+            public void onSuccess(Escooter escooter) {
+                callback.onSuccess(escooter);
             }
 
             @Override

@@ -5,6 +5,7 @@ import com.example.escooter.BuildConfig;
 import com.example.escooter.callback.BooleanCallback;
 import com.example.escooter.callback.EscooterGpsCallback;
 import com.example.escooter.callback.HttpResultCallback;
+import com.example.escooter.callback.RentCallback;
 import com.example.escooter.callback.RentRecordCallback;
 import com.example.escooter.callback.RentalCallback;
 import com.example.escooter.callback.ReturnCallback;
@@ -66,7 +67,7 @@ public class RentalRepository {
         });
     }
 
-    public void rentEscooter(String account, String password, String escooterId, RentalCallback callback) {
+    public void rentEscooter(String account, String password, String escooterId, RentCallback callback) {
 
         JSONObject body = new JSONObject();
         try {
@@ -82,7 +83,6 @@ public class RentalRepository {
             @Override
             public void onResult(JSONObject result) {
                 try {
-                    System.out.println(result);
                     JSONObject escooter = result.getJSONObject("data");
                     String escooterId = escooter.getString("escooterId");
                     String modelId = escooter.getString("modelId");
@@ -95,12 +95,8 @@ public class RentalRepository {
 
                     Escooter selectedEscooter = new Escooter(escooterId, modelId, status, batteryLevel, feePerMinutes, longitude, latitude);
 
-                    List<Escooter> escooterList = new ArrayList<>();
-                    escooterList.add(selectedEscooter);
-
-                    callback.onSuccess(escooterList);
+                    callback.onSuccess(selectedEscooter);
                 } catch (JSONException e) {
-                    System.out.println(e);
                     callback.onFailure(e);
                 }
             }

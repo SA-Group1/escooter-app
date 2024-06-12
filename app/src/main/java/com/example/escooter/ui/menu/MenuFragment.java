@@ -2,7 +2,6 @@ package com.example.escooter.ui.menu;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.location.Location;
@@ -80,16 +79,16 @@ public class MenuFragment extends Fragment {
     private UserViewModel userViewModel;
     private RentViewModel rentViewModel;
     private MapViewModel mapViewModel;
-    private List<Escooter> escooterList;
-    private Thread navigationThread;
     private View view = null;
     private EscooterService escooterService;
     private ComponentMenuScooterInfoBinding scooterInfoBinding;
     private Marker marker;
     private boolean isPark = false;
-    private Double ownLatitude;
-    private Double ownLongitude;
-    private Context context;
+    private double ownLatitude;
+    private double ownLongitude;
+    private double lastLatitude = 0;
+    private double lastLongitude = 0;
+    private List<Escooter> currentEscooterList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -131,8 +130,17 @@ public class MenuFragment extends Fragment {
                     ownLatitude = location.getLatitude();
                     ownLongitude = location.getLongitude();
 
-                    rentViewModel.setUserlocation(ownLongitude.toString(),ownLatitude.toString());
-                    setRentableEscooter();
+                    float[] results = new float[1];
+                    Location.distanceBetween(lastLatitude, lastLongitude, ownLatitude, ownLongitude, results);
+                    float distanceInMeters = results[0];
+
+                    if (distanceInMeters > 100) {
+                        lastLatitude = ownLatitude;
+                        lastLongitude = ownLongitude;
+
+                        rentViewModel.setUserlocation(Double.toString(ownLongitude), Double.toString(ownLatitude));
+                        setRentableEscooter();
+                    }
                 }
             }
         };
@@ -154,12 +162,54 @@ public class MenuFragment extends Fragment {
 
     private void setupObservers() {
         userViewModel.getUserResult().observe(getViewLifecycleOwner(), this::handleUserResult);
+        rentViewModel.getRentableListResult().observe(getViewLifecycleOwner(), this::handleRentableListResult);
         rentViewModel.getRentResult().observe(getViewLifecycleOwner(), this::handleRentResult);
         rentViewModel.getParkResult().observe(getViewLifecycleOwner(), this::handleParkResult);
         rentViewModel.getReturnResult().observe(getViewLifecycleOwner(), this::handleReturnResult);
         rentViewModel.getEscooterGpsResult().observe(getViewLifecycleOwner(), this::handleEscooterGpsResult);
         mapViewModel.getMapResult().observe(getViewLifecycleOwner(), this::handleMapResult);
         mapViewModel.getPolylinePoints().observe(getViewLifecycleOwner(), this::handlePolylineResult);
+    }
+
+    private void handleRentableListResult(RentableListResult rentableListResult) {
+        if (googleMap == null || rentableListResult == null) {
+            return;
+        }
+
+        if (rentableListResult.getError() != null) {
+            Toast.makeText(requireContext().getApplicationContext(), "No escooter nearby", Toast.LENGTH_LONG).show();
+            showFailed(rentableListResult.getError());
+            return;
+        }
+
+        List<Escooter> newEscooterList = rentableListResult.getEscooterList();
+        if (newEscooterList != null) {
+            for (Escooter newEscooter : newEscooterList) {
+                boolean exists = false;
+                for (Escooter currentEscooter : currentEscooterList) {
+                    if (currentEscooter.getEscooterId().equals(newEscooter.getEscooterId())) {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists) {
+                    double latitude = newEscooter.getLatitude();
+                    double longitude = newEscooter.getLongitude();
+                    String escooterId = newEscooter.getEscooterId();
+
+                    LatLng escooterLocation = new LatLng(latitude, longitude);
+
+                    googleMap.addMarker(new MarkerOptions()
+                            .position(escooterLocation)
+                            .title(escooterId)
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_escooter)));
+                }
+            }
+
+            // Update the current escooter list
+            currentEscooterList.clear();
+            currentEscooterList.addAll(newEscooterList);
+        }
     }
 
     private void handlePolylineResult(List<LatLng> points) {
@@ -190,7 +240,7 @@ public class MenuFragment extends Fragment {
     }
 
     private void handleMapResult(MapResult mapResult) {
-        if(googleMap == null){
+        if (googleMap == null) {
             return;
         }
         if (mapResult == null) {
@@ -213,7 +263,7 @@ public class MenuFragment extends Fragment {
     }
 
     private void handleReturnResult(ReturnResult returnResult) {
-        if(googleMap == null){
+        if (googleMap == null) {
             return;
         }
         if (returnResult == null) {
@@ -283,7 +333,7 @@ public class MenuFragment extends Fragment {
     }
 
     private void handleParkResult(ParkResult parkResult) {
-        if(googleMap == null){
+        if (googleMap == null) {
             return;
         }
         if (parkResult == null) {
@@ -295,36 +345,27 @@ public class MenuFragment extends Fragment {
     }
 
     private void handleRentResult(RentResult rentResult) {
-        if(googleMap == null){
+        if (googleMap == null) {
             return;
         }
         if (rentResult == null) {
             return;
         }
         if (rentResult.getError() != null) {
-            Toast.makeText(requireContext().getApplicationContext(), "No escooter nearby", Toast.LENGTH_LONG).show();
+//            Toast.makeText(requireContext().getApplicationContext(), "No escooter nearby", Toast.LENGTH_LONG).show();
             showFailed(rentResult.getError());
         }
-        if (rentResult.getEscooterList() != null) {
-            escooterList = rentResult.getEscooterList();
+        if (rentResult.getEscooter() != null) {
+            Escooter escooter = rentResult.getEscooter();
+            double latitude = escooter.getLatitude();
+            double longitude = escooter.getLongitude();
+            String escooterId = escooter.getEscooterId();
 
-
-            for (Escooter escooter : escooterList) {
-                double latitude = escooter.getLatitude();
-                double longitude = escooter.getLongitude();
-                String escooterId = escooter.getEscooterId();
-
-                LatLng escooterLocation = new LatLng(latitude, longitude);
-
-                if(escooterList.size() == 1){
-                    return;
-                }
-
-                googleMap.addMarker(new MarkerOptions()
-                        .position(escooterLocation)
-                        .title(escooterId)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_escooter)));
-            }
+            LatLng escooterLocation = new LatLng(latitude, longitude);
+            googleMap.addMarker(new MarkerOptions()
+                    .position(escooterLocation)
+                    .title(escooterId)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_escooter)));
         }
     }
 
@@ -457,7 +498,6 @@ public class MenuFragment extends Fragment {
         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
-                System.out.println("導引線");
                 for (Location location : locationResult.getLocations()) {
                     LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                     LatLng markerLatLng = marker.getPosition();
@@ -465,8 +505,23 @@ public class MenuFragment extends Fragment {
                     if (googleMap != null) {
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17));
                     }
+
+                    ownLatitude = location.getLatitude();
+                    ownLongitude = location.getLongitude();
+
+                    float[] results = new float[1];
+                    Location.distanceBetween(lastLatitude, lastLongitude, ownLatitude, ownLongitude, results);
+                    float distanceInMeters = results[0];
+
+                    if (distanceInMeters > 100) {
+                        lastLatitude = ownLatitude;
+                        lastLongitude = ownLongitude;
+
+                        rentViewModel.setUserlocation(Double.toString(ownLongitude), Double.toString(ownLatitude));
+                        setRentableEscooter();
+                    }
+
                 }
-                setRentableEscooter();
             }
         };
     }
@@ -485,7 +540,7 @@ public class MenuFragment extends Fragment {
 
             marker.remove();
             googleMap.clear();
-
+            googleMap.setOnMarkerClickListener(null);
             stopLocationUpdates();
             setRentLocationCallBack(marker);
             startLocationUpdates();
@@ -542,7 +597,7 @@ public class MenuFragment extends Fragment {
 
     private void rentEscooterInfo(ComponentMenuScooterInfoBinding binding,String markerEscooterId) {
         rentViewModel.rentEscooter();
-        for (Escooter escooter : escooterList) {
+        for (Escooter escooter : currentEscooterList) {
             binding.scooterId.setText(markerEscooterId);
             binding.scooterModel.setText(escooter.getModelId());
             binding.batteryTimeText.setText(String.valueOf(escooter.getBatteryLevel()));
@@ -581,7 +636,7 @@ public class MenuFragment extends Fragment {
     }
 
     private void markerEscooterInfo(ComponentMenuRentInfoBinding binding, String markerEscooterId) {
-        for (Escooter escooter : escooterList) {
+        for (Escooter escooter : currentEscooterList) {
             if (Objects.equals(markerEscooterId, escooter.getEscooterId())){
                 rentViewModel.setEscooterId(escooter.getEscooterId());
                 binding.scooterId.setText(escooter.getEscooterId());
@@ -606,10 +661,6 @@ public class MenuFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        // 取消導航請求
-        if (navigationThread != null && navigationThread.isAlive()) {
-            navigationThread.interrupt();
-        }
         if (currentPolyline != null) {
             currentPolyline.remove();
         }

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.escooter.callback.BooleanCallback;
 import com.example.escooter.callback.EscooterGpsCallback;
+import com.example.escooter.callback.RentCallback;
 import com.example.escooter.callback.RentalCallback;
 import com.example.escooter.callback.ReturnCallback;
 import com.example.escooter.data.model.Escooter;
@@ -15,14 +16,16 @@ import com.example.escooter.service.RentalService;
 import com.example.escooter.ui.menu.EscooterGpsResult;
 import com.example.escooter.ui.menu.ParkResult;
 import com.example.escooter.ui.menu.RentResult;
+import com.example.escooter.ui.menu.RentableListResult;
 import com.example.escooter.ui.menu.ReturnResult;
 
 import java.util.List;
 
 public class RentViewModel extends ViewModel {
     private final RentalService RentalService = new RentalService();
+    private final MutableLiveData<RentableListResult> rentableListResult = new MutableLiveData<>();
     private final MutableLiveData<RentResult> rentResult = new MutableLiveData<>();
-    private final MutableLiveData<com.example.escooter.ui.menu.ParkResult> ParkResult = new MutableLiveData<>();
+    private final MutableLiveData<ParkResult> ParkResult = new MutableLiveData<>();
     private MutableLiveData<ReturnResult> returnResult = new MutableLiveData<>();
     private final MutableLiveData<EscooterGpsResult> escooterGpsResult = new MutableLiveData<>();
     private final MutableLiveData<String> ownLongitude = new MutableLiveData<>();
@@ -30,7 +33,9 @@ public class RentViewModel extends ViewModel {
     private final MutableLiveData<String> account = new MutableLiveData<>();
     private final MutableLiveData<String> password = new MutableLiveData<>();
     private final MutableLiveData<String> escooterId = new MutableLiveData<>();
-
+    public LiveData<RentableListResult> getRentableListResult() {
+        return rentableListResult;
+    }
     public LiveData<RentResult> getRentResult() {
         return rentResult;
     }
@@ -46,12 +51,6 @@ public class RentViewModel extends ViewModel {
     public LiveData<String> getEscooterId() {
         return escooterId;
     }
-    public LiveData<String> getOwnLongitude() {
-        return ownLongitude;
-    }
-    public MutableLiveData<String> getOwnLatitude() {
-        return ownLatitude;
-    }
 
     public void clearReturnResult(){
         returnResult = new MutableLiveData<>();
@@ -62,22 +61,23 @@ public class RentViewModel extends ViewModel {
 
             @Override
             public void onSuccess(List<Escooter> escooterList) {
-                rentResult.postValue(new RentResult(escooterList));
+                rentableListResult.postValue(new RentableListResult(escooterList));
             }
 
             @Override
             public void onFailure(Exception e) {
-                rentResult.postValue(new RentResult(e));
+                rentableListResult.postValue(new RentableListResult(e));
             }
         });
     }
 
     public void rentEscooter() {
-        RentalService.rentEscooter(account.getValue(), password.getValue(), escooterId.getValue(), new RentalCallback() {
+        RentalService.rentEscooter(account.getValue(), password.getValue(), escooterId.getValue(), new RentCallback() {
 
             @Override
-            public void onSuccess(List<Escooter> escooterList) {
-                rentResult.postValue(new RentResult(escooterList));
+            public void onSuccess(Escooter escooter) {
+                System.out.println("Success Rent");
+                rentResult.postValue(new RentResult(escooter));
             }
 
             @Override
