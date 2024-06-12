@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="19dp"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="47dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:padding="8dp">
@@ -27,115 +27,120 @@
             android:src="@drawable/ic_back_button" />
     </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/mainContent"
-        android:layout_width="345dp"
-        android:layout_height="match_parent"
-        android:layout_below="@id/gobackbutton"
+    <!-- SwipeRefreshLayout 包裹主內容 -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_marginTop="5dp"
-        android:orientation="vertical"
-        android:layout_centerHorizontal="true"
-        android:gravity="center">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <View
-                android:id="@+id/status_bar_placeholder"
-                android:layout_width="match_parent"
-                android:layout_height="24dp" />
-
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/personinfobutton"
-                layout="@layout/component_person_info_button"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/changepagebutton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:layout_marginBottom="18dp"
-            android:orientation="horizontal"
-            android:paddingStart="11dp"
-            android:paddingEnd="11dp">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/profileButton"
-                android:layout_width="91dp"
-                android:layout_height="35dp"
-                android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/secondary_dark_gray"
-                android:fontFamily="@font/lufga_bold"
-                android:text="@string/profile_button_text"
-                android:textAllCaps="false"
-                android:textColor="@color/primary_medium_gray"
-                android:textSize="12sp"
-                tools:ignore="HardcodedText,TouchTargetSizeCheck" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/paymentButton"
-                android:layout_width="91dp"
-                android:layout_height="35dp"
-                android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/secondary_dark_gray"
-                android:fontFamily="@font/lufga_bold"
-                android:text="@string/payment_button_text"
-                android:textAllCaps="false"
-                android:textColor="@color/primary_medium_gray"
-                android:textSize="12sp"
-                tools:ignore="HardcodedText" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/rentRecordButton"
-                android:layout_width="91dp"
-                android:layout_height="35dp"
-                android:background="@drawable/bg_radius_8dp"
-                android:backgroundTint="@color/primary_white"
-                android:fontFamily="@font/lufga_bold"
-                android:text="@string/rent_record_button_text"
-                android:textAllCaps="false"
-                android:textColor="@color/primary_charcoal"
-                android:textSize="12sp"
-                tools:ignore="HardcodedText" />
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rent_record_list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/no_record_info_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/lufga_regular"
-        android:text="@string/no_record_info_text"
-        android:textColor="@color/primary_medium_gray"
-        android:textSize="32sp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:layout_below="@id/gobackbutton"
+        tools:ignore="MissingClass">
 
+        <LinearLayout
+            android:id="@+id/mainContent"
+            android:layout_width="345dp"
+            android:layout_height="match_parent"
+            android:layout_below="@id/gobackbutton"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+
+                <include
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/personinfobutton"
+                    layout="@layout/component_person_info_button"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/changepagebutton"
+                android:layout_width="345dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:layout_marginBottom="18dp"
+                android:orientation="horizontal"
+                android:paddingStart="11dp"
+                android:paddingEnd="11dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/profileButton"
+                    android:layout_width="91dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/bg_radius_8dp"
+                    android:backgroundTint="@color/secondary_dark_gray"
+                    android:fontFamily="@font/lufga_bold"
+                    android:text="@string/profile_button_text"
+                    android:textAllCaps="false"
+                    android:textColor="@color/primary_medium_gray"
+                    android:textSize="12sp"
+                    tools:ignore="HardcodedText,TouchTargetSizeCheck" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/paymentButton"
+                    android:layout_width="91dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/bg_radius_8dp"
+                    android:backgroundTint="@color/secondary_dark_gray"
+                    android:fontFamily="@font/lufga_bold"
+                    android:text="@string/payment_button_text"
+                    android:textAllCaps="false"
+                    android:textColor="@color/primary_medium_gray"
+                    android:textSize="12sp"
+                    tools:ignore="HardcodedText" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/rentRecordButton"
+                    android:layout_width="91dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/bg_radius_8dp"
+                    android:backgroundTint="@color/primary_white"
+                    android:fontFamily="@font/lufga_bold"
+                    android:text="@string/rent_record_button_text"
+                    android:textAllCaps="false"
+                    android:textColor="@color/primary_charcoal"
+                    android:textSize="12sp"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rent_record_list"
+                android:layout_width="345dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/no_record_info_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lufga_regular"
+            android:text="@string/no_record_info_text"
+            android:textColor="@color/primary_medium_gray"
+            android:textSize="32sp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>

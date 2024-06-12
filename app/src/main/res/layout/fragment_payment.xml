@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="19dp"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="47dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:padding="8dp">
@@ -56,10 +56,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
-                <View
-                    android:id="@+id/status_bar_placeholder"
-                    android:layout_width="match_parent"
-                    android:layout_height="24dp" />
 
                 <include
                     android:layout_width="match_parent"

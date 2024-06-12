@@ -36,7 +36,7 @@ public class RentRecordListAdapter extends RecyclerView.Adapter<RentRecordListAd
             binding.escooterReturnTime.setText(rentRecord.getEndTime());
             binding.feePerMin.setText(String.valueOf(rentRecord.getFeePerMinutes()));
             binding.duration.setText(String.valueOf(rentRecord.getDuration()));
-            binding.totalFee.setText(String.valueOf(rentRecord.getTotalFee()));
+            binding.totalFee.setText(String.valueOf((int)rentRecord.getTotalFee()));
         }
     }
 

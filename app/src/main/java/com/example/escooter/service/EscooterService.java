@@ -126,6 +126,9 @@ public class EscooterService {
     public boolean getIsGet() {
         return isGet;
     }
+    public void resetStartTime() {
+        startTime = System.currentTimeMillis();
+    }
 
 
 }

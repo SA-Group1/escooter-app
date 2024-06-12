@@ -48,13 +48,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void setupUI() {
-        binding.account.setText("acc001");
-        binding.password.setText("pwd001");
 
-        // Put testing data into view model.
-        String account = binding.account.getText().toString();
-        String password = binding.password.getText().toString();
-        loginViewModel.loginDataChanged(account,password);
     }
 
     private void setupObservers() {

@@ -57,14 +57,6 @@ import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -109,6 +101,7 @@ public class MenuFragment extends Fragment {
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         );
 
         setupFusedLocation();
@@ -126,22 +119,22 @@ public class MenuFragment extends Fragment {
         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
-                for (Location location : locationResult.getLocations()) {
-                    ownLatitude = location.getLatitude();
-                    ownLongitude = location.getLongitude();
+            for (Location location : locationResult.getLocations()) {
+                ownLatitude = location.getLatitude();
+                ownLongitude = location.getLongitude();
 
-                    float[] results = new float[1];
-                    Location.distanceBetween(lastLatitude, lastLongitude, ownLatitude, ownLongitude, results);
-                    float distanceInMeters = results[0];
+                float[] results = new float[1];
+                Location.distanceBetween(lastLatitude, lastLongitude, ownLatitude, ownLongitude, results);
+                float distanceInMeters = results[0];
 
-                    if (distanceInMeters > 100) {
-                        lastLatitude = ownLatitude;
-                        lastLongitude = ownLongitude;
+                if (distanceInMeters > 100) {
+                    lastLatitude = ownLatitude;
+                    lastLongitude = ownLongitude;
 
-                        rentViewModel.setUserlocation(Double.toString(ownLongitude), Double.toString(ownLatitude));
-                        setRentableEscooter();
-                    }
+                    rentViewModel.setUserlocation(Double.toString(ownLongitude), Double.toString(ownLatitude));
+                    setRentableEscooter();
                 }
+            }
             }
         };
     }
@@ -235,7 +228,6 @@ public class MenuFragment extends Fragment {
                 currentPolyline.remove();
                 currentPolyline = null;
             }
-            googleMap.clear();
         }
     }
 
@@ -309,7 +301,6 @@ public class MenuFragment extends Fragment {
         // 判斷距離是否超過閾值，如果超過則顯示 marker
         if (distance > distanceThreshold) {
             if (marker == null) {
-                googleMap.clear();
                 marker = googleMap.addMarker(new MarkerOptions()
                         .position(markerLatLng)
                         .title(rentViewModel.getEscooterId().getValue())
@@ -318,7 +309,7 @@ public class MenuFragment extends Fragment {
                 marker.setPosition(markerLatLng);
             }
             // 更新位置信息
-            updataRentEscooterInfo(scooterInfoBinding);
+            updateRentEscooterInfo(scooterInfoBinding);
         } else {
             if (marker != null) {
                 marker.remove(); // 移除 marker
@@ -328,7 +319,6 @@ public class MenuFragment extends Fragment {
                 currentPolyline.remove(); // 移除 polyline
                 currentPolyline = null;
             }
-            googleMap.clear(); // 清除地圖上的所有圖層
         }
     }
 
@@ -498,30 +488,30 @@ public class MenuFragment extends Fragment {
         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
-                for (Location location : locationResult.getLocations()) {
-                    LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                    LatLng markerLatLng = marker.getPosition();
-                    mapViewModel.setDirections(currentLatLng,markerLatLng);
-                    if (googleMap != null) {
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17));
-                    }
-
-                    ownLatitude = location.getLatitude();
-                    ownLongitude = location.getLongitude();
-
-                    float[] results = new float[1];
-                    Location.distanceBetween(lastLatitude, lastLongitude, ownLatitude, ownLongitude, results);
-                    float distanceInMeters = results[0];
-
-                    if (distanceInMeters > 100) {
-                        lastLatitude = ownLatitude;
-                        lastLongitude = ownLongitude;
-
-                        rentViewModel.setUserlocation(Double.toString(ownLongitude), Double.toString(ownLatitude));
-                        setRentableEscooter();
-                    }
-
+            for (Location location : locationResult.getLocations()) {
+                LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                LatLng markerLatLng = marker.getPosition();
+                mapViewModel.setDirections(currentLatLng,markerLatLng);
+                if (googleMap != null) {
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17));
                 }
+
+                ownLatitude = location.getLatitude();
+                ownLongitude = location.getLongitude();
+
+                float[] results = new float[1];
+                Location.distanceBetween(lastLatitude, lastLongitude, ownLatitude, ownLongitude, results);
+                float distanceInMeters = results[0];
+
+                if (distanceInMeters > 100) {
+                    lastLatitude = ownLatitude;
+                    lastLongitude = ownLongitude;
+
+                    rentViewModel.setUserlocation(Double.toString(ownLongitude), Double.toString(ownLatitude));
+                    setRentableEscooter();
+                }
+
+            }
             }
         };
     }
@@ -544,6 +534,8 @@ public class MenuFragment extends Fragment {
             stopLocationUpdates();
             setRentLocationCallBack(marker);
             startLocationUpdates();
+            mapViewModel.getReturnAreas();
+            escooterService.resetStartTime();
             escooterService.startGpsUpdates(rentViewModel, mapViewModel);
 
             //ViewStub彈窗新增
@@ -604,7 +596,7 @@ public class MenuFragment extends Fragment {
             binding.feePerMin.setText(String.valueOf(escooter.getFeePerMinutes()));
         }
     }
-    private void updataRentEscooterInfo(ComponentMenuScooterInfoBinding binding) {
+    private void updateRentEscooterInfo(ComponentMenuScooterInfoBinding binding) {
         binding.escooterRentTime.setText(escooterService.getStartTime());
         binding.duration.setText(String.valueOf(escooterService.getDuration()));
         binding.totalFee.setText(String.valueOf(escooterService.getTotalCost()));

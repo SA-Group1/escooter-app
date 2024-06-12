@@ -28,6 +28,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.escooter.R;
 import com.example.escooter.data.model.User;
@@ -46,6 +47,7 @@ public class PersonInfoFragment extends Fragment {
     private UserViewModel userViewModel;
     private ImageView personInfoImageView;
     private ActivityResultLauncher<Intent> pickImageLauncher;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private static final int REQUEST_CODE_PERMISSIONS = 1001;
 
@@ -101,6 +103,7 @@ public class PersonInfoFragment extends Fragment {
         );
     }
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -116,6 +119,30 @@ public class PersonInfoFragment extends Fragment {
 
         setListeners(binding);
         setupObservers();
+        setupSwipeRefresh(binding.getRoot());
+    }
+
+    private void setupSwipeRefresh(View rootView) {
+        swipeRefreshLayout = rootView.findViewById(R.id.swipeRefreshLayout);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // 刷新操作逻辑
+                refreshContent();
+            }
+        });
+    }
+
+    private void refreshContent() {
+        // 模拟刷新操作，刷新完成后停止刷新动画
+        swipeRefreshLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(false);
+                userViewModel.getUserData();
+            }
+        }, 2000); // 2秒后停止刷新动画
     }
 
     private void setupObservers() {

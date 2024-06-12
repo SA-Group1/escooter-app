@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,7 @@ public class RentRecordFragment extends Fragment {
     private FragmentRentRecordBinding binding;
     private UserViewModel userViewModel;
     private RentRecordViewModel rentRecordViewModel;
+    private SwipeRefreshLayout swipeRefreshLayout;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentRentRecordBinding.inflate(inflater, container, false);
@@ -52,7 +54,30 @@ public class RentRecordFragment extends Fragment {
         initializeViews(binding);
         setListeners(binding);
         setupObservers();
-        userViewModel.getUserData();
+        setupSwipeRefresh(binding.getRoot());
+    }
+
+    private void setupSwipeRefresh(View rootView) {
+        swipeRefreshLayout = rootView.findViewById(R.id.swipeRefreshLayout);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // 刷新操作逻辑
+                refreshContent();
+            }
+        });
+    }
+
+    private void refreshContent() {
+        // 模拟刷新操作，刷新完成后停止刷新动画
+        swipeRefreshLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(false);
+                userViewModel.getUserData();
+            }
+        }, 2000); // 2秒后停止刷新动画
     }
 
     private void initializeViews(FragmentRentRecordBinding binding) {

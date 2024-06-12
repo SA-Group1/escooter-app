@@ -79,6 +79,7 @@ public class PaymentFragment extends Fragment {
             @Override
             public void run() {
                 swipeRefreshLayout.setRefreshing(false);
+                userViewModel.getUserData();
             }
         }, 2000); // 2秒后停止刷新动画
     }

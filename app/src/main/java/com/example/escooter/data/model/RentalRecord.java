@@ -10,7 +10,7 @@ public class RentalRecord {
     private String modelId;
     private double feePerMinutes;
     private int duration;
-    private double totalFee;
+    private int totalFee;
 
     public int getRentalRecordId() {
         return rentalRecordId;
@@ -88,7 +88,7 @@ public class RentalRecord {
         return totalFee;
     }
 
-    public void setTotalFee(double totalFee) {
+    public void setTotalFee(int totalFee) {
         this.totalFee = totalFee;
     }
 }

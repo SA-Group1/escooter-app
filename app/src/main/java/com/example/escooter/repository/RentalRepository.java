@@ -164,7 +164,7 @@ public class RentalRepository {
                     rentalRecord.setModelId(selectedescooter.getString("modelId"));
                     rentalRecord.setFeePerMinutes(selectedescooter.getDouble("feePerMinutes"));
                     rentalRecord.setDuration(selectedescooter.getInt("duration"));
-                    rentalRecord.setTotalFee(selectedescooter.getDouble("totalFee"));
+                    rentalRecord.setTotalFee((int)selectedescooter.getDouble("totalFee"));
 
                     callback.onSuccess(rentalRecord);
                 } catch (JSONException e) {
@@ -208,7 +208,7 @@ public class RentalRepository {
                         rentalRecord.setModelId(rentalRecordJson.getString("modelId"));
                         rentalRecord.setFeePerMinutes(rentalRecordJson.getDouble("feePerMinutes"));
                         rentalRecord.setDuration(rentalRecordJson.getInt("duration"));
-                        rentalRecord.setTotalFee(rentalRecordJson.getDouble("totalFee"));
+                        rentalRecord.setTotalFee((int)rentalRecordJson.getDouble("totalFee"));
 
                         rentalRecordList.add(rentalRecord);
                     }

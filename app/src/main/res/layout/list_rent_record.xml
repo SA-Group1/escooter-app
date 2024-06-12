@@ -138,7 +138,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/fee_text"
             android:layout_toStartOf="@id/duration"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginTop="3dp"
             android:fontFamily="@font/lufga_regular"
             android:text="@string/rent_time_text"
