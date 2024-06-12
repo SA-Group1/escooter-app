@@ -137,6 +137,7 @@
                     android:inputType="textPassword"
                     android:paddingStart="12dp"
                     android:paddingTop="7dp"
+                    android:paddingBottom="8dp"
                     android:textColor="@color/primary_white"
                     android:textColorHint="@color/primary_medium_gray"
                     tools:ignore="Autofill,RtlSymmetry,TouchTargetSizeCheck" />
