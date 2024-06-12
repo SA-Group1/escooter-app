@@ -59,7 +59,7 @@ public class ReturnSuccessfulFragment extends Fragment {
             binding.escooterReturnTime.setText(escooter.getEndTime());
             binding.feePerMin.setText(String.valueOf(escooter.getFeePerMinutes()));
             binding.duration.setText(String.valueOf(escooter.getDuration()));
-            binding.totalFee.setText(String.valueOf(escooter.getTotalFee()));
+            binding.totalFee.setText(String.valueOf((int)escooter.getTotalFee()));
         }
     }
 

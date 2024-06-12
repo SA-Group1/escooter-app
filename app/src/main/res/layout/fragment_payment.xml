@@ -33,7 +33,8 @@
         android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/gobackbutton">
+        android:layout_below="@id/gobackbutton"
+        tools:ignore="MissingClass">
 
         <!-- 主内容布局 -->
         <LinearLayout
@@ -47,9 +48,26 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <!-- 个人信息 -->
-            <include
-                android:id="@+id/personinfobutton"
-                layout="@layout/component_person_info_button" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <View
+                    android:id="@+id/status_bar_placeholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp" />
+
+                <include
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/personinfobutton"
+                    layout="@layout/component_person_info_button"/>
+
+            </LinearLayout>
 
             <!-- 用户个人信息切换按钮 -->
             <LinearLayout

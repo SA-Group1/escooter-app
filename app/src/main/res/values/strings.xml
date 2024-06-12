@@ -51,7 +51,7 @@
     <!-- Payment -->
     <string name="add_card_text">Add a new credit/debit card</string>
     <string name="fragment_return_successful_payment_method_text">payment method</string>
-    <string name="fragment_return_successful_payment_method">credit card</string>
+    <string name="fragment_return_successful_payment_method">member card</string>
     <string name="fragment_return_successful_payment_total_fee_text">Total fee</string>
 
     <!-- Dialogs -->

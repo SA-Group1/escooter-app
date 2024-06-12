@@ -13,6 +13,7 @@ import android.os.Looper;
 import com.example.escooter.R;
 import com.example.escooter.callback.DirectionCallback;
 import com.example.escooter.callback.HttpResultCallback;
+import com.example.escooter.data.model.Escooter;
 import com.example.escooter.repository.EscooterRepository;
 import com.example.escooter.viewmodel.MapViewModel;
 import com.example.escooter.viewmodel.RentViewModel;
@@ -44,7 +45,7 @@ public class EscooterService {
     private long startTime;
     private long tempTime;
     private int duration;
-    private double feePerMin = 100;
+    private double feePerMin = 0.3;
     private int totalCost;
     private boolean isGet = false;
 
@@ -58,7 +59,7 @@ public class EscooterService {
         scheduler.scheduleWithFixedDelay(() -> {
             isGet = true;
             tempTime = System.currentTimeMillis();
-            duration = (int) ((tempTime - startTime) / 1000 / 60);
+            duration = (int) ((tempTime - startTime) / 1000 );
             totalCost = (int) (duration * feePerMin);
             rentViewModel.getEscooterGps();
             LatLng currentLatLng = mapViewModel.getCurrentLatLng().getValue();

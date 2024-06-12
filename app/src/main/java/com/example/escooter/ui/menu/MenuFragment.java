@@ -230,7 +230,7 @@ public class MenuFragment extends Fragment {
     }
 
     private void handleEscooterGpsResult(EscooterGpsResult escooterGpsResult) {
-        if(googleMap == null){
+        if (googleMap == null) {
             return;
         }
         if (escooterGpsResult == null) {
@@ -240,41 +240,44 @@ public class MenuFragment extends Fragment {
         if (escooterGpsResult.getError() != null) {
             showFailed(escooterGpsResult.getError());
         }
-        if (escooterGpsResult.getEscooterGps() != null) {
-            Gps gps = escooterGpsResult.getEscooterGps();
-            LatLng markerLatLng = new LatLng(gps.getLatitude(), gps.getLongitude());
+        if (escooterGpsResult.getEscooterGps() == null) {
+            return;
+        }
 
-            // 設置距離閾值 20 米
-            float distanceThreshold = 20.0f;
-            // 計算當前位置與 marker 的距離
-            float[] results = new float[1];
-            Location.distanceBetween(ownLatitude, ownLongitude,
-                    markerLatLng.latitude, markerLatLng.longitude, results);
-            float distance = results[0];
+        Gps gps = escooterGpsResult.getEscooterGps();
+        LatLng markerLatLng = new LatLng(gps.getLatitude(), gps.getLongitude());
 
-            // 判斷距離是否超過閾值，如果超過則顯示 marker
-            if (distance > distanceThreshold) {
-                if (marker == null) {
-                    marker = googleMap.addMarker(new MarkerOptions()
-                            .position(markerLatLng)
-                            .title(rentViewModel.getEscooterId().toString())
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_escooter)));
-                } else {
-                    marker.setPosition(markerLatLng);
-                }
-                // 更新位置信息
-                updataRentEscooterInfo(scooterInfoBinding);
+        // 設置距離閾值 20 米
+        float distanceThreshold = 20.0f;
+        // 計算當前位置與 marker 的距離
+        float[] results = new float[1];
+        Location.distanceBetween(ownLatitude, ownLongitude,
+                markerLatLng.latitude, markerLatLng.longitude, results);
+        float distance = results[0];
+
+        // 判斷距離是否超過閾值，如果超過則顯示 marker
+        if (distance > distanceThreshold) {
+            if (marker == null) {
+                googleMap.clear();
+                marker = googleMap.addMarker(new MarkerOptions()
+                        .position(markerLatLng)
+                        .title(rentViewModel.getEscooterId().getValue())
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_escooter)));
             } else {
-                if (marker != null) {
-                    marker.remove(); // 移除 marker
-                    marker = null;
-                }
-                if (currentPolyline != null) {
-                    currentPolyline.remove(); // 移除 polyline
-                    currentPolyline = null;
-                }
-                googleMap.clear(); // 清除地圖上的所有圖層
+                marker.setPosition(markerLatLng);
             }
+            // 更新位置信息
+            updataRentEscooterInfo(scooterInfoBinding);
+        } else {
+            if (marker != null) {
+                marker.remove(); // 移除 marker
+                marker = null;
+            }
+            if (currentPolyline != null) {
+                currentPolyline.remove(); // 移除 polyline
+                currentPolyline = null;
+            }
+            googleMap.clear(); // 清除地圖上的所有圖層
         }
     }
 
@@ -298,17 +301,24 @@ public class MenuFragment extends Fragment {
             return;
         }
         if (rentResult.getError() != null) {
-            Toast.makeText(requireContext().getApplicationContext(), "User rental error", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext().getApplicationContext(), "No escooter nearby", Toast.LENGTH_LONG).show();
             showFailed(rentResult.getError());
         }
         if (rentResult.getEscooterList() != null) {
             escooterList = rentResult.getEscooterList();
+
+
             for (Escooter escooter : escooterList) {
                 double latitude = escooter.getLatitude();
                 double longitude = escooter.getLongitude();
                 String escooterId = escooter.getEscooterId();
 
                 LatLng escooterLocation = new LatLng(latitude, longitude);
+
+                if(escooterList.size() == 1){
+                    return;
+                }
+
                 googleMap.addMarker(new MarkerOptions()
                         .position(escooterLocation)
                         .title(escooterId)
@@ -356,8 +366,8 @@ public class MenuFragment extends Fragment {
     }
 
     private void startLocationUpdates() {
-        LocationRequest locationRequest = new LocationRequest.Builder(1000)
-                .setMinUpdateIntervalMillis(500)
+        LocationRequest locationRequest = new LocationRequest.Builder(10000) // 10秒更新一次
+                .setMinUpdateIntervalMillis(5000) // 最小更新間隔為5秒
                 .build();
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -423,6 +433,7 @@ public class MenuFragment extends Fragment {
     private void setOnMarkerClick() {
         //設定標籤點擊事件
         googleMap.setOnMarkerClickListener(marker -> {
+
             //檢查引導線是否已經存在
             if (currentPolyline != null) {
                 currentPolyline.remove();
@@ -431,10 +442,11 @@ public class MenuFragment extends Fragment {
             stopLocationUpdates();
             //新增導引locationCallback
             setlocationCallBack(marker);
-            //開始LocationUpdates
-            startLocationUpdates();
             //點擊出現彈窗
             dialogSet(requireContext(), marker);
+            //開始LocationUpdates
+            startLocationUpdates();
+
             return true;
         });
     }
@@ -469,9 +481,10 @@ public class MenuFragment extends Fragment {
         markerEscooterInfo(rentInfoBinding, markerEscooterId);
 
         rentInfoBinding.rentButton.setOnClickListener(v ->{
-            //清空google map上的標記
+
+            marker.remove();
             googleMap.clear();
-            googleMap.setOnMarkerClickListener(null);
+
             stopLocationUpdates();
             setRentLocationCallBack(marker);
             startLocationUpdates();
@@ -593,9 +606,6 @@ public class MenuFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        requireActivity().getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_VISIBLE
-        );
         // 取消導航請求
         if (navigationThread != null && navigationThread.isAlive()) {
             navigationThread.interrupt();
