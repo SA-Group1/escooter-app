@@ -346,16 +346,7 @@ public class MenuFragment extends Fragment {
             showFailed(rentResult.getError());
         }
         if (rentResult.getEscooter() != null) {
-            Escooter escooter = rentResult.getEscooter();
-            double latitude = escooter.getLatitude();
-            double longitude = escooter.getLongitude();
-            String escooterId = escooter.getEscooterId();
 
-            LatLng escooterLocation = new LatLng(latitude, longitude);
-            googleMap.addMarker(new MarkerOptions()
-                    .position(escooterLocation)
-                    .title(escooterId)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_escooter)));
         }
     }
 

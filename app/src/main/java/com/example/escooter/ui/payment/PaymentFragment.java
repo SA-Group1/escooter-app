@@ -289,6 +289,7 @@ public class PaymentFragment extends Fragment {
             binding.memberCardText.setVisibility(View.GONE);
             binding.memberCardInfo.setVisibility(View.GONE);
         }else {
+            binding.memberCardText.setVisibility(View.VISIBLE);
             binding.memberCardInfo.setVisibility(View.VISIBLE);
             String expirationDate = user.getMemberCard().getExpirationDate();
             String month = expirationDate.substring(0, 2);
